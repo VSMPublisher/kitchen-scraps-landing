@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "kitchen-scraps-quiz"
+  },
+  "targets": {
+    "kitchen-scraps-quiz": {
+      "hosting": {
+        "landing": [
+          "kitchen-scraps"
+        ]
+      }
+    }
+  }
+}
