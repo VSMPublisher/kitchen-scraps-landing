@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" fill="none">
+  <rect width="400" height="320" rx="40" fill="#F0F7EC"/>
+  
+  <!-- Compost bin body -->
+  <rect x="110" y="140" width="180" height="120" rx="12" fill="#8B5E3C" stroke="#6B4423" stroke-width="3"/>
+  <rect x="100" y="130" width="200" height="20" rx="6" fill="#A0714F" stroke="#6B4423" stroke-width="2"/>
+  
+  <!-- Compost layers inside bin -->
+  <rect x="116" y="210" width="168" height="10" rx="4" fill="#5C4033"/>
+  <rect x="116" y="195" width="168" height="12" rx="4" fill="#6B8E23"/>
+  <rect x="116" y="180" width="168" height="12" rx="4" fill="#7CFC00" opacity="0.6"/>
+  <rect x="116" y="165" width="168" height="12" rx="4" fill="#DAA520"/>
+  <rect x="116" y="148" width="168" height="14" rx="4" fill="#8FBC8F"/>
+  
+  <!-- Leaves on top of compost -->
+  <path d="M160 130 C160 110 175 100 185 115 C195 105 210 110 205 130" fill="#4CAF50" opacity="0.8"/>
+  <path d="M200 128 C200 108 215 95 225 112 C235 100 250 108 245 128" fill="#388E3C" opacity="0.8"/>
+  <path d="M180 125 C170 105 185 90 195 108 C200 95 215 100 210 125" fill="#66BB6A" opacity="0.7"/>
+  
+  <!-- Small leaf on top -->
+  <path d="M190 118 C190 105 198 95 205 108 C210 98 218 102 215 118" fill="#81C784"/>
+  
+  <!-- Apple core -->
+  <ellipse cx="230" cy="155" rx="8" ry="12" fill="#E57373" transform="rotate(-15 230 155)"/>
+  <path d="M226 148 C226 143 230 140 234 148" fill="#C62828"/>
+  
+  <!-- Banana peel -->
+  <path d="M160 160 C150 152 145 165 155 170 C160 172 158 165 160 160Z" fill="#FDD835"/>
+  <path d="M165 158 C155 148 148 160 158 166 C163 168 160 162 165 158Z" fill="#FFE082"/>
+  
+  <!-- Eggshell -->
+  <ellipse cx="180" cy="170" rx="6" ry="8" fill="#FFF9C4" stroke="#E6D6A8" stroke-width="1"/>
+  <path d="M178 166 L182 168" stroke="#E6D6A8" stroke-width="1"/>
+  
+  <!-- Coffee ground dots -->
+  <circle cx="195" cy="172" r="2" fill="#3E2723"/>
+  <circle cx="200" cy="168" r="2.5" fill="#4E342E"/>
+  <circle cx="190" cy="176" r="1.5" fill="#3E2723"/>
+  <circle cx="205" cy="174" r="2" fill="#4E342E"/>
+  
+  <!-- Sprouting plant from bin -->
+  <line x1="215" y1="130" x2="215" y2="90" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"/>
+  <path d="M215 90 C210 88 205 85 208 80 C212 75 215 85 215 90Z" fill="#66BB6A"/>
+  <path d="M215 90 C220 88 225 85 222 80 C218 75 215 85 215 90Z" fill="#81C784"/>
+  
+  <!-- Worm peeking out -->
+  <path d="M140 170 C135 165 128 168 130 173 C132 178 138 175 140 170Z" fill="#FF8A65"/>
+  
+  <!-- Small flowers -->
+  <circle cx="245" cy="118" r="5" fill="#FFD54F"/>
+  <circle cx="245" cy="118" r="2.5" fill="#FF8F00"/>
+  <circle cx="170" cy="108" r="4" fill="#CE93D8"/>
+  <circle cx="170" cy="108" r="2" fill="#8E24AA"/>
+  
+  <!-- Checkmark badge -->
+  <circle cx="310" cy="90" r="28" fill="#49A84D"/>
+  <circle cx="310" cy="90" r="24" fill="#66BB6A"/>
+  <path d="M298 90 L307 99 L322 82" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  
+  <!-- Decorative dots -->
+  <circle cx="70" cy="80" r="6" fill="#C8E6C9"/>
+  <circle cx="330" cy="250" r="5" fill="#C8E6C9"/>
+  <circle cx="60" cy="250" r="4" fill="#A5D6A7"/>
+  <circle cx="340" cy="70" r="4" fill="#A5D6A7"/>
+</svg>

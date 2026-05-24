@@ -1,88 +1,271 @@
+﻿import Image from "next/image";
 import Link from "next/link";
 
 export default function LandingPage() {
-  const categories = [
-    { title: "Go/No-Go 🎯", desc: "Quick decisions on what can be safely composted." },
-    { title: "Myths vs. Facts ❓", desc: "Distinguish composting myths from scientific facts." },
-    { title: "The Why Logic 💡", desc: "Understand the science behind the composting rules." },
-    { title: "Troubleshooting ⚠️", desc: "Learn to solve common composting problems." },
-    { title: "Practical Apps ⭐", desc: "Integrating composting into your daily life." },
-    { title: "Systems & Methods 🏆", desc: "Explore Bokashi, Vermicomposting, and more." },
+  const categories: { title: string; emoji: string; desc: string }[] = [
+    { title: "Go/No-Go", emoji: "♻️", desc: "\"Can I compost this?\" — Get fast, clear answers on everyday kitchen scraps. No more Googling at the trash can." },
+    { title: "Myths vs. Facts", emoji: "✔️", desc: "\"Eggshells take years to break down.\" True or false? Separate composting folklore from what actually works." },
+    { title: "The Why Logic", emoji: "💡", desc: "Know the science behind the rules. Understanding *why* makes composting stick — and makes you the expert at dinner parties." },
+    { title: "Troubleshooting", emoji: "🛠️", desc: "Smelly bin? Fruit flies? Learn to fix the problems that make people quit composting in week two." },
+    { title: "Practical Apps", emoji: "🏡", desc: "From apartment balconies to backyard piles — see how real people fit composting into real life." },
+    { title: "Systems & Methods", emoji: "⚙️", desc: "Bokashi, vermicomposting, hot composting, cold composting — find the method that fits your space, time, and sanity." },
+  ];
+
+  const features: { icon: string; title: string; desc: string }[] = [
+    { icon: "⏱️", title: "30-Second Timer", desc: "Keeps you focused without feeling rushed. Perfect for a quick learning break." },
+    { icon: "💡", title: "Credits & Hints", desc: "Stuck? Spend earned credits on expert hints. Learn by doing, not by guessing." },
+    { icon: "🧠", title: "Expert Explanations", desc: "Every answer comes with a \"here's why\" — so the knowledge actually sticks." },
+    { icon: "🔥", title: "Streak Tracking", desc: "Watch your streak grow as you learn. There's nothing quite like a 10-answer streak." },
+    { icon: "⚡", title: "Instant Feedback", desc: "No waiting. Learn from every question immediately with clear, plain-language explanations." },
+    { icon: "🔁", title: "Mistake Review", desc: "Go back and revisit what tripped you up. That's where the real learning happens." },
+  ];
+
+  const testimonials = [
+    { quote: "I always hesitated before tossing melon rinds or citrus skins away. This quick 10-question practice framework clear up my confusion immediately.", name: "Beta Tester", role: "Backyard sorting focus" },
+    { quote: "Fast, straightforward, and didn't force me to fill out an annoying signup form. Just pure, clean composting knowledge drills right in my browser.", name: "Early Reviewer", role: "Apartment balcony grower" },
+    { quote: "The mistake review step actually helps you learn. It's a perfect quick tool to test your sorting instincts before handling the morning kitchen waste.", name: "Backyard Composter", role: "Soil management enthusiast" },
+  ];
+
+  const faqs = [
+    { q: "Is this really free?", a: "Yes. No signup, no paywall, no catch. Just open your browser and start playing instantly." },
+    { q: "Do I need composting experience?", a: "Not at all. The quiz meets you where you are — whether you've never composted or you've got multiple active backyard systems." },
+    { q: "How long does it take?", a: "Each question takes about 30 seconds. With 10 curated questions across each of our 6 core categories, you can test your composting knowledge in just 5 minutes." },
+    { q: "What's the Android app?", a: "Same quiz, built for mobile. Requires an initial internet connection to download your question database, then you are ready to play anywhere — great for the garden or classroom." },
+    { q: "What topics does it cover?", a: "Six categories: what you can compost, myth-busting, the science behind it, troubleshooting, real-life applications, and different composting systems (bokashi, worms, backyard, and more)." },
+  ];
+
+  const socialLinks = [
+    {
+      href: "https://www.youtube.com/@KitchenScrapsQuiz",
+      label: "YouTube",
+      icon: (
+        <svg className="w-6 h-6 inline-block alignment-baseline" viewBox="0 0 24 24">
+          <path
+            fill="#FFFFFF"
+            d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.518 3.545 12 3.545 12 3.545s-7.518 0-9.388.507a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.87.507 9.388.507 9.388.507s7.518 0 9.388-.507a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.933-.502-5.837z"
+          />
+          <path fill="#2D4A22" d="M9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+        </svg>
+      ),
+    },
+    {
+      href: "https://www.instagram.com/kitchenscrapsquiz/",
+      label: "Instagram",
+      icon: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+      ),
+    },
+    {
+      href: "https://www.pinterest.com/kitchenscrapsquiz/",
+      label: "Pinterest",
+      icon: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.403.042-3.438.218-.932 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+        </svg>
+      ),
+    },
+    {
+      href: "https://linktr.ee/kitchenscrapsquiz",
+      label: "Linktree",
+      icon: (
+        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M13.5 1.5v8.25h7.5l-.007 4.5h-7.493v8.25h-4.5v-8.25H1.5l-.007-4.5H9V1.5z"/>
+        </svg>
+      ),
+    },
   ];
 
   return (
-    // Background is now a very light, clean "Mint Cream" - fresh but easy on eyes
-    <main className="min-h-screen bg-[#F8FDF5] text-[#2D4A22] font-sans">
+    <main className="min-h-screen bg-[#FCFEF9] text-[#2D4A22] font-sans">
       
-      {/* HEADER - Solid Brand Green */}
-      <header className="bg-[#49A84D] py-5 px-6 text-center shadow-md">
-        <h1 className="text-white font-bold text-2xl tracking-tight">
-          Kitchen Scraps & Food Waste Quiz
-        </h1>
+      {/* HEADER */}
+      <header className="bg-[#49A84D] py-4 px-6 text-center shadow-md">
+        <div className="flex items-center justify-center gap-3">
+          <Image
+            src="/app-icon.png"
+            alt="Kitchen Scraps Quiz app icon"
+            width={28}
+            height={28}
+            className="w-7 h-auto rounded-md"
+          />
+          <h1 className="text-white font-bold text-2xl tracking-tight">
+            Kitchen Scraps & Food Waste Quiz
+          </h1>
+        </div>
       </header>
 
       {/* HERO SECTION */}
-      <section className="py-20 px-6 text-center max-w-5xl mx-auto">
-        <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-[#38761D] leading-tight">
-          Master Composting Today! <span className="inline-block">🍃</span>
-        </h2>
-        <p className="text-xl md:text-2xl mb-12 text-[#556B2F] max-w-3xl mx-auto leading-relaxed font-medium">
-          The ultimate interactive tool for promoting sustainable food waste practices. 
-          Test your knowledge and empower your eco-friendly lifestyle.
-        </p>
-        
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6">
-          <Link 
-            href="https://kitchen-scraps-quiz.web.app" 
-            className="bg-[#49A84D] text-white px-12 py-5 rounded-2xl font-bold text-xl hover:bg-[#3D8C40] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Play in Web Browser
-          </Link>
-          <button className="bg-white border-2 border-[#A9C4A0] text-[#7A9671] px-12 py-5 rounded-2xl font-bold text-xl cursor-not-allowed shadow-sm">
-            Android App (Soon)
-          </button>
+      <section className="py-16 px-6 max-w-6xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex-1 text-center md:text-left">
+            <h2 className="text-4xl md:text-6xl font-extrabold mb-6 text-[#38761D] leading-tight">
+              Turn Your Kitchen Scraps Into Garden Gold
+            </h2>
+             <p className="text-xl md:text-2xl mb-4 text-[#556B2F] max-w-3xl leading-relaxed font-medium">
+               Yeah, we've all been there—staring at a banana peel or coffee grounds, wondering if it goes in the compost or the trash. Our free quiz takes the guesswork out of composting, showing you exactly what belongs in your bin in just 30 seconds per question.
+             </p>
+            <p className="text-base mb-8 text-[#6B8E4E] font-bold">
+              10 questions. 6 categories. No more guessing.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4">
+              <Link 
+                href="https://kitchen-scraps-quiz.web.app" 
+                className="bg-[#49A84D] text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-[#3D8C40] transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full sm:w-auto text-center"
+              >
+                Play Now — Free in Your Browser
+              </Link>
+              <Link 
+                href="/kitchen-scraps.apk" 
+                className="bg-[#E9B15D] text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-md hover:bg-[#d49e4d] transition-all w-full sm:w-auto text-center"
+              >
+                Download for Android
+              </Link>
+            </div>
+            
+            {/* ANDROID MONETIZATION AND POOL UPDATE MICRO-COPY */}
+            <p className="text-xs text-gray-500 mt-4 italic">
+              Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <Image
+              src="/app-icon.png"
+              alt="Kitchen Scraps Quiz App Icon graphic representation"
+              width={400}
+              height={320}
+              priority
+              className="w-full max-w-[400px] h-auto rounded-2xl"
+            />
+          </div>
         </div>
       </section>
 
-      {/* CATEGORIES SECTION - Restored Symbols and Vibrancy */}
+      {/* SOCIAL PROOF BAR */}
+      <section className="px-6 py-6 bg-[#E8F5E4] text-center">
+        <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-6 md:gap-12 text-[#2D4A22] font-semibold">
+          <span>100% Free</span>
+          <span>No Forced Ads</span>
+          <span>No signup, No Hassle.</span>
+          <span>Instant Play</span>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <section className="py-16 px-6 max-w-5xl mx-auto text-center">
+        <h3 className="text-3xl font-bold mb-12 text-[#38761D]">How It Works</h3>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="p-8 bg-white rounded-3xl border border-[#E2EADA] shadow-sm">
+            <div className="text-4xl mb-4">1</div>
+            <h4 className="font-bold text-xl mb-3 text-[#2D4A22]">Pick a Category</h4>
+            <p className="text-[#556B2F] leading-relaxed">Start with what matters to you. Apartment composting? Worm bins? We've got you covered.</p>
+          </div>
+          <div className="p-8 bg-white rounded-3xl border border-[#E2EADA] shadow-sm">
+            <div className="text-4xl mb-4">2</div>
+            <h4 className="font-bold text-xl mb-3 text-[#2D4A22]">Answer in 30 Seconds</h4>
+            <p className="text-[#556B2F] leading-relaxed">Each question is quick, fun, and comes with a real explanation — not just "right" or "wrong."</p>
+          </div>
+          <div className="p-8 bg-white rounded-3xl border border-[#E2EADA] shadow-sm">
+            <div className="text-4xl mb-4">3</div>
+            <h4 className="font-bold text-xl mb-3 text-[#2D4A22]">Actually Learn Something</h4>
+            <p className="text-[#556B2F] leading-relaxed">Track your streaks, review mistakes, and walk away knowing exactly what to do with your everyday kitchen organics.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* CATEGORIES SECTION */}
       <section className="py-16 px-6 max-w-6xl mx-auto bg-white rounded-[3rem] shadow-sm border border-[#F1F5EE]">
         <h3 className="text-3xl font-bold text-center mb-12 text-[#38761D]">
-          6 Expert-Crafted Categories
+          6 Quiz Categories
         </h3>
         <div className="grid md:grid-cols-3 gap-8">
           {categories.map((cat, index) => (
             <div key={index} className="bg-[#F9FBF7] p-8 rounded-3xl border-b-4 border-[#49A84D] shadow-sm hover:shadow-md transition-all flex flex-col items-center text-center">
-              <h4 className="font-bold text-2xl mb-4 text-[#2D4A22]">{cat.title}</h4>
+              <h4 className="font-bold text-2xl mb-4 text-[#2D4A22]">{cat.title} {cat.emoji}</h4>
               <p className="text-[#556B2F] text-base leading-relaxed">{cat.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* FEATURES - Vibrant Mint Section */}
-      <section className="py-20 px-6 mt-16 bg-[#F1F8EE] text-center border-y border-[#E2EADA]">
-        <div className="max-w-4xl mx-auto">
-          <h3 className="text-3xl font-bold mb-10 text-[#38761D]">Gamified Features</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="p-6 bg-white rounded-2xl shadow-sm border border-[#D9E4D4] font-bold text-lg">⏰ 30s Timer</div>
-            <div className="p-6 bg-white rounded-2xl shadow-sm border border-[#D9E4D4] font-bold text-lg">⚡ Streaks</div>
-            <div className="p-6 bg-white rounded-2xl shadow-sm border border-[#D9E4D4] font-bold text-lg">💡 Hints</div>
-            <div className="p-6 bg-white rounded-2xl shadow-sm border border-[#D9E4D4] font-bold text-lg">📝 Feedback</div>
+      {/* FEATURES */}
+      <section className="py-20 px-6 mt-16 bg-white text-center border-y border-[#E2EADA]">
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-3xl font-bold mb-12 text-[#38761D]">Gamified Features</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feat, index) => (
+              <div key={index} className="p-6 bg-[#FCFEF9] rounded-2xl border border-[#D9E4D4] flex items-start gap-4 text-left shadow-sm">
+                <span className="text-4xl flex-shrink-0">{feat.icon}</span>
+                <div>
+                  <h4 className="font-bold text-lg text-[#2D4A22]">{feat.title}</h4>
+                  <p className="text-sm text-[#556B2F]">{feat.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER - Professional Darker Green Footer */}
-      <footer className="bg-[#2D4A22] py-16 px-6 text-center text-[#A9C4A0]">
+      {/* TESTIMONIALS */}
+      <section className="py-16 px-6 max-w-5xl mx-auto">
+        <h3 className="text-3xl font-bold text-center mb-12 text-[#38761D]">What People Are Saying</h3>
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((t, index) => (
+            <div key={index} className="bg-white p-8 rounded-3xl border border-[#E2EADA] shadow-sm">
+              <p className="text-[#556B2F] italic leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
+              <div>
+                <p className="font-bold text-[#2D4A22]">{t.name}</p>
+                <p className="text-sm text-[#6B8E4E]">{t.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 px-6 max-w-4xl mx-auto">
+        <h3 className="text-3xl font-bold text-center mb-12 text-[#38761D]">Frequently Asked Questions</h3>
+        <div className="space-y-6">
+          {faqs.map((faq, index) => (
+            <div key={index} className="bg-white p-6 rounded-2xl border border-[#E2EADA] shadow-sm">
+              <h4 className="font-bold text-lg text-[#2D4A22] mb-2">{faq.q}</h4>
+              <p className="text-[#556B2F] leading-relaxed">{faq.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#2D4A22] py-16 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <h4 className="text-white font-bold text-xl mb-6">Kitchen Scraps & Food Waste Quiz</h4>
-          <p className="mb-8 opacity-80 italic">"Empowering sustainable habits through interactive education."</p>
-          <div className="flex justify-center gap-10 font-bold text-white mb-10">
-            <Link href="#" className="hover:text-[#49A84D] transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-[#49A84D] transition-colors">Terms of Service</Link>
+          <h4 className="text-white font-bold text-2xl mb-4">Kitchen Scraps & Food Waste Quiz</h4>
+          <p className="mb-10 text-white opacity-90 italic text-lg leading-relaxed">
+            &ldquo;One quiz at a time, we're making composting less confusing and a lot more fun.&rdquo;
+          </p>
+
+          {/* SOCIAL LINKS */}
+          <div className="flex justify-center items-center gap-6 mb-10">
+            {socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.label}
+                className="text-white/80 hover:text-[#95e17a] transition-colors flex items-center justify-center"
+              >
+                {link.icon}
+              </a>
+            ))}
           </div>
-          <div className="pt-8 border-t border-[#3D5C31] text-xs opacity-60">
-            © 2023 VSMPublisher. All rights reserved.
+
+          <div className="flex justify-center gap-10 font-bold text-white mb-12">
+            <Link href="https://vsmpublisher.github.io/kitchen-scraps-legal/privacy_policy.html" className="hover:text-[#95e17a] transition-colors decoration-[#49A84D] underline underline-offset-8">Privacy Policy</Link>
+            <Link href="https://vsmpublisher.github.io/kitchen-scraps-legal/terms_of_service.html" className="hover:text-[#95e17a] transition-colors decoration-[#49A84D] underline underline-offset-8">Terms of Service</Link>
+          </div>
+          <div className="pt-8 border-t border-white/10 text-sm text-white opacity-70">
+            &copy; {new Date().getFullYear()} VSMPublisher. All rights reserved.
           </div>
         </div>
       </footer>
