@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Corporate Design Tokens */
+  --color-brand-primary: #2D4A22;
+  --color-brand-header: #49A84D;
+  --color-brand-hero-accent: #38761D;
+  --color-brand-bg: #FCFEF9;
+  --color-brand-cta: #E9B15D;
+  
+  /* Accessible Secondary Grays & Brand Accents */
+  --color-brand-primary-light: #556B2F;
+  --color-brand-muted: #6B8E4E;
+  --color-brand-soft-bg: #E8F5E4;
+  --color-brand-border: #E2EADA;
+
+  /* Font Families */
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-montserrat), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Premium Shadow Elevations */
+  --shadow-premium-sm: 0 2px 8px rgba(45, 74, 34, 0.04);
+  --shadow-premium: 0 10px 30px -10px rgba(45, 74, 34, 0.12);
+  --shadow-premium-lg: 0 20px 40px -15px rgba(45, 74, 34, 0.18);
+  --shadow-mockup: 0 25px 60px -15px rgba(45, 74, 34, 0.25);
+  
+  /* Micro-Interactions */
+  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* Base resets mapped to brand tokens */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-brand-bg);
+  color: var(--color-brand-primary);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Custom premium hover lift utility */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
