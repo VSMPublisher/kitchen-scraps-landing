@@ -59,20 +59,20 @@ export default function Hero() {
         </div>
 
         {/* Right Side: Code-based premium Flutter app mockup chassis with constrained layout scaling */}
-        <div className="flex-shrink-0 w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[320px] aspect-[9/18] relative group">
+        <div className="flex-shrink-0 w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[320px] relative group h-fit">
           {/* External decorative aura */}
           <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-          {/* CSS Device Frame Container */}
-          <div className="w-full h-full bg-brand-primary rounded-[3rem] px-3 pb-3 pt-1 shadow-mockup border-4 border-brand-primary-light flex flex-col overflow-hidden relative">
+          {/* CSS Device Frame Container with restricted maximum height and overflow containment */}
+          <div className="w-full h-auto max-h-[530px] bg-brand-primary rounded-[3rem] px-3 pb-3 pt-1 shadow-mockup border-4 border-brand-primary-light flex flex-col overflow-hidden relative">
             {/* Phone notch */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-4 bg-brand-primary rounded-b-xl z-20 flex items-center justify-center">
               <div className="w-10 h-1 bg-brand-primary-light/50 rounded-full" />
               <div className="w-2 h-2 bg-brand-primary-light/30 rounded-full ml-2" />
             </div>
 
-            {/* In-app mockup UI screen container */}
-            <div className="flex-1 rounded-[2.4rem] bg-brand-bg px-6 pt-2 pb-6 flex flex-col justify-between overflow-hidden relative select-none">
+            {/* In-app mockup UI screen container wrapping snuggly around content */}
+            <div className="rounded-[2.4rem] bg-brand-bg px-6 pt-5 pb-5 flex flex-col gap-4 overflow-hidden relative select-none h-auto">
               {/* Inner card layout */}
               <div className="space-y-4">
                 {/* Header status in-app */}
@@ -118,7 +118,7 @@ export default function Hero() {
               </div>
 
               {/* In-app expert explanation teaser */}
-              <div className="bg-white/80 backdrop-blur-sm border border-brand-border rounded-xl p-3 mt-4">
+              <div className="bg-white/80 backdrop-blur-sm border border-brand-border rounded-xl p-3">
                 <span className="text-[10px] bg-brand-cta/20 text-brand-primary font-bold px-1.5 py-0.5 rounded mr-1">
                   💡 Hint Used
                 </span>

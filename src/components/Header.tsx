@@ -14,7 +14,7 @@ export default function Header() {
               className="w-7 h-auto rounded-lg object-contain"
             />
           </div>
-          <span className="text-white font-display font-extrabold text-base sm:text-xl tracking-tight">
+          <span className="text-brand-soft-bg font-display font-medium text-base sm:text-xl tracking-normal">
             Kitchen Scraps & Food Waste Quiz
           </span>
         </div>
