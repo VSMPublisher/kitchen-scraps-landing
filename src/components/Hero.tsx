@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { trackOutboundLink } from "@/utils/analytics";
 
 export default function Hero() {
@@ -58,81 +59,23 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Right Side: Code-based premium Flutter app mockup chassis with constrained layout scaling */}
+        {/* Right Side: Optimized Next.js Image Phone Mockup Container */}
         <div className="flex-shrink-0 w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[320px] relative group h-fit">
           {/* External decorative aura */}
           <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-          {/* CSS Device Frame Container with restricted maximum height and overflow containment */}
-          <div className="w-full h-auto max-h-[530px] bg-brand-primary rounded-[3rem] px-3 pb-3 pt-1 shadow-mockup border-4 border-brand-primary-light flex flex-col overflow-hidden relative">
-            {/* Phone notch */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-4 bg-brand-primary rounded-b-xl z-20 flex items-center justify-center">
-              <div className="w-10 h-1 bg-brand-primary-light/50 rounded-full" />
-              <div className="w-2 h-2 bg-brand-primary-light/30 rounded-full ml-2" />
-            </div>
-
-            {/* In-app mockup UI screen container wrapping snuggly around content */}
-            <div className="rounded-[2.4rem] bg-brand-bg px-6 pt-5 pb-5 flex flex-col gap-4 overflow-hidden relative select-none h-auto">
-              {/* Inner card layout */}
-              <div className="space-y-4">
-                {/* Header status in-app */}
-                <div className="flex justify-between items-center text-xs font-bold text-brand-primary/60">
-                  <span>Category: Go/No-Go</span>
-                  <span className="text-brand-hero-accent">🔥 Streak: 8</span>
-                </div>
-
-                {/* Question Card mockup */}
-                <div className="bg-white border border-brand-border rounded-2xl p-5 shadow-premium-sm">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-2 py-0.5 text-[10px] bg-brand-soft-bg text-brand-hero-accent font-bold rounded-md">
-                      Q4 of 10
-                    </span>
-                    <span className="text-[10px] text-brand-muted font-semibold">
-                      Time: 24s
-                    </span>
-                  </div>
-                  <h4 className="font-display font-extrabold text-sm text-brand-primary leading-snug">
-                    Can fresh coffee grounds go straight into a compost pile?
-                  </h4>
-                </div>
-
-                {/* Answers list mockup */}
-                <div className="space-y-2.5">
-                  <div className="bg-brand-soft-bg border-2 border-brand-header rounded-xl p-3 flex items-center gap-3 cursor-pointer">
-                    <span className="w-6 h-6 rounded-full bg-brand-header text-white font-bold text-xs flex items-center justify-center">
-                      A
-                    </span>
-                    <span className="text-xs font-bold text-brand-primary">
-                      Yes, they are greens and rich in nitrogen.
-                    </span>
-                  </div>
-                  <div className="bg-white border border-brand-border hover:border-brand-primary/20 rounded-xl p-3 flex items-center gap-3 cursor-pointer">
-                    <span className="w-6 h-6 rounded-full bg-brand-border text-brand-primary font-bold text-xs flex items-center justify-center">
-                      B
-                    </span>
-                    <span className="text-xs font-semibold text-brand-primary/80">
-                      No, they are too acidic for standard bins.
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* In-app expert explanation teaser */}
-              <div className="bg-white/80 backdrop-blur-sm border border-brand-border rounded-xl p-3">
-                <span className="text-[10px] bg-brand-cta/20 text-brand-primary font-bold px-1.5 py-0.5 rounded mr-1">
-                  💡 Hint Used
-                </span>
-                <p className="text-[10px] text-brand-primary-light mt-1.5 font-medium leading-relaxed">
-                  Despite their dark color, coffee grounds are loaded with nitrogen!
-                </p>
-              </div>
-
-              {/* Bottom in-app branding */}
-              <div className="text-center pt-2 border-t border-brand-border/60">
-                <span className="text-[10px] text-brand-muted font-bold tracking-wider uppercase">
-                  Kitchen Scraps & Food Waste Quiz
-                </span>
-              </div>
+          {/* Premium Physical Chassis with restricted maximum height and overflow containment */}
+          <div className="w-full h-auto max-h-[530px] bg-brand-primary rounded-[2.8rem] p-2.5 shadow-mockup border-4 border-brand-primary-light relative overflow-hidden flex flex-col">
+            {/* In-app mockup screen constrained to 500px with top-aligned crop */}
+            <div className="rounded-[2rem] overflow-hidden bg-brand-bg relative h-[500px] w-full">
+              <Image
+                src="/hero-mockup.png"
+                alt="Kitchen Scraps & Food Waste Quiz Android App Gameplay Screen"
+                fill
+                sizes="(max-width: 320px) 100vw, 320px"
+                priority
+                className="object-cover object-top"
+              />
             </div>
           </div>
         </div>
