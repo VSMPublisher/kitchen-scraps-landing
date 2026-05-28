@@ -60,21 +60,21 @@ export default function Hero() {
         </div>
 
         {/* Right Side: Optimized Next.js Image Phone Mockup Container */}
-        <div className="flex-shrink-0 w-full max-w-[280px] sm:max-w-[300px] lg:max-w-[320px] relative group h-fit">
+        <div className="flex-shrink-0 w-full max-w-[210px] sm:max-w-[230px] lg:max-w-[250px] relative group h-fit">
           {/* External decorative aura */}
           <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-          {/* Premium Physical Chassis with restricted maximum height and overflow containment */}
-          <div className="w-full h-auto max-h-[530px] bg-brand-primary rounded-[2.8rem] p-2.5 shadow-mockup border-4 border-brand-primary-light relative overflow-hidden flex flex-col">
-            {/* In-app mockup screen constrained to 500px with top-aligned crop */}
-            <div className="rounded-[2rem] overflow-hidden bg-brand-bg relative h-[500px] w-full">
+          {/* Premium Physical Chassis with explicit sleek mobile aspect ratio */}
+          <div className="w-full h-auto bg-brand-primary rounded-[2.8rem] p-2 shadow-mockup border-4 border-brand-primary-light relative overflow-hidden flex flex-col">
+            {/* In-app mockup screen with locked aspect ratio matching native asset dimensions */}
+            <div className="rounded-[2rem] overflow-hidden bg-transparent relative w-full aspect-[450/952]">
               <Image
                 src="/hero-mockup.png"
                 alt="Kitchen Scraps & Food Waste Quiz Android App Gameplay Screen"
                 fill
-                sizes="(max-width: 320px) 100vw, 320px"
+                sizes="(max-width: 250px) 100vw, 250px"
                 priority
-                className="object-cover object-top"
+                className="object-cover"
               />
             </div>
           </div>
