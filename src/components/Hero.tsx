@@ -28,7 +28,8 @@ export default function Hero() {
           </h2>
 
           <p className="text-lg sm:text-xl mb-4 text-brand-primary/85 max-w-2xl leading-relaxed font-medium">
-            Yeah, we've all been there—staring at a banana peel or coffee grounds, wondering if it goes in the compost or the trash. Our quiz takes the guesswork out of composting, showing you exactly what belongs in your bin in just 30 seconds.
+            Wondering how to compost kitchen scraps like coffee grounds or banana peels? 
+  Our free interactive quiz teaches you smart <strong className="text-emerald-700 font-semibold">kitchen waste management app</strong> rules in just 30 seconds.
           </p>
 
           <p className="text-base mb-8 text-brand-muted font-normal tracking-tight">

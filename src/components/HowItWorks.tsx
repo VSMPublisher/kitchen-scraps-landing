@@ -25,12 +25,13 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="py-20 px-6 max-w-6xl mx-auto scroll-mt-20">
       <div className="text-center mb-16 max-w-2xl mx-auto">
-        <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-brand-hero-accent mb-4">
-          How It Works
-        </h3>
-        <p className="text-brand-primary-light font-medium">
-          Whether you are a seasoned soil master or a complete backyard composting novice, our structure turns complex sorting guidelines into quick, memorable habits.
-        </p>
+<h2 className="text-3xl font-bold text-emerald-800 text-center tracking-tight">
+  How to Start Composting Kitchen Scraps
+</h2>
+
+<p className="text-center text-gray-600 max-w-2xl mx-auto mt-3 text-base leading-relaxed">
+  Whether you are a seasoned soil master or a complete novice, play through 3 quick stages to build your perfect indoor or outdoor setup.
+</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
