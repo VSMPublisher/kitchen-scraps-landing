@@ -1,10 +1,11 @@
-import Header from "@/components/Header";
+﻿import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import SocialProof from "@/components/SocialProof";
 import HowItWorks from "@/components/HowItWorks";
 import Categories from "@/components/Categories";
 import Features from "@/components/Features";
 import Faq from "@/components/Faq";
+import CtaCloser from "@/components/CtaCloser";
 import Footer from "@/components/Footer";
 
 export default function LandingPage() {
@@ -17,6 +18,7 @@ export default function LandingPage() {
       <Categories />
       <Features />
       <Faq />
+      <CtaCloser />
       <Footer />
     </main>
   );

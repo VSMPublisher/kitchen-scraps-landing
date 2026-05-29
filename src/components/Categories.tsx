@@ -5,32 +5,32 @@ export default function Categories() {
     {
       title: "Go/No-Go",
       icon: "/go_nogo_icon.png",
-      desc: '"Can I compost this?" — Fast, clear rules for everyday kitchen scraps. Stop second-guessing yourself at the garbage bin.',
+      desc: '"Can I compost this?” — Fast, clear rules for everyday scraps. Learn why fats, dairy, and citrus stall your pile, and stop second-guessing yourself at the bin.',
     },
     {
       title: "Myths vs. Facts",
       icon: "/myths_facts_icon.png",
-      desc: '"Eggshells take years to degrade." True or false? Separate popular composting lore from scientific organic fact.',
+      desc: '"Eggshells, bioplastics, and paper cups—separate popular folklore from organic chemistry. Learn what actually breaks down at home and what belongs in the trash.',
     },
     {
       title: "The Why",
       icon: "/the_why_icon.png",
-      desc: "Know the chemistry and biology behind the regulations. Understanding the science makes composting intuitive and fun.",
+      desc: "Master the 'Greens vs. Browns' science. Understanding the carbon-to-nitrogen ratio keeps your composting bacteria active, thriving, and odor-free.",
     },
     {
       title: "Troubleshooting",
       icon: "/troubleshooting_icon.png",
-      desc: "Smelly box? Infested with fruit flies? Fix the common beginner mistakes that cause people to quit in their second week.",
+      desc: "Soggy bin? Fruit flies? Ammonia smell? Diagnose and fix the moisture, aeration, and acidity imbalances that cause beginners to give up in week two.",
     },
     {
       title: "Practical Applications",
       icon: "/practical_applications_icon.png",
-      desc: "From tiny urban studio apartments to wide backyard raised beds — see how real people adapt composting to real life.",
+      desc: "From studio apartments to rainy backyard bins—see how real-world composters manage seasonal shifts, winter freezes, and small-space restrictions.",
     },
     {
       title: "Methods & Systems",
       icon: "/methods_systems_icon.png",
-      desc: "Bokashi fermentation, vermicomposting, hot piles, cold bins — choose the exact system that matches your space, time, and budget.",
+      desc: "Bokashi pickling, worm farms, hot tumblers, or cold bins—choose the biological decomposition method that aligns with your daily routine and budget.",
     },
   ];
 
@@ -41,12 +41,13 @@ export default function Categories() {
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-soft-bg rounded-full blur-3xl pointer-events-none" />
 
         <div className="text-center mb-16 max-w-2xl mx-auto relative z-10">
-          <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-brand-hero-accent mb-4">
-            6 Specialized Categories
-          </h3>
-          <p className="text-brand-primary-light font-medium">
-            Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
-          </p>
+          
+<h2 className="text-3xl font-bold text-emerald-800 text-center">
+  Master 6 Kitchen Composting Methods
+</h2>
+<p className="text-center text-gray-500 mt-2">
+  Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
+</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">

@@ -22,7 +22,10 @@ export default function Hero() {
               Free 60-Question Quiz
             </span>
           </div>
-
+<p className="flex items-center gap-1.5 justify-start text-xs text-emerald-800 font-medium mt-1">
+  <span>⭐</span> 
+  <span>Built using verified organic chemistry and household composting data</span>
+</p>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold mb-6 text-brand-hero-accent leading-[1.1] tracking-tight">
             Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta">Gold</span>
           </h2>
@@ -53,7 +56,16 @@ export default function Hero() {
               Download for Android
             </Link>
           </div>
-
+<div className="mt-3 text-xs text-gray-500 tracking-wide space-y-1.5 pl-1">
+  <p className="flex items-center gap-1.5 justify-start">
+    <span>🛡️</span> 
+    <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
+  </p>
+  <p className="flex items-center gap-1.5 justify-start text-gray-400">
+    <span>⚡</span> 
+    <span>Play instantly in your browser — no installation required</span>
+  </p>
+</div>
           {/* Android Monetization and Question Pool Notice */}
           <p className="text-xs text-brand-muted/80 mt-4 italic font-normal">
             Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
@@ -78,7 +90,7 @@ export default function Hero() {
                 className="object-cover"
               />
             </div>
-          </div>
+          </div>          
         </div>
       </div>
     </section>

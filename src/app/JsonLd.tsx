@@ -19,11 +19,29 @@ const webAppJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "Kitchen Scraps & Food Waste Quiz",
-  url: "https://kitchen-scraps-quiz.web.app",
+  url: siteUrl,
   description:
     "Confused about composting? Take our free, fun quiz to master food waste rules, learn science-backed facts, and build sustainable habits today!",
   applicationCategory: "EducationalApplication",
   operatingSystem: "Web, Android",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+};
+
+// Step 5: Mobile App Schema Injection for Enhanced Google Indexing
+const mobileAppJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Kitchen Scraps & Food Waste Quiz",
+  description:
+    "Confused about composting? Take our free, fun quiz to master food waste rules, learn science-backed facts, and build sustainable habits today!",
+  operatingSystem: "Android",
+  applicationCategory: "EducationalApplication",
+  downloadUrl: `${siteUrl}/kitchen-scraps.apk`,
+  fileSize: "60MB",
   offers: {
     "@type": "Offer",
     price: "0",
@@ -46,6 +64,11 @@ export default function JsonLd() {
         key="jsonld-webapp"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: sanitize(webAppJsonLd) }}
+      />
+      <script
+        key="jsonld-mobileapp"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: sanitize(mobileAppJsonLd) }}
       />
     </>
   );

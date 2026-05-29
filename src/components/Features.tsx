@@ -36,12 +36,12 @@ export default function Features() {
     <section id="features" className="py-20 bg-white border-y border-brand-border/60 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16 max-w-2xl mx-auto">
-          <h3 className="text-3xl sm:text-4xl font-display font-extrabold text-brand-hero-accent mb-4">
-            Gamified Features
-          </h3>
-          <p className="text-brand-primary-light font-medium">
-            Composting rules can be dry and confusing. That is why we packed our quiz with fun, rewarding elements that turn learning into a game.
-          </p>
+          <h2 className="text-3xl font-bold text-emerald-800 text-center">
+  Learn Kitchen Waste Sorting Rules Faster
+</h2>
+<p className="text-center text-gray-500 mt-2">
+  Composting rules can be dry and confusing. That is why we packed our quiz with fun, rewarding elements that turn learning into a game.
+</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
