@@ -6,13 +6,13 @@ export default function CtaCloser() {
         <h2 className="text-2xl md:text-3xl font-bold text-brand-primary tracking-tight font-sans">
           Ready to Stop Second-Guessing Your Waste?
         </h2>
-        <p className="text-gray-500 mt-3 text-sm md:text-base max-w-md mx-auto">
+        <p className="text-gray-600 mt-3 text-sm md:text-base max-w-md mx-auto">
           Get the free app now and instantly master composting rules in just 30 seconds.
         </p>
         
         {/* Balanced Button Row */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
-          <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-xl transition-all shadow-md w-full sm:w-auto text-sm">
+          <button className="bg-brand-header hover:bg-brand-header-light text-white font-medium px-6 py-3 rounded-xl transition-all shadow-md w-full sm:w-auto text-sm">
             Play Free in Web Browser
           </button>
           <button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-medium px-6 py-3 rounded-xl transition-all shadow-md w-full sm:w-auto text-sm">
@@ -21,7 +21,7 @@ export default function CtaCloser() {
         </div>
         
         {/* Private & Trust Micro-copy */}
-        <p className="text-xs text-gray-400 mt-5 tracking-wide">
+        <p className="text-xs text-gray-600 mt-5 tracking-wide">
           No signup required • 100% Ad-Free • Zero Device Permissions Required
         </p>
       </div>

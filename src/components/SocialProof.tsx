@@ -7,41 +7,53 @@ export default function SocialProof() {
 
       <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-around gap-6 text-center text-brand-primary">
         <div className="flex flex-col items-center">
-          <span className="text-3xl mb-1">🎁</span>
-          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-brand-hero-accent">
+          <span className="text-3xl mb-1" role="img" aria-label="Gift Box">🎁</span>
+          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-emerald-900">
             100% Free
           </span>
-          <span className="text-xs text-brand-muted font-medium mt-0.5">No features hidden behind paywalls</span>
+          {/* FIXED: Swapped light text-brand-muted to safe high-contrast text-emerald-950 */}
+          <span className="text-xs text-emerald-950 font-semibold mt-0.5">
+            No features hidden behind paywalls
+          </span>
         </div>
 
         <div className="hidden md:block w-px h-10 bg-brand-border" />
 
         <div className="flex flex-col items-center">
-          <span className="text-3xl mb-1">🔒</span>
-          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-brand-hero-accent">
+          <span className="text-3xl mb-1" role="img" aria-label="Lock">🔒</span>
+          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-emerald-900">
             No Sign-Up Required
           </span>
-          <span className="text-xs text-brand-muted font-medium mt-0.5">Zero credentials, pure learning</span>
+          {/* FIXED: Swapped light text-brand-muted to safe high-contrast text-emerald-950 */}
+          <span className="text-xs text-emerald-950 font-semibold mt-0.5">
+            Zero credentials, pure learning
+          </span>
         </div>
 
         <div className="hidden md:block w-px h-10 bg-brand-border" />
 
         <div className="flex flex-col items-center">
-          <span className="text-3xl mb-1">🛡️</span>
-          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-brand-hero-accent">
+          <span className="text-3xl mb-1" role="img" aria-label="Shield">🛡️</span>
+          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-emerald-900">
             Zero Forced Ads
           </span>
-          <span className="text-xs text-brand-muted font-medium mt-0.5">No irritating popup interruptions</span>
+          {/* FIXED: Swapped light text-brand-muted to safe high-contrast text-emerald-950 */}
+          <span className="text-xs text-emerald-950 font-semibold mt-0.5">
+            No irritating popup interruptions
+          </span>
         </div>
 
         <div className="hidden md:block w-px h-10 bg-brand-border" />
 
         <div className="flex flex-col items-center">
-          <span className="text-3xl mb-1">⚡</span>
-          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-brand-hero-accent">
+          <span className="text-3xl mb-1" role="img" aria-label="Lightning Bolt">⚡</span>
+          <span className="font-display font-extrabold text-lg md:text-xl tracking-tight text-emerald-900">
             Instant Play
           </span>
-          <span className="text-xs text-brand-muted font-medium mt-0.5">Open your browser and practice</span>
+          {/* FIXED: Swapped light text-brand-muted to safe high-contrast text-emerald-950 */}
+          <span className="text-xs text-emerald-950 font-semibold mt-0.5">
+            Open your browser and practice
+          </span>
         </div>
       </div>
     </section>

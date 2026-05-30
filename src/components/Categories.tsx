@@ -41,13 +41,12 @@ export default function Categories() {
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-soft-bg rounded-full blur-3xl pointer-events-none" />
 
         <div className="text-center mb-16 max-w-2xl mx-auto relative z-10">
-          
-<h2 className="text-3xl font-bold text-emerald-800 text-center">
-  Master 6 Kitchen Composting Methods
-</h2>
-<p className="text-center text-gray-500 mt-2">
-  Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
-</p>
+          <h2 className="text-3xl font-bold text-emerald-800 text-center">
+            Master 6 Kitchen Composting Methods
+          </h2>
+          <p className="text-center text-gray-700 mt-2">
+            Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
@@ -74,10 +73,14 @@ export default function Categories() {
                   />
                 </div>
               </div>
-              <h4 className="font-display font-extrabold text-lg text-brand-primary mb-3">
+              
+              {/* FIXED: Swapped h4 -> h3 for correct sequential heading layout */}
+              <h3 className="font-display font-extrabold text-lg text-brand-primary mb-3">
                 {cat.title}
-              </h4>
-              <p className="text-sm text-brand-primary-light/90 leading-relaxed font-medium">
+              </h3>
+              
+              {/* FIXED: Swapped light opacity utility for high-contrast slate text layout */}
+              <p className="text-sm text-gray-600 leading-relaxed font-medium">
                 {cat.desc}
               </p>
             </div>

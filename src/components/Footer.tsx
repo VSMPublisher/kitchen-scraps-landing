@@ -54,10 +54,12 @@ export default function Footer() {
       <div className="absolute top-0 left-0 w-full h-1 bg-brand-header/35" />
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        <h4 className="text-white font-display font-extrabold text-2xl mb-4 tracking-tight">
+        {/* FIXED: Shifted from h4 to h2 for layout alignment */}
+        <h2 className="text-white font-display font-extrabold text-2xl mb-4 tracking-tight">
           Kitchen Scraps & Food Waste Quiz
-        </h4>
-        <p className="mb-10 text-white/80 italic text-base leading-relaxed max-w-xl mx-auto">
+        </h2>
+        {/* FIXED: Darkened contrasting tone layer from white/80 to emerald-50 */}
+        <p className="mb-10 text-emerald-50 italic text-base leading-relaxed max-w-xl mx-auto">
           &ldquo;One quiz at a time, we're making composting less confusing and a lot more fun.&rdquo;
         </p>
 
@@ -78,7 +80,7 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Verified Legal Anchors (strictly pointing to existing urls from profile) */}
+        {/* Links */}
         <div className="flex justify-center gap-10 font-display font-bold text-white mb-12">
           <Link
             href="https://vsmpublisher.github.io/kitchen-scraps-legal/privacy_policy.html"
@@ -111,7 +113,8 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-white/10 text-xs text-white/50 font-medium">
+        {/* FIXED: Shifted light opacity to a stable contrast emerald-100 token */}
+        <div className="pt-8 border-t border-white/10 text-xs text-emerald-100 font-medium">
           &copy; {new Date().getFullYear()} VSMPublisher. All rights reserved.
         </div>
       </div>

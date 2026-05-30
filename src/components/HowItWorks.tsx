@@ -25,13 +25,12 @@ export default function HowItWorks() {
   return (
     <section id="how-it-works" className="py-20 px-6 max-w-6xl mx-auto scroll-mt-20">
       <div className="text-center mb-16 max-w-2xl mx-auto">
-<h2 className="text-3xl font-bold text-emerald-800 text-center tracking-tight">
-  How to Start Composting Kitchen Scraps
-</h2>
-
-<p className="text-center text-gray-600 max-w-2xl mx-auto mt-3 text-base leading-relaxed">
-  Whether you are a seasoned soil master or a complete novice, play through 3 quick stages to build your perfect indoor or outdoor setup.
-</p>
+        <h2 className="text-3xl font-bold text-emerald-800 text-center tracking-tight">
+          How to Start Composting Kitchen Scraps
+        </h2>
+        <p className="text-center text-gray-700 max-w-2xl mx-auto mt-3 text-base leading-relaxed font-medium">
+          Whether you are a seasoned soil master or a complete novice, play through 3 quick stages to build your perfect indoor or outdoor setup.
+        </p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-12 lg:gap-16">
@@ -59,10 +58,12 @@ export default function HowItWorks() {
               <div className="w-10 h-10 rounded-full bg-brand-header text-white font-display font-extrabold text-lg flex items-center justify-center mx-auto mb-4 shadow-premium group-hover:scale-110 transition-transform duration-300">
                 {item.step}
               </div>
-              <h4 className="font-display font-extrabold text-lg text-brand-primary mb-2">
+              {/* FIXED: Shifted from h4 to h3 for semantic hierarchy compliance */}
+              <h3 className="font-display font-extrabold text-lg text-brand-primary mb-2">
                 {item.title}
-              </h4>
-              <p className="text-sm text-brand-primary-light/95 leading-relaxed font-medium">
+              </h3>
+              {/* FIXED: Upgraded translucent helper class to crisp text-gray-700 line elements */}
+              <p className="text-sm text-gray-700 leading-relaxed font-medium">
                 {item.desc}
               </p>
             </div>

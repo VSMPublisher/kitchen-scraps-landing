@@ -27,6 +27,12 @@ export const metadata: Metadata = {
     apple: "/app-icon.png",
   },
   metadataBase: new URL(siteUrl),
+  
+  // Google Search Console Site Verification Added Here:
+  verification: {
+    google: "ymeXpfXiEZQw3VqV-iDF0TpCT31QwCyTlcUOsbQlpAY",
+  },
+
   openGraph: {
     title: "Composting Quiz — Know What Goes In Your Bin (Free, 60 Questions)",
     description:
@@ -62,9 +68,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${montserrat.variable} antialiased font-sans text-gray-900 bg-[#FCFEF9]`}
-      >
+      {/* FIXED: Removed explicit text-gray-900 to prevent child contrast inheritance bugs */}
+      <body className={`${inter.variable} ${montserrat.variable} antialiased font-sans`}>
         <JsonLd />
         {children}
         {gaId && (

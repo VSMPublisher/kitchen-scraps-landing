@@ -37,11 +37,11 @@ export default function Features() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16 max-w-2xl mx-auto">
           <h2 className="text-3xl font-bold text-emerald-800 text-center">
-  Learn Kitchen Waste Sorting Rules Faster
-</h2>
-<p className="text-center text-gray-500 mt-2">
-  Composting rules can be dry and confusing. That is why we packed our quiz with fun, rewarding elements that turn learning into a game.
-</p>
+            Learn Kitchen Waste Sorting Rules Faster
+          </h2>
+          <p className="text-center text-gray-700 mt-2">
+            Composting rules can be dry and confusing. That is why we packed our quiz with fun, rewarding elements that turn learning into a game.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -54,10 +54,12 @@ export default function Features() {
                 {feat.icon}
               </div>
               <div className="space-y-1">
-                <h4 className="font-display font-extrabold text-brand-primary text-base">
+                {/* FIXED: Shifted from h4 to h3 for semantic hierarchy compliance */}
+                <h3 className="font-display font-extrabold text-brand-primary text-base">
                   {feat.title}
-                </h4>
-                <p className="text-xs text-brand-primary-light/95 leading-relaxed font-medium">
+                </h3>
+                {/* FIXED: Upgraded translucent utility to crisp text-gray-700 */}
+                <p className="text-sm text-gray-700 leading-relaxed font-medium">
                   {feat.desc}
                 </p>
               </div>

@@ -22,20 +22,23 @@ export default function Hero() {
               Free 60-Question Quiz
             </span>
           </div>
-<p className="flex items-center gap-1.5 justify-start text-xs text-emerald-800 font-medium mt-1">
-  <span>⭐</span> 
-  <span>Built using verified organic chemistry and household composting data</span>
-</p>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold mb-6 text-brand-hero-accent leading-[1.1] tracking-tight">
+          {/* FIXED: Bumped up green context line text tone for enhanced readability contrast */}
+          <p className="flex items-center gap-1.5 justify-center lg:justify-start text-xs text-emerald-900 font-bold mt-1">
+            <span>⭐</span> 
+            <span>Built using verified organic chemistry and household composting data</span>
+          </p>
+          
+          {/* FIXED: Converted h2 to h1 as the main page entry title */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-hero-accent leading-[1.1] tracking-tight">
             Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta">Gold</span>
-          </h2>
+          </h1>
 
-          <p className="text-lg sm:text-xl mb-4 text-brand-primary/85 max-w-2xl leading-relaxed font-medium">
-            Wondering how to compost kitchen scraps like coffee grounds or banana peels? 
-  Our free interactive quiz teaches you smart <strong className="text-emerald-700 font-semibold">kitchen waste management app</strong> rules in just 30 seconds.
+          {/* FIXED: Changed text-brand-primary/85 opacity reduction to high-contrast slate */}
+          <p className="text-lg sm:text-xl mb-4 text-gray-800 max-w-2xl leading-relaxed font-semibold">
+            Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free interactive quiz teaches you smart <strong className="text-emerald-800 font-bold">kitchen waste management app</strong> rules in just 30 seconds.
           </p>
 
-          <p className="text-base mb-8 text-brand-muted font-normal tracking-tight">
+          <p className="text-base mb-8 text-gray-700 font-medium tracking-tight">
             10 questions per run • 6 specialized categories • No signup, ever.
           </p>
 
@@ -56,30 +59,28 @@ export default function Hero() {
               Download for Android
             </Link>
           </div>
-<div className="mt-3 text-xs text-gray-500 tracking-wide space-y-1.5 pl-1">
-  <p className="flex items-center gap-1.5 justify-start">
-    <span>🛡️</span> 
-    <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
-  </p>
-  <p className="flex items-center gap-1.5 justify-start text-gray-400">
-    <span>⚡</span> 
-    <span>Play instantly in your browser — no installation required</span>
-  </p>
-</div>
-          {/* Android Monetization and Question Pool Notice */}
-          <p className="text-xs text-brand-muted/80 mt-4 italic font-normal">
+
+          {/* FIXED: Darkened notice fonts to cross safety threshold lines cleanly */}
+          <div className="mt-4 text-xs text-gray-700 font-medium tracking-wide space-y-1.5 pl-1">
+            <p className="flex items-center gap-1.5 justify-center lg:justify-start">
+              <span>🛡️</span> 
+              <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
+            </p>
+            <p className="flex items-center gap-1.5 justify-center lg:justify-start">
+              <span>⚡</span> 
+              <span>Play instantly in your browser — no installation required</span>
+            </p>
+          </div>
+          
+          <p className="text-xs text-gray-600 mt-4 italic font-medium">
             Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
           </p>
         </div>
 
-        {/* Right Side: Optimized Next.js Image Phone Mockup Container */}
+        {/* Right Side: Phone Mockup */}
         <div className="flex-shrink-0 w-full max-w-[210px] sm:max-w-[230px] lg:max-w-[250px] relative group h-fit">
-          {/* External decorative aura */}
           <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-          {/* Premium Physical Chassis with explicit sleek mobile aspect ratio */}
           <div className="w-full h-auto bg-brand-primary rounded-[2.8rem] p-2 shadow-mockup border-4 border-brand-primary-light relative overflow-hidden flex flex-col">
-            {/* In-app mockup screen with locked aspect ratio matching native asset dimensions */}
             <div className="rounded-[2rem] overflow-hidden bg-transparent relative w-full aspect-[450/952]">
               <Image
                 src="/hero-mockup.png"

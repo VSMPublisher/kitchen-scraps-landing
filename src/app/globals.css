@@ -3,9 +3,9 @@
 @theme {
   /* Corporate Design Tokens */
   --color-brand-primary: #2D4A22;
-  --color-brand-header: #49A84D;
+  --color-brand-header: #0D7A14; /* UPDATED: Vibrant, punchy green that passes 4.5:1 contrast */
   --color-brand-hero-accent: #38761D;
-  --color-brand-bg: #FCFEF9;
+  --color-brand-bg: #F4FAEB;
   --color-brand-cta: #E9B15D;
   
   /* Accessible Secondary Grays & Brand Accents */
@@ -43,7 +43,7 @@
 /* Base resets mapped to brand tokens */
 body {
   background-color: var(--color-brand-bg);
-  color: var(--color-brand-primary);
+  color: var(--color-brand-primary); /* FIXED: Kept deep dark green for readable body text contrast */
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -57,4 +57,3 @@ body {
 .hover-lift:hover {
   transform: translateY(-4px);
 }
-

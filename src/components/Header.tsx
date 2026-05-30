@@ -14,32 +14,32 @@ export default function Header() {
               className="w-7 h-auto rounded-lg object-contain"
             />
           </div>
-          <span className="text-brand-soft-bg font-display font-medium text-base sm:text-xl tracking-normal">
+          <span className="text-white font-display font-bold text-base sm:text-xl tracking-normal">
             Kitchen Scraps & Food Waste Quiz
           </span>
         </div>
         <nav className="hidden sm:flex items-center gap-6">
           <a
             href="#how-it-works"
-            className="text-white/90 hover:text-white font-medium text-sm transition-colors"
+            className="text-white hover:text-white/80 font-semibold text-sm transition-colors"
           >
             How It Works
           </a>
           <a
             href="#categories"
-            className="text-white/90 hover:text-white font-medium text-sm transition-colors"
+            className="text-white hover:text-white/80 font-semibold text-sm transition-colors"
           >
             Categories
           </a>
           <a
             href="#features"
-            className="text-white/90 hover:text-white font-medium text-sm transition-colors"
+            className="text-white hover:text-white/80 font-semibold text-sm transition-colors"
           >
             Features
           </a>
           <a
             href="#faq"
-            className="text-white/90 hover:text-white font-medium text-sm transition-colors"
+            className="text-white hover:text-white/80 font-semibold text-sm transition-colors"
           >
             FAQ
           </a>
