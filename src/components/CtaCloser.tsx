@@ -1,4 +1,13 @@
+"use client";
+
+import Link from "next/link";
+import { trackOutboundLink } from "@/utils/analytics";
+
 export default function CtaCloser() {
+  const handleCtaClick = (label: string, url: string) => {
+    trackOutboundLink(url, label);
+  };
+
   return (
     <section className="bg-brand-bg py-12 px-4 border-t border-brand-primary/5">
       {/* Container Card that separates it from the FAQ above */}
@@ -12,18 +21,21 @@ export default function CtaCloser() {
         
         {/* Balanced Button Row */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
-          <button className="bg-brand-header hover:bg-brand-header-light text-white font-medium px-6 py-3 rounded-xl transition-all shadow-md w-full sm:w-auto text-sm">
+          <Link
+            href="https://kitchen-scraps-quiz.web.app"
+            onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
+            className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
+          >
             Play Free in Web Browser
-          </button>
-          <button className="bg-amber-500 hover:bg-amber-600 text-emerald-950 font-medium px-6 py-3 rounded-xl transition-all shadow-md w-full sm:w-auto text-sm">
+          </Link>
+          <Link
+            href="/kitchen-scraps.apk"
+            onClick={() => handleCtaClick("Download APK", "/kitchen-scraps.apk")}
+            className="bg-brand-cta text-brand-primary hover:bg-[#e0a24b] font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
+          >
             Download for Android
-          </button>
+          </Link>
         </div>
-        
-        {/* Private & Trust Micro-copy */}
-        <p className="text-xs text-gray-600 mt-5 tracking-wide">
-          No signup required • 100% Ad-Free • Zero Device Permissions Required
-        </p>
       </div>
     </section>
   );

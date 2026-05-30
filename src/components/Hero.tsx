@@ -22,18 +22,19 @@ export default function Hero() {
               Free 60-Question Quiz
             </span>
           </div>
+          
           {/* FIXED: Bumped up green context line text tone for enhanced readability contrast */}
-          <p className="flex items-center gap-1.5 justify-center lg:justify-start text-xs text-emerald-900 font-bold mt-1">
-            <span>⭐</span> 
+          <p className="flex items-start gap-2 justify-center lg:justify-start text-xs text-emerald-900 font-bold mt-1 text-center lg:text-left">
+            <span className="shrink-0">⭐</span> 
             <span>Built using verified organic chemistry and household composting data</span>
           </p>
           
-          {/* FIXED: Converted h2 to h1 as the main page entry title */}
+          {/* Main heading entry title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-hero-accent leading-[1.1] tracking-tight">
             Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta">Gold</span>
           </h1>
 
-          {/* FIXED: Changed text-brand-primary/85 opacity reduction to high-contrast slate */}
+          {/* High-contrast descriptions */}
           <p className="text-lg sm:text-xl mb-4 text-gray-800 max-w-2xl leading-relaxed font-semibold">
             Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free interactive quiz teaches you smart <strong className="text-emerald-800 font-bold">kitchen waste management app</strong> rules in just 30 seconds.
           </p>
@@ -60,14 +61,14 @@ export default function Hero() {
             </Link>
           </div>
 
-          {/* FIXED: Darkened notice fonts to cross safety threshold lines cleanly */}
-          <div className="mt-4 text-xs text-gray-700 font-medium tracking-wide space-y-1.5 pl-1">
-            <p className="flex items-center gap-1.5 justify-center lg:justify-start">
-              <span>🛡️</span> 
+          {/* Safety badges and notice layouts */}
+          <div className="mt-6 text-xs text-gray-700 font-medium tracking-wide space-y-1.5 pl-1">
+            <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
+              <span className="shrink-0">🛡️</span> 
               <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
             </p>
-            <p className="flex items-center gap-1.5 justify-center lg:justify-start">
-              <span>⚡</span> 
+            <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
+              <span className="shrink-0">⚡</span> 
               <span>Play instantly in your browser — no installation required</span>
             </p>
           </div>
