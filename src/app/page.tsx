@@ -4,22 +4,26 @@ import SocialProof from "@/components/SocialProof";
 import HowItWorks from "@/components/HowItWorks";
 import Categories from "@/components/Categories";
 import Features from "@/components/Features";
+import CoreValues from "@/components/CoreValues";
 import Faq from "@/components/Faq";
 import CtaCloser from "@/components/CtaCloser";
 import Footer from "@/components/Footer";
 
 export default function LandingPage() {
   return (
-    <main className="bg-brand-bg text-brand-primary min-h-screen flex flex-col font-sans relative overflow-x-hidden antialiased">
+    <>
       <Header />
-      <Hero />
-      <SocialProof />
-      <HowItWorks />
-      <Categories />
-      <Features />
-      <Faq />
-      <CtaCloser />
-      <Footer />
-    </main>
+      <main className="bg-brand-bg text-brand-primary min-h-screen flex flex-col font-sans relative overflow-x-hidden antialiased">
+        <Hero />
+        <SocialProof />
+        <HowItWorks />
+        <Categories />
+        <Features />
+        <CoreValues />
+        <Faq />
+        <CtaCloser />
+        <Footer />
+      </main>
+    </>
   );
 }
