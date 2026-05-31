@@ -7,6 +7,7 @@
   --color-brand-hero-accent: #38761D;
   --color-brand-bg: #F4FAEB;
   --color-brand-cta: #E9B15D;
+  --color-brand-cta-text: #B27512; /* FIXED: High-contrast gold text for light backgrounds */
   
   /* Accessible Secondary Grays & Brand Accents */
   --color-brand-primary-light: #556B2F;

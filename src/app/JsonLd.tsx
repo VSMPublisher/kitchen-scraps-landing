@@ -1,5 +1,14 @@
 const siteUrl = "https://kitchen-scraps.web.app";
 
+// Google Site Name Schema (Highly recommended for indexation)
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Kitchen Scraps & Food Waste Quiz",
+  alternateName: ["Kitchen Scraps", "Kitchen Scraps Quiz"],
+  url: siteUrl,
+};
+
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -31,7 +40,7 @@ const webAppJsonLd = {
   },
 };
 
-// Step 5: Mobile App Schema Injection for Enhanced Google Indexing
+// Mobile App Schema Injection for Enhanced Google Indexing
 const mobileAppJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -55,6 +64,11 @@ const sanitize = (obj: unknown) =>
 export default function JsonLd() {
   return (
     <>
+      <script
+        key="jsonld-website"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: sanitize(websiteJsonLd) }}
+      />
       <script
         key="jsonld-organization"
         type="application/ld+json"

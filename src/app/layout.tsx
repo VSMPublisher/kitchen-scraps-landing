@@ -10,7 +10,8 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat
 const siteUrl = "https://kitchen-scraps.web.app";
 
 export const metadata: Metadata = {
-  title: "Composting Quiz — Know What Goes In Your Bin (Free, 60 Questions)",
+  // FIXED: Standardized page title structure to verify the brand alignment with the JSON-LD schema
+  title: "Composting Quiz — Know What Goes In Your Bin | Kitchen Scraps & Food Waste Quiz",
   description:
     "Not sure if coffee grounds belong in compost? Take our free 60-question quiz across 6 categories and finally learn what to compost — and what to toss.",
   keywords: [
@@ -23,12 +24,17 @@ export const metadata: Metadata = {
     "eco-friendly quiz",
   ],
   icons: {
-    icon: "/app-icon.png",
-    apple: "/app-icon.png",
+    icon: [
+      { url: "/app-icon.png", sizes: "192x192", type: "image/png" }
+    ],
+    shortcut: "/app-icon.png",
+    apple: [
+      { url: "/app-icon.png", sizes: "180x180", type: "image/png" }
+    ],
   },
   metadataBase: new URL(siteUrl),
   
-  // Google Search Console Site Verification Added Here:
+  // Google Search Console Site Verification:
   verification: {
     google: "ymeXpfXiEZQw3VqV-iDF0TpCT31QwCyTlcUOsbQlpAY",
   },
@@ -68,7 +74,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* FIXED: Removed explicit text-gray-900 to prevent child contrast inheritance bugs */}
       <body className={`${inter.variable} ${montserrat.variable} antialiased font-sans`}>
         <JsonLd />
         {children}

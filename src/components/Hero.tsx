@@ -69,8 +69,11 @@ export default function Hero() {
   return (
     <section className="w-full bg-brand-bg relative overflow-hidden py-16 lg:py-24 px-6 scroll-mt-20">
       
-      {/* Background soft glow decoration */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0" />
+      {/* FIXED: Added aria-hidden="true" to instruct accessibility engines to skip blurred background layers */}
+      <div 
+        aria-hidden="true"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0" 
+      />
 
       {/* Structured placements of the high-fidelity leaf templates */}
       <OrganicLeaf className="top-[3%] left-[2%] w-24 h-24 md:w-36 md:h-36 -rotate-12 opacity-80" />
@@ -101,7 +104,7 @@ export default function Hero() {
           
           {/* Main heading entry title */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-hero-accent leading-[1.1] tracking-tight">
-            Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta">Gold</span>
+            Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta-text">Gold</span>
           </h1>
 
           {/* Subheading emphasizing gamified systems with bold keywords */}
