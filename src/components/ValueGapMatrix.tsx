@@ -23,6 +23,12 @@ export default function ValueGapMatrix() {
       web: "Static: Requires continuous manual caching and manual reloads",
       app: "Instant Update Sync: Automatically receive background rule modifications as regional guidelines roll out",
       psychology: "Longevity: Converts a static website into a permanent garden companion utility"
+    },
+    {
+      feature: "Pricing & Ads",
+      web: "100% Free (No forced popups or interrupting ad loops)",
+      app: "100% Free (No ads + full offline usage permissions)",
+      psychology: "Transparency: No paywalls, hidden microtransactions, or data mining"
     }
   ];
 

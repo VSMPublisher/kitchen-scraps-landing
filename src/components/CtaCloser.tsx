@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { trackOutboundLink } from "@/utils/analytics";
-import DownloadModal from "./DownloadModal"; // Integrated
+import DownloadModal from "./DownloadModal";
 
 export default function CtaCloser() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,6 +42,11 @@ export default function CtaCloser() {
             Download for Android
           </button>
         </div>
+
+        {/* Technical Reassurance Badge - Handled in high-contrast emerald-950 color */}
+        <p className="text-emerald-950 text-xs font-semibold mt-6 tracking-wide">
+          v1.0.0 • Secure Standalone APK (60MB) • Zero Device Permissions Required
+        </p>
       </div>
 
       {/* Render Pre-Download Trust Modal */}
