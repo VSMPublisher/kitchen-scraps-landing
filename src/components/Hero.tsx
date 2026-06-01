@@ -151,22 +151,20 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Right Side: Tall Borderless Phone Mockup aligned cleanly to the bottom */}
-        <div className="flex-shrink-0 w-full max-w-[210px] sm:max-w-[240px] lg:max-w-[310px] relative group h-fit z-10 self-center lg:self-end">
+        {/* Right Side: Phone Mockup resized to prevent vertical overflow on standard viewports */}
+        <div className="flex-shrink-0 w-full max-w-[190px] sm:max-w-[210px] lg:max-w-[260px] relative group h-fit z-10 self-center lg:self-end">
           <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           
-          {/* Borderless screen frame container */}
-          <div className="w-full h-auto rounded-[2rem] overflow-hidden shadow-mockup relative flex flex-col bg-brand-primary/10">
-            <div className="relative w-full aspect-[450/952]">
-              <Image
-                src="/hero-mockup.png"
-                alt="Kitchen Scraps & Food Waste Quiz Android App Gameplay Screen"
-                fill
-                sizes="(max-width: 310px) 100vw, 310px"
-                priority
-                className="object-cover rounded-[2rem]"
-              />
-            </div>
+          {/* Bezel Frame Container */}
+          <div className="relative w-full aspect-[450/952] rounded-[2.2rem] overflow-hidden border-4 border-zinc-900 bg-brand-primary/10 shadow-mockup">
+            <Image
+              src="/hero-mockup.png"
+              alt="Kitchen Scraps & Food Waste Quiz Android App Gameplay Screen"
+              fill
+              sizes="(max-width: 260px) 100vw, 260px"
+              priority
+              className="object-cover"
+            />
           </div>          
         </div>
       </div>
