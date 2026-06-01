@@ -121,29 +121,37 @@ export default function Hero() {
           </p>
 
           {/* Call To Actions */}
-<div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
-  <Link
-    href="https://kitchen-scraps-quiz.web.app"
-    onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-    className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center"
-  >
-    Play Now — Free in Web Browser
-  </Link>
+<div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center sm:items-end gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
+  {/* Download CTA (Primary Action - Deep Brand Green) */}
+  <div className="flex flex-col w-full sm:w-auto">
+    <Link
+      href="/kitchen-scraps.apk"
+      download="kitchen-scraps.apk"
+      onClick={(e) => {
+        // Fires your tracking log matrix cleanly
+        handleCtaClick("Download APK", "/kitchen-scraps.apk");
+        // Triggers your custom Antigravity 2.0 Trust Modal box overlay
+        setIsModalOpen(true);
+      }}
+      className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center cursor-pointer"
+    >
+      Download for Android
+    </Link>
+  </div>
   
-  {/* SWAPPED BUTTON TO LINK ELEMENT FOR HOVER PREVIEW AND VALIDATION */}
-  <Link
-    href="/kitchen-scraps.apk"
-    download="kitchen-scraps.apk"
-    onClick={(e) => {
-      // Fires your tracking log matrix cleanly
-      handleCtaClick("Download APK", "/kitchen-scraps.apk");
-      // Triggers your custom Antigravity 2.0 Trust Modal box overlay
-      setIsModalOpen(true);
-    }}
-    className="bg-brand-cta text-brand-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e0a24b] hover-lift transition-all shadow-premium w-full sm:w-auto text-center cursor-pointer"
-  >
-    Download for Android
-  </Link>
+  {/* Teaser CTA (Secondary Action - Clean Outline) */}
+  <div className="flex flex-col items-center w-full sm:w-auto">
+    <span className="text-[10px] font-display font-extrabold uppercase tracking-widest text-brand-hero-accent/90 mb-1.5 select-none">
+      ⚡ Instant Demo (10 Qs)
+    </span>
+    <Link
+      href="https://kitchen-scraps-quiz.web.app"
+      onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
+      className="border-2 border-brand-header text-brand-header px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full text-center"
+    >
+      Try Web Teaser
+    </Link>
+  </div>
 </div>
 
           {/* Safety badges and notice layouts */}

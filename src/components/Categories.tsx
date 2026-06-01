@@ -42,7 +42,7 @@ export default function Categories() {
 
         <div className="text-center mb-16 max-w-2xl mx-auto relative z-10">
           <h2 className="text-3xl font-bold text-emerald-800 text-center">
-            Master 6 Kitchen Composting Methods
+            Master 6 Gamified Quiz Categories
           </h2>
           <p className="text-center text-gray-700 mt-2">
             Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
