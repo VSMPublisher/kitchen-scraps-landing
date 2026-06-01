@@ -121,24 +121,30 @@ export default function Hero() {
           </p>
 
           {/* Call To Actions */}
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
-            <Link
-              href="https://kitchen-scraps-quiz.web.app"
-              onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-              className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center"
-            >
-              Play Now — Free in Web Browser
-            </Link>
-            <button
-              onClick={() => {
-                handleCtaClick("Download APK", "/kitchen-scraps.apk");
-                setIsModalOpen(true);
-              }}
-              className="bg-brand-cta text-brand-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e0a24b] hover-lift transition-all shadow-premium w-full sm:w-auto text-center cursor-pointer"
-            >
-              Download for Android
-            </button>
-          </div>
+<div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
+  <Link
+    href="https://kitchen-scraps-quiz.web.app"
+    onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
+    className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center"
+  >
+    Play Now — Free in Web Browser
+  </Link>
+  
+  {/* SWAPPED BUTTON TO LINK ELEMENT FOR HOVER PREVIEW AND VALIDATION */}
+  <Link
+    href="/kitchen-scraps.apk"
+    download="kitchen-scraps.apk"
+    onClick={(e) => {
+      // Fires your tracking log matrix cleanly
+      handleCtaClick("Download APK", "/kitchen-scraps.apk");
+      // Triggers your custom Antigravity 2.0 Trust Modal box overlay
+      setIsModalOpen(true);
+    }}
+    className="bg-brand-cta text-brand-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e0a24b] hover-lift transition-all shadow-premium w-full sm:w-auto text-center cursor-pointer"
+  >
+    Download for Android
+  </Link>
+</div>
 
           {/* Safety badges and notice layouts */}
           <div className="mt-6 text-xs text-gray-700 font-medium tracking-wide space-y-1.5 pl-1">
