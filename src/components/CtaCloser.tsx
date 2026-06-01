@@ -24,26 +24,24 @@ export default function CtaCloser() {
         </p>
         
         {/* Balanced Button Row */}
-<div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
+<div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8">
   <Link
     href="https://kitchen-scraps-quiz.web.app"
     onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-    className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center"
+    className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
   >
-    Play Now — Free in Web Browser
+    Play Free in Web Browser
   </Link>
   
-  {/* SWAPPED BUTTON TO LINK ELEMENT FOR HOVER PREVIEW AND VALIDATION */}
+  {/* Correctly sized Link component for the footer CTA closer */}
   <Link
     href="/kitchen-scraps.apk"
     download="kitchen-scraps.apk"
     onClick={(e) => {
-      // Fires your tracking log matrix cleanly
       handleCtaClick("Download APK", "/kitchen-scraps.apk");
-      // Triggers your custom Antigravity 2.0 Trust Modal box overlay
       setIsModalOpen(true);
     }}
-    className="bg-brand-cta text-brand-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e0a24b] hover-lift transition-all shadow-premium w-full sm:w-auto text-center cursor-pointer"
+    className="bg-brand-cta text-brand-primary hover:bg-[#e0a24b] font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center cursor-pointer"
   >
     Download for Android
   </Link>
