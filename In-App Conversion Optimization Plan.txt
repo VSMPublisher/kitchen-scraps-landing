@@ -1,0 +1,102 @@
+In-App Conversion Optimization Plan (Web Teaser & Android Platforms)
+
+This strategic plan targets the user experience *inside the application interfaces* to guide web players toward downloading the Android app, while solidifying long-term retention and trust inside the native environment.
+
+---
+
+```
+                        +---------------------------------------+
+                        |       WEB TEASER QUIZ APP             |
+                        | (Frictionless, instant browser play)  |
+                        +---------------------------------------+
+                                            |
+                                            | [Triggers Locked Feature or Ends Run]
+                                            v
+                        +---------------------------------------+
+                        |     IN-APP CONVERSION INTERCEPT       |
+                        |  "Get Android App to Unlock Science   |
+                        |   Hints, Offline Mode & 50+ Levels"   |
+                        +---------------------------------------+
+                                            |
+                                            | [Clicks Download APK]
+                                            v
+                        +---------------------------------------+
+                        |      LANDING PAGE TRUST OVERLAY       |
+                        | (Auto-Download / Step-by-Step Guide) |
+                        +---------------------------------------+
+                                            |
+                                            | [User Launches Installed App]
+                                            v
+                        +---------------------------------------+
+                        |         ANDROID NATIVE APP            |
+                        |  - "Zero-Permission sandbox" banner   |
+                        |  - Unlock code: GARDENGOLD99          |
+                        |  - Streak-protection & offline play   |
+                        +---------------------------------------+
+```
+
+---
+
+## 🌐 Module 1: The Web Teaser App Funnel
+*Goal: Turn passive browser players into active Android app installers by treating the web app as a high-engagement funnel hook.*
+
+### 1. Progressive Locked-State Micro-Interactions
+When browser players interact with premium components, instead of a static error, display a warm, highly visual call-to-action.
+*   **The Hint Button Tease:** When a web player clicks the "💡 Hint" button on any question, they should not see a disabled gray icon. Instead, open a micro-modal:
+    > #### 💡 Unlock Biological Science Hints
+    > Need a hand? Get the complete Android App to unlock detailed background science hints for all 60+ questions. 
+    > 
+    > *   **Ad-Free, 100% Offline-Enabled, Zero Permissions Required**
+    > 
+    > `[ Get Android App ]` `[ Keep Guessing ]`
+*   **The Level 10 Hard Gate:** Limit category streams on the browser version to exactly 10 questions. Upon finishing the 10th card, immediately display a personalized performance card:
+    > #### 🎉 Web Teaser Completed! Your Score: 8/10
+    > You have a great handle on standard waste sorting, but do you know how to handle **citrus rinds**, **infested leaves**, or **Bokashi liquid**?
+    > 
+    > **Unlock the remaining 50+ advanced composting questions and troubleshooting guides:**
+    > 
+    > `[ Install Android Companion (Free) ]` `[ Retake Teaser ]`
+
+### 2. Header and Persistent Subtle Banners
+*   **Contextual Banner Placement:** Keep a slim, non-intrusive sticky header at the top of the browser gameplay screen:
+    > "🏃 You are playing the Web Teaser. Download our **Zero-Permission Android App** for 100% offline play in the garden. `[ Download Free App ]`"
+
+---
+
+## 🤖 Module 2: The Android App Trust & Retention Architecture
+*Goal: Remove psychological friction immediately upon app installation, reward action, and build habit-forming composting behaviors.*
+
+### 1. First-Launch Trust Reassurance
+The first 5 seconds of the native app experience should validate the user's decision to download a third-party APK file.
+*   **The Zero-Permission Handshake:** On the very first launch, display a simple, premium welcome screen rather than dropping the user straight into a menu:
+    > ### Welcome to Kitchen Scraps 🌿
+    > Your local environment is safe, and so is your device. We are proudly committed to privacy:
+    > *   🛡️ **0 Permissions Requested** (We do not access contacts, storage, or GPS)
+    > *   🔌 **100% Offline Capable** (We do not drain background cellular data)
+    > *   🚫 **No Sign-up or Ads Required**
+    > 
+    > `[ Let's Compost! ]`
+
+### 2. Promo Code Fulfillment
+This bridges the gap between the website modal and the installed application, delivering on the promised psychological reward.
+*   **The Reward Console:** Place a "Promo / Skin Codes" option clearly visible within the in-app Settings menu.
+*   **The Unlock Animation:** When the user enters **`GARDENGOLD99`**:
+    *   Do not just show a flat text confirmation.
+    *   Trigger an in-app visual transition (e.g., a gold leaf particle animation) showing their interface theme shifting from standard green to the exclusive **Amber Gold Garden** palette.
+    *   Display a confirmation card:
+        > "✨ **Amber Gold Skin Unlocked!** Thank you for supporting independent, open-source eco-education."
+
+### 3. "Streak-Save" Interstitials
+To prevent users from abandoning the app when they lose their learning momentum, gamify their mistakes.
+*   **The Ecology Save Option:** If a user misses a question and is about to lose a multi-day streak, offer them a one-time "Streak-Save" opportunity:
+    > #### 💥 Streak in Danger!
+    > Keep your streak alive by taking 15 seconds to read the biological explanation card for your incorrect answer.
+    > 
+    > `[ Read & Save Streak ]` `[ Reset Streak ]`
+*   This shifts the failure state into an active, positive learning moment.
+
+### 4. Interactive Composting Badges (The Growth Engine)
+*   Encourage users to share their learning progression offline or via messaging apps.
+*   As users clear categories, unlock digital badges (e.g., *"Balcony Worm Whisperer"*, *"Hot Heap Manager"*).
+*   Add a simple "Share Progress" button that copies a stylized text string to their clipboard:
+    > "I just unlocked the 'Balcony Worm Whisperer' badge in the Kitchen Scraps quiz app! 100% ad-free, secure, and offline: kitchen-scraps.web.app"

@@ -1,9 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { trackOutboundLink } from "@/utils/analytics";
+import DownloadModal from "./DownloadModal"; // Integrated
 
 export default function CtaCloser() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleCtaClick = (label: string, url: string) => {
     trackOutboundLink(url, label);
   };
@@ -28,15 +32,20 @@ export default function CtaCloser() {
           >
             Play Free in Web Browser
           </Link>
-          <Link
-            href="/kitchen-scraps.apk"
-            onClick={() => handleCtaClick("Download APK", "/kitchen-scraps.apk")}
-            className="bg-brand-cta text-brand-primary hover:bg-[#e0a24b] font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
+          <button
+            onClick={() => {
+              handleCtaClick("Download APK", "/kitchen-scraps.apk");
+              setIsModalOpen(true);
+            }}
+            className="bg-brand-cta text-brand-primary hover:bg-[#e0a24b] font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center cursor-pointer"
           >
             Download for Android
-          </Link>
+          </button>
         </div>
       </div>
+
+      {/* Render Pre-Download Trust Modal */}
+      <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

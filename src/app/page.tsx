@@ -4,6 +4,7 @@ import SocialProof from "@/components/SocialProof";
 import HowItWorks from "@/components/HowItWorks";
 import Categories from "@/components/Categories";
 import Features from "@/components/Features";
+import ValueGapMatrix from "@/components/ValueGapMatrix"; // Integrated
 import CoreValues from "@/components/CoreValues";
 import Faq from "@/components/Faq";
 import CtaCloser from "@/components/CtaCloser";
@@ -19,6 +20,7 @@ export default function LandingPage() {
         <HowItWorks />
         <Categories />
         <Features />
+        <ValueGapMatrix /> {/* Positioned directly following Features */}
         <CoreValues />
         <Faq />
         <CtaCloser />

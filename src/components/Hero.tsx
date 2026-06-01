@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { trackOutboundLink } from "@/utils/analytics";
+import DownloadModal from "./DownloadModal"; // Integrated
 
 export default function Hero() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleCtaClick = (label: string, url: string) => {
     trackOutboundLink(url, label);
   };
@@ -125,13 +129,15 @@ export default function Hero() {
             >
               Play Now — Free in Web Browser
             </Link>
-            <Link
-              href="/kitchen-scraps.apk"
-              onClick={() => handleCtaClick("Download APK", "/kitchen-scraps.apk")}
-              className="bg-brand-cta text-brand-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e0a24b] hover-lift transition-all shadow-premium w-full sm:w-auto text-center"
+            <button
+              onClick={() => {
+                handleCtaClick("Download APK", "/kitchen-scraps.apk");
+                setIsModalOpen(true);
+              }}
+              className="bg-brand-cta text-brand-primary px-8 py-4 rounded-2xl font-bold text-lg hover:bg-[#e0a24b] hover-lift transition-all shadow-premium w-full sm:w-auto text-center cursor-pointer"
             >
               Download for Android
-            </Link>
+            </button>
           </div>
 
           {/* Safety badges and notice layouts */}
@@ -168,6 +174,9 @@ export default function Hero() {
           </div>          
         </div>
       </div>
+
+      {/* Render Pre-Download Trust Modal */}
+      <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }
