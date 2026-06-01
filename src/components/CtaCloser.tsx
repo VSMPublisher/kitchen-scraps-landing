@@ -19,41 +19,43 @@ export default function CtaCloser() {
         <h2 className="text-2xl md:text-3xl font-bold text-brand-primary tracking-tight font-sans">
           Ready to Stop Second-Guessing Your Waste?
         </h2>
-        <p className="text-gray-600 mt-3 text-sm md:text-base max-w-md mx-auto">
+        {/* ACCESSIBILITY FIX: Changed text-gray-600 to high-contrast text-zinc-800 */}
+        <p className="text-zinc-800 mt-3 text-sm md:text-base max-w-md mx-auto">
           Get the free app now and instantly master composting rules in just 30 seconds.
         </p>
         
         {/* Balanced Button Row */}
-<div className="flex flex-col sm:flex-row justify-center items-center sm:items-end gap-4 mt-8">
-  {/* Download CTA (Primary Action - Deep Brand Green) */}
-  <div className="flex flex-col w-full sm:w-auto">
-    <Link
-      href="/kitchen-scraps.apk"
-      download="kitchen-scraps.apk"
-      onClick={(e) => {
-        handleCtaClick("Download APK", "/kitchen-scraps.apk");
-        setIsModalOpen(true);
-      }}
-      className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center cursor-pointer"
-    >
-      Download for Android
-    </Link>
-  </div>
-  
-  {/* Teaser CTA (Secondary Action - Clean Outline) */}
-  <div className="flex flex-col items-center w-full sm:w-auto">
-    <span className="text-[9px] font-display font-extrabold uppercase tracking-widest text-brand-hero-accent/90 mb-1 select-none">
-      ⚡ Instant Demo (10 Qs)
-    </span>
-    <Link
-      href="https://kitchen-scraps-quiz.web.app"
-      onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-      className="border-2 border-brand-header text-brand-header hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
-    >
-      Try Web Teaser
-    </Link>
-  </div>
-</div>
+        <div className="flex flex-col sm:flex-row justify-center items-center sm:items-end gap-4 mt-8">
+          {/* Download CTA (Primary Action - Deep Brand Green) */}
+          <div className="flex flex-col w-full sm:w-auto">
+            <Link
+              href="/kitchen-scraps.apk"
+              download="kitchen-scraps.apk"
+              onClick={(e) => {
+                handleCtaClick("Download APK", "/kitchen-scraps.apk");
+                setIsModalOpen(true);
+              }}
+              className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center cursor-pointer"
+            >
+              Download for Android
+            </Link>
+          </div>
+          
+          {/* Teaser CTA (Secondary Action - Clean Outline) */}
+          <div className="flex flex-col items-center w-full sm:w-auto">
+            {/* ACCESSIBILITY FIX: Changed text size to text-xs and swapped light text-brand-hero-accent/90 to solid text-emerald-900 */}
+            <span className="text-xs font-display font-extrabold uppercase tracking-widest text-emerald-900 mb-1 select-none">
+              ⚡ Instant Demo (10 Qs)
+            </span>
+            <Link
+              href="https://kitchen-scraps-quiz.web.app"
+              onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
+              className="border-2 border-brand-header text-brand-header hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
+            >
+              Try Web Teaser
+            </Link>
+          </div>
+        </div>
 
         {/* Technical Reassurance Badge - Handled in high-contrast emerald-950 color */}
         <p className="text-emerald-950 text-xs font-semibold mt-6 tracking-wide">

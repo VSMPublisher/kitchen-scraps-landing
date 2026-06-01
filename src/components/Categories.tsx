@@ -44,7 +44,8 @@ export default function Categories() {
           <h2 className="text-3xl font-bold text-emerald-800 text-center">
             Master 6 Gamified Quiz Categories
           </h2>
-          <p className="text-center text-gray-700 mt-2">
+          {/* ACCESSIBILITY FIX: Changed text-gray-700 to text-zinc-800 */}
+          <p className="text-center text-zinc-800 mt-2">
             Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
           </p>
         </div>
@@ -79,8 +80,8 @@ export default function Categories() {
                 {cat.title}
               </h3>
               
-              {/* FIXED: Swapped light opacity utility for high-contrast slate text layout */}
-              <p className="text-sm text-gray-600 leading-relaxed font-medium">
+              {/* ACCESSIBILITY FIX: Changed text-gray-600 to high-contrast text-zinc-800 */}
+              <p className="text-sm text-zinc-800 leading-relaxed font-medium">
                 {cat.desc}
               </p>
             </div>

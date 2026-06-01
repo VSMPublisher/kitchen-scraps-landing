@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { trackOutboundLink } from "@/utils/analytics";
-import DownloadModal from "./DownloadModal"; // Integrated
+import DownloadModal from "./DownloadModal";
 
 export default function Hero() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,9 +13,10 @@ export default function Hero() {
     trackOutboundLink(url, label);
   };
 
-  // Highly detailed, organic vector leaf template (designed procedurally to look realistic)
+  // ACCESSIBILITY FIX: Added aria-hidden="true" to the vector SVG template to prevent contrast validation flags
   const OrganicLeaf = ({ className }: { className: string }) => (
     <svg 
+      aria-hidden="true"
       viewBox="0 0 100 100" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
@@ -73,13 +74,13 @@ export default function Hero() {
   return (
     <section className="w-full bg-brand-bg relative overflow-hidden py-16 lg:py-24 px-6 scroll-mt-20">
       
-      {/* FIXED: Added aria-hidden="true" to instruct accessibility engines to skip blurred background layers */}
+      {/* Background blur decoration layer explicitly ignored by readers */}
       <div 
         aria-hidden="true"
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0" 
       />
 
-      {/* Structured placements of the high-fidelity leaf templates */}
+      {/* Structured placements of the high-fidelity leaf templates with implicit ARIA exclusion */}
       <OrganicLeaf className="top-[3%] left-[2%] w-24 h-24 md:w-36 md:h-36 -rotate-12 opacity-80" />
       <OrganicLeaf className="top-[28%] left-[8%] w-18 h-18 md:w-28 md:h-28 rotate-45 opacity-70" />
       <OrganicLeaf className="bottom-[8%] left-[2%] w-28 h-28 md:w-40 md:h-40 rotate-[135deg] opacity-80" />
@@ -96,7 +97,7 @@ export default function Hero() {
         {/* Left Side: Engaging content */}
         <div className="flex-1 text-center lg:text-left animate-fade-in-up">
           <div className="inline-flex items-center gap-2 bg-brand-soft-bg border border-brand-header/20 px-4 py-1.5 rounded-full mb-6">
-            <span className="text-brand-hero-accent font-semibold text-xs tracking-wider uppercase">
+            <span className="text-emerald-950 font-semibold text-xs tracking-wider uppercase">
               Free 60-Question Quiz
             </span>
           </div>
@@ -106,56 +107,57 @@ export default function Hero() {
             <span>Built using verified organic chemistry and household composting data</span>
           </p>
           
-          {/* Main heading entry title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-hero-accent leading-[1.1] tracking-tight">
+          {/* ACCESSIBILITY FIX: Changed text-brand-hero-accent to text-brand-primary for contrast conformity */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-primary leading-[1.1] tracking-tight">
             Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta-text">Gold</span>
           </h1>
 
-          {/* Subheading emphasizing gamified systems with bold keywords */}
-          <p className="text-lg sm:text-xl mb-4 text-gray-800 max-w-2xl leading-relaxed font-semibold">
-            Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free, gamified learning platform teaches you smart <strong className="text-emerald-800 font-bold">kitchen waste management app</strong> rules through interactive play in just 30 seconds.
+          {/* ACCESSIBILITY FIX: Changed text-gray-800 to text-zinc-900 for dark contrast */}
+          <p className="text-lg sm:text-xl mb-4 text-zinc-900 max-w-2xl leading-relaxed font-semibold">
+            Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free, gamified learning platform teaches you smart <strong className="text-emerald-900 font-bold">kitchen waste management app</strong> rules through interactive play in just 30 seconds.
           </p>
 
-          <p className="text-base mb-8 text-gray-700 font-medium tracking-tight">
+          {/* ACCESSIBILITY FIX: Changed text-gray-700 to text-zinc-800 */}
+          <p className="text-base mb-8 text-zinc-800 font-medium tracking-tight">
             10 questions per run • 6 specialized categories • No signup, ever.
           </p>
 
           {/* Call To Actions */}
-<div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center sm:items-end gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
-  {/* Download CTA (Primary Action - Deep Brand Green) */}
-  <div className="flex flex-col w-full sm:w-auto">
-    <Link
-      href="/kitchen-scraps.apk"
-      download="kitchen-scraps.apk"
-      onClick={(e) => {
-        // Fires your tracking log matrix cleanly
-        handleCtaClick("Download APK", "/kitchen-scraps.apk");
-        // Triggers your custom Antigravity 2.0 Trust Modal box overlay
-        setIsModalOpen(true);
-      }}
-      className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center cursor-pointer"
-    >
-      Download for Android
-    </Link>
-  </div>
-  
-  {/* Teaser CTA (Secondary Action - Clean Outline) */}
-  <div className="flex flex-col items-center w-full sm:w-auto">
-    <span className="text-[10px] font-display font-extrabold uppercase tracking-widest text-brand-hero-accent/90 mb-1.5 select-none">
-      ⚡ Instant Demo (10 Qs)
-    </span>
-    <Link
-      href="https://kitchen-scraps-quiz.web.app"
-      onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-      className="border-2 border-brand-header text-brand-header px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full text-center"
-    >
-      Try Web Teaser
-    </Link>
-  </div>
-</div>
+          <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center sm:items-end gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
+            {/* Download CTA (Primary Action - Deep Brand Green) */}
+            <div className="flex flex-col w-full sm:w-auto">
+              <Link
+                href="/kitchen-scraps.apk"
+                download="kitchen-scraps.apk"
+                onClick={(e) => {
+                  handleCtaClick("Download APK", "/kitchen-scraps.apk");
+                  setIsModalOpen(true);
+                }}
+                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center cursor-pointer"
+              >
+                Download for Android
+              </Link>
+            </div>
+            
+            {/* Teaser CTA (Secondary Action - Clean Outline) */}
+            <div className="flex flex-col items-center w-full sm:w-auto">
+              {/* ACCESSIBILITY FIX: Scaled text up to text-xs and swapped light green/opacity to deep solid text-emerald-900 */}
+              <span className="text-xs font-display font-extrabold uppercase tracking-widest text-emerald-900 mb-1.5 select-none">
+                ⚡ Instant Demo (10 Qs)
+              </span>
+              <Link
+                href="https://kitchen-scraps-quiz.web.app"
+                onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
+                className="border-2 border-brand-header text-brand-header px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full text-center"
+              >
+                Try Web Teaser
+              </Link>
+            </div>
+          </div>
 
           {/* Safety badges and notice layouts */}
-          <div className="mt-6 text-xs text-gray-700 font-medium tracking-wide space-y-1.5 pl-1">
+          {/* ACCESSIBILITY FIX: Changed text-gray-700 to text-zinc-800 inside list */}
+          <div className="mt-6 text-xs text-zinc-800 font-medium tracking-wide space-y-1.5 pl-1">
             <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
               <span className="shrink-0">🛡️</span> 
               <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
@@ -166,7 +168,8 @@ export default function Hero() {
             </p>
           </div>
           
-          <p className="text-xs text-gray-600 mt-4 italic font-medium">
+          {/* ACCESSIBILITY FIX: Changed text-gray-600 to text-zinc-700 */}
+          <p className="text-xs text-zinc-700 mt-4 italic font-medium">
             Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
           </p>
         </div>
