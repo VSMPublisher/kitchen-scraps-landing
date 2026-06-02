@@ -13,7 +13,6 @@ export default function Hero() {
     trackOutboundLink(url, label);
   };
 
-  // ACCESSIBILITY FIX: Added aria-hidden="true" to the vector SVG template to prevent contrast validation flags
   const OrganicLeaf = ({ className }: { className: string }) => (
     <svg 
       aria-hidden="true"
@@ -22,13 +21,11 @@ export default function Hero() {
       xmlns="http://www.w3.org/2000/svg"
       className={`absolute pointer-events-none select-none z-0 transition-transform ${className}`}
     >
-      {/* Leaf Blade (Body Fill) */}
       <path 
         d="M15 85 C 10 50, 40 20, 85 15 C 80 50, 50 80, 15 85 Z" 
         fill="currentColor" 
         className="text-emerald-700/6"
       />
-      {/* Midrib and Stem */}
       <path 
         d="M5 95 C 10 90, 15 85, 15 85 C 22 78, 45 45, 85 15" 
         stroke="currentColor" 
@@ -36,7 +33,6 @@ export default function Hero() {
         strokeLinecap="round" 
         className="text-emerald-800/25"
       />
-      {/* Parallel Lateral Veins - Left Side Sweep */}
       <path 
         d="
           M 20 80 C 15 76, 12 73, 12 70
@@ -52,7 +48,6 @@ export default function Hero() {
         strokeLinecap="round" 
         className="text-emerald-800/20"
       />
-      {/* Parallel Lateral Veins - Right Side Sweep */}
       <path 
         d="
           M 20 80 C 27 82, 33 83, 35 84
@@ -74,13 +69,11 @@ export default function Hero() {
   return (
     <section className="w-full bg-brand-bg relative overflow-hidden py-16 lg:py-24 px-6 scroll-mt-20">
       
-      {/* Background blur decoration layer explicitly ignored by readers */}
       <div 
         aria-hidden="true"
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0" 
       />
 
-      {/* Structured placements of the high-fidelity leaf templates with implicit ARIA exclusion */}
       <OrganicLeaf className="top-[3%] left-[2%] w-24 h-24 md:w-36 md:h-36 -rotate-12 opacity-80" />
       <OrganicLeaf className="top-[28%] left-[8%] w-18 h-18 md:w-28 md:h-28 rotate-45 opacity-70" />
       <OrganicLeaf className="bottom-[8%] left-[2%] w-28 h-28 md:w-40 md:h-40 rotate-[135deg] opacity-80" />
@@ -107,25 +100,22 @@ export default function Hero() {
             <span>Built using verified organic chemistry and household composting data</span>
           </p>
           
-          {/* ACCESSIBILITY FIX: Changed text-brand-hero-accent to text-brand-primary for contrast conformity */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-primary leading-[1.1] tracking-tight">
             Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta-text">Gold</span>
           </h1>
 
-          {/* ACCESSIBILITY FIX: Changed text-gray-800 to text-zinc-900 for dark contrast */}
           <p className="text-lg sm:text-xl mb-4 text-zinc-900 max-w-2xl leading-relaxed font-semibold">
             Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free, gamified learning platform teaches you smart <strong className="text-emerald-900 font-bold">kitchen waste management app</strong> rules through interactive play in just 30 seconds.
           </p>
 
-          {/* ACCESSIBILITY FIX: Changed text-gray-700 to text-zinc-800 */}
           <p className="text-base mb-8 text-zinc-800 font-medium tracking-tight">
             10 questions per run • 6 specialized categories • No signup, ever.
           </p>
 
           {/* Call To Actions */}
-          <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center sm:items-end gap-4 max-w-md sm:max-w-none mx-auto lg:mx-0">
+          <div className="flex flex-col md:flex-row justify-center lg:justify-start items-center md:items-end gap-6 max-w-md md:max-w-none mx-auto lg:mx-0">
             {/* Download CTA (Primary Action - Deep Brand Green) */}
-            <div className="flex flex-col w-full sm:w-auto">
+            <div className="flex flex-col w-full md:w-auto">
               <Link
                 href="/kitchen-scraps.apk"
                 download="kitchen-scraps.apk"
@@ -133,30 +123,32 @@ export default function Hero() {
                   handleCtaClick("Download APK", "/kitchen-scraps.apk");
                   setIsModalOpen(true);
                 }}
-                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full sm:w-auto text-center cursor-pointer"
+                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full text-center cursor-pointer"
               >
                 Download for Android
               </Link>
             </div>
             
-            {/* Teaser CTA (Secondary Action - Clean Outline) */}
-            <div className="flex flex-col items-center w-full sm:w-auto">
-              {/* ACCESSIBILITY FIX: Scaled text up to text-xs and swapped light green/opacity to deep solid text-emerald-900 */}
-              <span className="text-xs font-display font-extrabold uppercase tracking-widest text-emerald-900 mb-1.5 select-none">
-                ⚡ Instant Demo (10 Qs)
-              </span>
+            {/* Teaser CTA (Secondary Action - Clean Outline with Repositioned Tag) */}
+            {/* VISUAL & ACCESSIBILITY FIX: Placed button and note inside a responsive flex container. 
+                On mobile, this columns the layout, rendering the note BELOW. 
+                On desktop (md & lg), this rows the layout, shifting the note to the RIGHT.
+                Replaced border-brand-header with border-emerald-900 for contrast standards. */}
+            <div className="flex flex-col md:flex-row items-center w-full md:w-auto gap-3">
               <Link
                 href="https://kitchen-scraps-quiz.web.app"
                 onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-                className="border-2 border-brand-header text-brand-header px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full text-center"
+                className="border-2 border-emerald-900 text-emerald-900 px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full md:w-auto text-center order-first"
               >
                 Try Web Teaser
               </Link>
+              <span className="text-xs font-display font-extrabold uppercase tracking-widest text-emerald-950 select-none text-center md:text-left whitespace-nowrap mt-2 md:mt-0">
+                ⚡ Instant Demo (10 Qs)
+              </span>
             </div>
           </div>
 
           {/* Safety badges and notice layouts */}
-          {/* ACCESSIBILITY FIX: Changed text-gray-700 to text-zinc-800 inside list */}
           <div className="mt-6 text-xs text-zinc-800 font-medium tracking-wide space-y-1.5 pl-1">
             <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
               <span className="shrink-0">🛡️</span> 
@@ -168,13 +160,12 @@ export default function Hero() {
             </p>
           </div>
           
-          {/* ACCESSIBILITY FIX: Changed text-gray-600 to text-zinc-700 */}
           <p className="text-xs text-zinc-700 mt-4 italic font-medium">
             Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
           </p>
         </div>
 
-        {/* Right Side: Phone Mockup resized to prevent vertical overflow on standard viewports */}
+        {/* Right Side: Phone Mockup */}
         <div className="flex-shrink-0 w-full max-w-[190px] sm:max-w-[210px] lg:max-w-[260px] relative group h-fit z-10 self-center lg:self-end">
           <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           

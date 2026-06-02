@@ -44,7 +44,6 @@ export default function Categories() {
           <h2 className="text-3xl font-bold text-emerald-800 text-center">
             Master 6 Gamified Quiz Categories
           </h2>
-          {/* ACCESSIBILITY FIX: Changed text-gray-700 to text-zinc-800 */}
           <p className="text-center text-zinc-800 mt-2">
             Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
           </p>
@@ -58,29 +57,26 @@ export default function Categories() {
             >
               {/* Icon container housing the optimized custom colored asset */}
               <div className="w-16 h-16 rounded-2xl bg-white border border-brand-border flex items-center justify-center mb-6 shadow-premium-sm group-hover:scale-105 group-hover:bg-brand-soft-bg transition-all duration-300">
-                <div 
-                  className="relative w-12 h-12 flex items-center justify-center"
-                  style={{ 
-                    // Converts black-and-white asset directly into our primary brand green shade (#2D4A22)
-                    filter: "brightness(0) saturate(100%) invert(21%) sepia(21%) saturate(1478%) hue-rotate(63deg) brightness(97%) contrast(92%)" 
-                  }}
-                >
+                {/* ACCESSIBILITY & VISUAL FIX: Declared a relative size wrapper with Next.js 'fill' to resolve collapsed/invisible icons on custom viewport widths */}
+                <div className="relative w-12 h-12">
                   <Image
                     src={cat.icon}
                     alt={`${cat.title} Category Icon`}
-                    width={48}
-                    height={48}
-                    className="w-full h-auto object-contain"
+                    fill
+                    sizes="48px"
+                    className="object-contain"
+                    style={{ 
+                      // Converts black-and-white asset directly into our primary brand green shade (#2D4A22)
+                      filter: "brightness(0) saturate(100%) invert(21%) sepia(21%) saturate(1478%) hue-rotate(63deg) brightness(97%) contrast(92%)" 
+                    }}
                   />
                 </div>
               </div>
               
-              {/* FIXED: Swapped h4 -> h3 for correct sequential heading layout */}
               <h3 className="font-display font-extrabold text-lg text-brand-primary mb-3">
                 {cat.title}
               </h3>
               
-              {/* ACCESSIBILITY FIX: Changed text-gray-600 to high-contrast text-zinc-800 */}
               <p className="text-sm text-zinc-800 leading-relaxed font-medium">
                 {cat.desc}
               </p>

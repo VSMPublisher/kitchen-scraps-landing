@@ -19,13 +19,16 @@ export default function CtaCloser() {
         <h2 className="text-2xl md:text-3xl font-bold text-brand-primary tracking-tight font-sans">
           Ready to Stop Second-Guessing Your Waste?
         </h2>
-        {/* ACCESSIBILITY FIX: Changed text-gray-600 to high-contrast text-zinc-800 */}
         <p className="text-zinc-800 mt-3 text-sm md:text-base max-w-md mx-auto">
           Get the free app now and instantly master composting rules in just 30 seconds.
         </p>
         
         {/* Balanced Button Row */}
-        <div className="flex flex-col sm:flex-row justify-center items-center sm:items-end gap-4 mt-8">
+        {/* VISUAL & ACCESSIBILITY FIX: Placed button and note inside a responsive flex container. 
+            On mobile, this columns the layout, rendering the note BELOW. 
+            On desktop (sm & up), this rows the layout, shifting the note to the RIGHT.
+            Replaced border-brand-header with border-emerald-900 for contrast standards. */}
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-6 mt-8">
           {/* Download CTA (Primary Action - Deep Brand Green) */}
           <div className="flex flex-col w-full sm:w-auto">
             <Link
@@ -35,25 +38,24 @@ export default function CtaCloser() {
                 handleCtaClick("Download APK", "/kitchen-scraps.apk");
                 setIsModalOpen(true);
               }}
-              className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center cursor-pointer"
+              className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full text-center cursor-pointer"
             >
               Download for Android
             </Link>
           </div>
           
-          {/* Teaser CTA (Secondary Action - Clean Outline) */}
-          <div className="flex flex-col items-center w-full sm:w-auto">
-            {/* ACCESSIBILITY FIX: Changed text size to text-xs and swapped light text-brand-hero-accent/90 to solid text-emerald-900 */}
-            <span className="text-xs font-display font-extrabold uppercase tracking-widest text-emerald-900 mb-1 select-none">
-              ⚡ Instant Demo (10 Qs)
-            </span>
+          {/* Teaser CTA (Secondary Action - Clean Outline with Repositioned Tag) */}
+          <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto gap-3">
             <Link
               href="https://kitchen-scraps-quiz.web.app"
               onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-              className="border-2 border-brand-header text-brand-header hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center"
+              className="border-2 border-emerald-900 text-emerald-900 hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center order-first"
             >
               Try Web Teaser
             </Link>
+            <span className="text-xs font-display font-extrabold uppercase tracking-widest text-emerald-950 select-none text-center sm:text-left whitespace-nowrap mt-2 sm:mt-0">
+              ⚡ Instant Demo (10 Qs)
+            </span>
           </div>
         </div>
 
