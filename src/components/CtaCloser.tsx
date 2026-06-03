@@ -1,12 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { trackOutboundLink } from "@/utils/analytics";
-import DownloadModal from "./DownloadModal";
 
 export default function CtaCloser() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCtaClick = (label: string, url: string) => {
     trackOutboundLink(url, label);
@@ -32,12 +29,8 @@ export default function CtaCloser() {
           {/* Download CTA (Primary Action - Deep Brand Green) */}
           <div className="flex flex-col w-full sm:w-auto">
             <Link
-              href="/kitchen-scraps.apk"
-              download="kitchen-scraps.apk"
-              onClick={(e) => {
-                handleCtaClick("Download APK", "/kitchen-scraps.apk");
-                setIsModalOpen(true);
-              }}
+              href="/download"
+              onClick={() => handleCtaClick("Download APK", "/download")}
               className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full text-center cursor-pointer"
             >
               Download for Android
@@ -64,9 +57,6 @@ export default function CtaCloser() {
           v1.0.0 • Secure Standalone APK (60MB) • Zero Device Permissions Required
         </p>
       </div>
-
-      {/* Render Pre-Download Trust Modal */}
-      <DownloadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

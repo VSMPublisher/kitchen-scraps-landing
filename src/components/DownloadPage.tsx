@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-interface DownloadModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
+export default function DownloadPage() {
   const [progress, setProgress] = useState(0);
   const [isCopied, setIsCopied] = useState(false);
   const [isHashCopied, setIsHashCopied] = useState(false);
@@ -17,39 +12,30 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
   const fileSizeMB = 60;
   const apkSha256 = "b7d5e4a8f3c21a0e6b8c9d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f12";
 
+  // Auto-trigger download after 1 second
   useEffect(() => {
-    if (isOpen) {
-      // Reset states
-      setProgress(0);
-      setIsInstalled(false);
-      setIsCopied(false);
-      setIsHashCopied(false);
+    const downloadTimer = setTimeout(() => {
+      window.location.href = "/kitchen-scraps.apk";
+    }, 1000);
 
-      // Trigger background download
-      const downloadLink = document.createElement("a");
-      downloadLink.href = "/kitchen-scraps.apk";
-      downloadLink.setAttribute("download", "kitchen-scraps.apk");
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
+    return () => clearTimeout(downloadTimer);
+  }, []);
 
-      // Simulate a natural downloading progression
-      const timer = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            clearInterval(timer);
-            return 100;
-          }
-          const increment = Math.floor(Math.random() * 12) + 6;
-          return Math.min(prev + increment, 100);
-        });
-      }, 350);
+  // Simulate download progress
+  useEffect(() => {
+    const progressTimer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(progressTimer);
+          return 100;
+        }
+        const increment = Math.floor(Math.random() * 12) + 6;
+        return Math.min(prev + increment, 100);
+      });
+    }, 350);
 
-      return () => clearInterval(timer);
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
+    return () => clearInterval(progressTimer);
+  }, []);
 
   const handleCopyCode = async () => {
     try {
@@ -74,28 +60,19 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
   const calculatedMB = ((progress / 100) * fileSizeMB).toFixed(1);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/70 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-[2.2rem] border border-brand-border shadow-premium-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto relative flex flex-col text-brand-primary">
+    <div className="w-full min-h-screen bg-brand-bg text-brand-primary">
+      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:py-16">
         
-        {/* Header Close Button with High-Contrast Text */}
-        <button
-          onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 rounded-full bg-brand-soft-bg hover:bg-brand-border/60 flex items-center justify-center font-bold text-lg text-zinc-800 transition-colors cursor-pointer"
-          aria-label="Close modal"
-        >
-          ✕
-        </button>
-
-        {/* Modal Top Branding & Progress Tracker */}
-        <div className="p-8 sm:p-10 border-b border-brand-border bg-brand-soft-bg/40">
+        {/* Page Header with Progress */}
+        <div className="bg-white rounded-[2.2rem] border border-brand-border shadow-premium-lg p-8 sm:p-10 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <span className="text-emerald-950 font-display font-extrabold text-xs tracking-wider uppercase">
                 Secure Direct Transfer
               </span>
-              <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-brand-primary tracking-tight mt-1">
+              <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-brand-primary tracking-tight mt-1">
                 📥 Downloading Kitchen Scraps
-              </h2>
+              </h1>
             </div>
             <div className="text-left sm:text-right font-display font-bold">
               <span className="text-sm text-zinc-700 block">Status Tracking</span>
@@ -120,14 +97,14 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
           </div>
         </div>
 
-        {/* Grid Zone */}
-        <div className="grid md:grid-cols-2 gap-8 p-8 sm:p-10 overflow-y-auto">
+        {/* Main Content Grid */}
+        <div className="grid md:grid-cols-2 gap-8">
           
           {/* Column 1: Trust & Security Posture */}
           <div className="space-y-6">
-            <h3 className="font-display font-extrabold text-lg text-emerald-800 tracking-tight flex items-center gap-2 pb-2 border-b border-brand-border">
+            <h2 className="font-display font-extrabold text-lg text-emerald-800 tracking-tight flex items-center gap-2 pb-2 border-b border-brand-border">
               🛡️ Trust & Integrity Zone
-            </h3>
+            </h2>
 
             {/* VirusTotal Validation Badge */}
             <div className="bg-emerald-50 border border-emerald-600/10 rounded-2xl p-4 flex items-start gap-4">
@@ -135,9 +112,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                 ✅
               </div>
               <div>
-                <h4 className="font-display font-bold text-sm text-brand-primary">
+                <h3 className="font-display font-bold text-sm text-brand-primary">
                   VirusTotal Certified Secure
-                </h4>
+                </h3>
                 <p className="text-xs text-zinc-700 mt-1 leading-relaxed">
                   Scanned across 70 major antivirus engines. <strong>0 threat detections</strong> returned. Completely safe for Android operation.
                 </p>
@@ -153,9 +130,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                 🛡️
               </div>
               <div>
-                <h4 className="font-display font-bold text-sm text-brand-primary">
+                <h3 className="font-display font-bold text-sm text-brand-primary">
                   Play Protect Compatible
-                </h4>
+                </h3>
                 <p className="text-xs text-zinc-700 mt-1 leading-relaxed">
                   Our application is cryptographically signed and passes all built-in Android Google Play Protect device safety scans seamlessly [1].
                 </p>
@@ -164,9 +141,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
 
             {/* Zero-Permission Policy Card */}
             <div className="bg-brand-soft-bg/30 border border-brand-border rounded-2xl p-4">
-              <h4 className="font-display font-bold text-sm text-brand-primary mb-2">
+              <h3 className="font-display font-bold text-sm text-brand-primary mb-2">
                 Zero-Permission Security Pledge
-              </h4>
+              </h3>
               <p className="text-xs text-zinc-800 leading-relaxed mb-3 font-medium">
                 Our lightweight composting utility requests <strong>zero background systems access</strong> to run safely on your mobile hardware:
               </p>
@@ -181,9 +158,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
             {/* SHA-256 Hash Display */}
             <div className="bg-zinc-50 border border-zinc-200 rounded-2xl p-4">
               <div className="flex items-center justify-between gap-2 mb-1">
-                <h4 className="font-display font-bold text-xs text-zinc-800">
+                <h3 className="font-display font-bold text-xs text-zinc-800">
                   SHA-256 Integrity Fingerprint
-                </h4>
+                </h3>
                 <button
                   onClick={handleCopyHash}
                   className="text-xs font-bold text-emerald-900 hover:text-emerald-950 hover:underline cursor-pointer"
@@ -199,9 +176,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
 
           {/* Column 2: 3-Step Visual Guide */}
           <div className="space-y-6">
-            <h3 className="font-display font-extrabold text-lg text-emerald-800 tracking-tight flex items-center gap-2 pb-2 border-b border-brand-border">
+            <h2 className="font-display font-extrabold text-lg text-emerald-800 tracking-tight flex items-center gap-2 pb-2 border-b border-brand-border">
               📲 3-Step Installation Guide
-            </h3>
+            </h2>
 
             <ol className="space-y-4">
               <li className="flex gap-4 items-start">
@@ -209,9 +186,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   1
                 </div>
                 <div>
-                  <h4 className="font-display font-extrabold text-sm text-brand-primary">
+                  <h3 className="font-display font-extrabold text-sm text-brand-primary">
                     Accept System Alert If Prompted
-                  </h4>
+                  </h3>
                   <p className="text-xs text-zinc-800 mt-1 leading-relaxed">
                     If Chrome displays <em>&ldquo;File might be harmful&rdquo;</em>, tap <strong>&ldquo;Download Anyway&rdquo;</strong>.
                   </p>
@@ -226,9 +203,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   2
                 </div>
                 <div>
-                  <h4 className="font-display font-extrabold text-sm text-brand-primary">
+                  <h3 className="font-display font-extrabold text-sm text-brand-primary">
                     Open File From Notifications
-                  </h4>
+                  </h3>
                   <p className="text-xs text-zinc-800 mt-1 leading-relaxed">
                     Pull down your phone status bar or check browser downloads and select <strong>&ldquo;kitchen-scraps.apk&rdquo;</strong>.
                   </p>
@@ -240,9 +217,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   3
                 </div>
                 <div>
-                  <h4 className="font-display font-extrabold text-sm text-brand-primary">
+                  <h3 className="font-display font-extrabold text-sm text-brand-primary">
                     Grant Source Toggle and Finish Setup
-                  </h4>
+                  </h3>
                   <p className="text-xs text-zinc-800 mt-1 leading-relaxed">
                     If requested by your system settings, tap <strong>&ldquo;Settings&rdquo;</strong> on the prompt, toggle <strong>&ldquo;Allow from this source&rdquo;</strong>, and proceed to hit <strong>&ldquo;Install&rdquo;</strong>.
                   </p>
@@ -252,15 +229,15 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
           </div>
         </div>
 
-        {/* Modal Bottom Gamified Claim Action Section */}
-        <div className="p-8 border-t border-brand-border bg-emerald-50/40 text-center">
+        {/* Bottom Gamified Claim Action Section */}
+        <div className="bg-white rounded-[2.2rem] border border-brand-border shadow-premium-lg p-8 sm:p-10 mt-8 text-center">
           {progress < 100 ? (
             <div className="py-2 text-sm text-zinc-700 font-semibold animate-pulse">
               ⌛ Preparing your verified installation bundle... please keep this window active.
             </div>
           ) : (
             <div className="space-y-4 max-w-lg mx-auto">
-              <label className="flex items-center justify-center gap-3 bg-white p-4 rounded-xl border border-brand-border shadow-premium-sm cursor-pointer select-none group hover:border-brand-header/60 transition-colors">
+              <label className="flex items-center justify-center gap-3 bg-brand-soft-bg/40 p-4 rounded-xl border border-brand-border shadow-premium-sm cursor-pointer select-none group hover:border-brand-header/60 transition-colors">
                 <input
                   type="checkbox"
                   checked={isInstalled}
@@ -277,9 +254,9 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   <span className="text-xs font-display font-bold tracking-widest uppercase bg-white/20 px-3 py-1 rounded-full">
                     🎉 Skin Unlocked!
                   </span>
-                  <h4 className="font-display font-extrabold text-lg">
+                  <h3 className="font-display font-extrabold text-lg">
                     Claim Your Amber Golden Garden Theme
-                  </h4>
+                  </h3>
                   <p className="text-xs text-emerald-100 leading-relaxed max-w-sm mx-auto font-medium">
                     Copy this code and enter it in your new native app's settings panel to claim your bonus customization interface:
                   </p>
@@ -300,7 +277,6 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
