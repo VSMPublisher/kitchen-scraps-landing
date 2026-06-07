@@ -49,7 +49,7 @@ const mobileAppJsonLd = {
     "Confused about composting? Take our free, fun quiz to master food waste rules, learn science-backed facts, and build sustainable habits today!",
   operatingSystem: "Android",
   applicationCategory: "EducationalApplication",
-  downloadUrl: `${siteUrl}/kitchen-scraps.apk`,
+  downloadUrl: `${siteUrl}/kitchen-scraps-quiz-v1.0.apk`,
   fileSize: "60MB",
   offers: {
     "@type": "Offer",

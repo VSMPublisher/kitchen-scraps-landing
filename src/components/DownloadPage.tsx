@@ -10,12 +10,12 @@ export default function DownloadPage() {
 
   // Constants
   const fileSizeMB = 60;
-  const apkSha256 = "b7d5e4a8f3c21a0e6b8c9d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f12";
+  const apkSha256 = "90f28ff17c1db7a86bcc87b9b13ae788b4646769621674d1f19323bf464a31f5";
 
   // Auto-trigger download after 1 second
   useEffect(() => {
     const downloadTimer = setTimeout(() => {
-      window.location.href = "/kitchen-scraps.apk";
+      window.location.href = "/kitchen-scraps-quiz-v1.0.apk";
     }, 1000);
 
     return () => clearTimeout(downloadTimer);
@@ -207,7 +207,7 @@ export default function DownloadPage() {
                     Open File From Notifications
                   </h3>
                   <p className="text-xs text-zinc-800 mt-1 leading-relaxed">
-                    Pull down your phone status bar or check browser downloads and select <strong>&ldquo;kitchen-scraps.apk&rdquo;</strong>.
+                    Pull down your phone status bar or check browser downloads and select <strong>&ldquo;kitchen-scraps-quiz-v1.0.apk&rdquo;</strong>.
                   </p>
                 </div>
               </li>
