@@ -4,67 +4,67 @@ import Link from "next/link";
 import Image from "next/image";
 import { trackOutboundLink } from "@/utils/analytics";
 
+const OrganicLeaf = ({ className }: { className: string }) => (
+  <svg 
+    aria-hidden="true"
+    viewBox="0 0 100 100" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    className={`absolute pointer-events-none select-none z-0 transition-transform ${className}`}
+  >
+    <path 
+      d="M15 85 C 10 50, 40 20, 85 15 C 80 50, 50 80, 15 85 Z" 
+      fill="currentColor" 
+      className="text-emerald-700/6"
+    />
+    <path 
+      d="M5 95 C 10 90, 15 85, 15 85 C 22 78, 45 45, 85 15" 
+      stroke="currentColor" 
+      strokeWidth="1.2" 
+      strokeLinecap="round" 
+      className="text-emerald-800/25"
+    />
+    <path 
+      d="
+        M 20 80 C 15 76, 12 73, 12 70
+        M 28 71 C 21 66, 16 62, 16 58
+        M 36 62 C 28 56, 23 50, 23 46
+        M 45 52 C 37 45, 31 39, 31 35
+        M 54 42 C 46 35, 42 30, 42 26
+        M 63 33 C 57 27, 55 23, 55 20
+        M 72 24 C 68 19, 68 17, 68 16
+      " 
+      stroke="currentColor" 
+      strokeWidth="0.8" 
+      strokeLinecap="round" 
+      className="text-emerald-800/20"
+    />
+    <path 
+      d="
+        M 20 80 C 27 82, 33 83, 35 84
+        M 28 71 C 37 74, 44 76, 47 78
+        M 36 62 C 47 65, 55 67, 58 69
+        M 45 52 C 56 55, 64 56, 68 58
+        M 54 42 C 65 44, 73 45, 77 46
+        M 63 33 C 73 34, 80 34, 83 34
+        M 72 24 C 80 24, 84 23, 86 23
+      " 
+      stroke="currentColor" 
+      strokeWidth="0.8" 
+      strokeLinecap="round" 
+      className="text-emerald-800/20"
+    />
+  </svg>
+);
+
 export default function Hero() {
 
   const handleCtaClick = (label: string, url: string) => {
     trackOutboundLink(url, label);
   };
 
-  const OrganicLeaf = ({ className }: { className: string }) => (
-    <svg 
-      aria-hidden="true"
-      viewBox="0 0 100 100" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-      className={`absolute pointer-events-none select-none z-0 transition-transform ${className}`}
-    >
-      <path 
-        d="M15 85 C 10 50, 40 20, 85 15 C 80 50, 50 80, 15 85 Z" 
-        fill="currentColor" 
-        className="text-emerald-700/6"
-      />
-      <path 
-        d="M5 95 C 10 90, 15 85, 15 85 C 22 78, 45 45, 85 15" 
-        stroke="currentColor" 
-        strokeWidth="1.2" 
-        strokeLinecap="round" 
-        className="text-emerald-800/25"
-      />
-      <path 
-        d="
-          M 20 80 C 15 76, 12 73, 12 70
-          M 28 71 C 21 66, 16 62, 16 58
-          M 36 62 C 28 56, 23 50, 23 46
-          M 45 52 C 37 45, 31 39, 31 35
-          M 54 42 C 46 35, 42 30, 42 26
-          M 63 33 C 57 27, 55 23, 55 20
-          M 72 24 C 68 19, 68 17, 68 16
-        " 
-        stroke="currentColor" 
-        strokeWidth="0.8" 
-        strokeLinecap="round" 
-        className="text-emerald-800/20"
-      />
-      <path 
-        d="
-          M 20 80 C 27 82, 33 83, 35 84
-          M 28 71 C 37 74, 44 76, 47 78
-          M 36 62 C 47 65, 55 67, 58 69
-          M 45 52 C 56 55, 64 56, 68 58
-          M 54 42 C 65 44, 73 45, 77 46
-          M 63 33 C 73 34, 80 34, 83 34
-          M 72 24 C 80 24, 84 23, 86 23
-        " 
-        stroke="currentColor" 
-        strokeWidth="0.8" 
-        strokeLinecap="round" 
-        className="text-emerald-800/20"
-      />
-    </svg>
-  );
-
   return (
-    <section className="w-full bg-brand-bg relative overflow-hidden py-16 lg:py-24 px-6 scroll-mt-20">
+    <section id="hero" className="w-full bg-brand-bg relative overflow-hidden py-16 lg:py-24 px-6 scroll-mt-20">
       
       <div 
         aria-hidden="true"
@@ -93,7 +93,7 @@ export default function Hero() {
           </div>
           
           <p className="flex items-start gap-2 justify-center lg:justify-start text-xs text-emerald-900 font-bold mt-1 text-center lg:text-left">
-            <span className="shrink-0">⭐</span> 
+            <span className="shrink-0" aria-hidden="true">⭐</span> 
             <span>Built using verified organic chemistry and household composting data</span>
           </p>
           
@@ -101,11 +101,11 @@ export default function Hero() {
             Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta-text">Gold</span>
           </h1>
 
-          <p className="text-lg sm:text-xl mb-4 text-zinc-900 max-w-2xl leading-relaxed font-semibold">
+          <p className="text-lg sm:text-xl mb-4 text-brand-primary max-w-2xl leading-relaxed font-semibold">
             Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free, gamified learning platform teaches you smart <strong className="text-emerald-900 font-bold">kitchen waste management app</strong> rules through interactive play in just 30 seconds.
           </p>
 
-          <p className="text-base mb-8 text-zinc-800 font-medium tracking-tight">
+          <p className="text-base mb-8 text-brand-primary-light font-medium tracking-tight">
             10 questions per run • 6 specialized categories • No signup, ever.
           </p>
 
@@ -116,7 +116,7 @@ export default function Hero() {
               <Link
                 href="/download"
                 onClick={() => handleCtaClick("Download APK", "/download")}
-                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full text-center cursor-pointer"
+                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
               >
                 Download for Android
               </Link>
@@ -131,7 +131,7 @@ export default function Hero() {
               <Link
                 href="https://kitchen-scraps-quiz.web.app"
                 onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-                className="border-2 border-emerald-900 text-emerald-900 px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full md:w-auto text-center order-first"
+                className="border-2 border-emerald-900 text-emerald-900 px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full md:w-auto text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
               >
                 Try Web Teaser
               </Link>
@@ -142,18 +142,18 @@ export default function Hero() {
           </div>
 
           {/* Safety badges and notice layouts */}
-          <div className="mt-6 text-xs text-zinc-800 font-medium tracking-wide space-y-1.5 pl-1">
+          <div className="mt-6 text-xs text-brand-primary-light font-medium tracking-wide space-y-1.5 pl-1">
             <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
-              <span className="shrink-0">🛡️</span> 
+              <span className="shrink-0" aria-hidden="true">🛡️</span> 
               <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
             </p>
             <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
-              <span className="shrink-0">⚡</span> 
+              <span className="shrink-0" aria-hidden="true">⚡</span> 
               <span>Play instantly in your browser — no installation required</span>
             </p>
           </div>
           
-          <p className="text-xs text-zinc-700 mt-4 italic font-medium">
+          <p className="text-xs text-brand-muted mt-4 italic font-medium">
             Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
           </p>
         </div>
@@ -172,7 +172,27 @@ export default function Hero() {
               priority
               className="object-cover"
             />
-          </div>          
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Sticky CTA Bar - Thumb Zone Access */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm border-t border-brand-border/50 shadow-premium-lg p-4 safe-area-pb">
+        <div className="max-w-6xl mx-auto flex gap-3">
+          <Link
+            href="/download"
+            onClick={() => handleCtaClick("Download APK - Mobile CTA", "/download")}
+            className="flex-1 bg-brand-header text-white px-6 py-3.5 rounded-xl font-bold text-base hover:bg-brand-hero-accent hover-lift transition-all shadow-premium text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
+          >
+            Download for Android
+          </Link>
+          <Link
+            href="https://kitchen-scraps-quiz.web.app"
+            onClick={() => handleCtaClick("Play Now - Web - Mobile CTA", "https://kitchen-scraps-quiz.web.app")}
+            className="flex-1 border-2 border-emerald-900 text-emerald-900 px-6 py-3.5 rounded-xl font-bold text-base hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
+          >
+            Try Web Teaser
+          </Link>
         </div>
       </div>
 

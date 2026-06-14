@@ -46,7 +46,7 @@ export default function Faq() {
           Frequently Asked Questions
         </h2>
         {/* FIXED: Swapped pale brand utility with clean high-contrast text-gray-700 */}
-        <p className="text-gray-700 font-medium max-w-xl mx-auto">
+        <p className="text-brand-primary-light font-medium max-w-xl mx-auto">
           Need quick answers regarding the quiz app mechanics, platforms, or content? We have you covered.
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function Faq() {
             key={idx}
             className="group bg-white border border-brand-border rounded-2xl p-6 shadow-premium-sm [&_summary::-webkit-details-marker]:hidden transition-all duration-300 open:shadow-premium select-none"
           >
-            <summary className="flex items-center justify-between cursor-pointer focus:outline-none">
+            <summary className="flex items-center justify-between cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-header focus-visible:ring-offset-2 rounded-md" aria-keyshortcuts="Space Enter">
               {/* FIXED: Swapped h4 -> h3 to align layout headers perfectly */}
               <h3 className="font-display font-extrabold text-brand-primary text-base sm:text-lg pr-4 group-open:text-brand-hero-accent transition-colors duration-300">
                 {faq.q}

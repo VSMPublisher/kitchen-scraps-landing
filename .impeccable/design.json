@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-14T11:45:00Z",
+  "title": "Design System: Kitchen Scraps",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Forest Ink", "canonical": "oklch(28% 0.05 120)", "tonalRamp": ["#162511", "#22391a", "#2d4a22", "#3b622d", "#4b7c39", "#6b9e57", "#98be88", "#d2e5ca"] },
+      "neutral-bg": { "role": "neutral", "displayName": "Sprout White", "canonical": "oklch(97% 0.015 110)", "tonalRamp": ["#8fa37d", "#abc097", "#c5dbb1", "#d9edd2", "#e8f5e4", "#f1f8ed", "#f4faeb", "#fafefe"] },
+      "header": { "role": "accent", "displayName": "Vibrant Leaf Green", "canonical": "oklch(50% 0.18 135)", "tonalRamp": ["#063908", "#0a550d", "#0d7a14", "#15a61e", "#3ad345", "#70e277", "#a6f0ab", "#dbfad2"] },
+      "cta": { "role": "accent", "displayName": "Harvest Gold", "canonical": "oklch(76% 0.14 78)", "tonalRamp": ["#6e4f1a", "#9b7027", "#c69237", "#e9b15d", "#f1ca85", "#f7deb0", "#fcedd6", "#fffdfa"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Montserrat Display", "purpose": "Main promotional titles and high-energy marketing headings." },
+      "body": { "displayName": "Inter Body", "purpose": "Highly legible copy, instructions, and interactive options." }
+    },
+    "shadows": [
+      { "name": "premium-rest", "value": "0 10px 30px -10px rgba(45, 74, 34, 0.12)", "purpose": "Subtle rest depth for key containers." },
+      { "name": "premium-lift", "value": "0 20px 40px -15px rgba(45, 74, 34, 0.18)", "purpose": "Elevated depth triggered during button or container hovers." }
+    ],
+    "motion": [
+      { "name": "ease-out-back", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Ears-out energetic bounce transition for tactile clicks and hovers." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Standard action button used for downloading the Android APK.",
+      "html": "<button class=\"ds-btn-primary\">Download for Android</button>",
+      "css": ".ds-btn-primary { background-color: #0D7A14; color: #ffffff; font-family: system-ui, -apple-system, sans-serif; font-weight: 700; font-size: 1.125rem; padding: 1rem 2rem; border-radius: 12px; border: none; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.2s ease; box-shadow: 0 10px 30px -10px rgba(45, 74, 34, 0.12); } .ds-btn-primary:hover { background-color: #38761D; transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(45, 74, 34, 0.18); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Secondary outline button used for instant browser gameplay teaser.",
+      "html": "<button class=\"ds-btn-secondary\">Try Web Teaser</button>",
+      "css": ".ds-btn-secondary { background-color: transparent; color: #2D4A22; border: 2px solid #2D4A22; font-family: system-ui, -apple-system, sans-serif; font-weight: 700; font-size: 1.125rem; padding: 0.875rem 2rem; border-radius: 12px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, background-color 0.2s ease; } .ds-btn-secondary:hover { background-color: rgba(232, 245, 228, 0.4); transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(45, 74, 34, 0.18); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Composter's Field Guide",
+    "overview": "The Composter's Field Guide visual system is designed to look clean, highly readable, structured, and informative. It draws visual inspiration from traditional organic field guides, using deep forest greens and soft sprout whites as the foundation, contrasted with high-visibility leafy green and harvest gold action elements.",
+    "keyCharacteristics": [
+      "Earthy, natural tones contrasted with vibrant, accessible CTA actions.",
+      "Tactile container cards with light borders (1px) and subtle depth.",
+      "Clean typographic pairing of Montserrat (Display) and Inter (Sans-serif).",
+      "Smooth responsive transitions and hover-lifts that provide micro-interactive feedback."
+    ],
+    "rules": [
+      { "name": "The Forest Contrast Rule", "body": "Body text must always use Forest Ink against Sprout White or Eco Border to ensure contrast meets or exceeds 4.5:1. Never use muted grays for prose.", "section": "colors" },
+      { "name": "The Letter-Spacing Floor Rule", "body": "Display H1s must never have a letter-spacing tighter than -0.04em, preventing cramped layout issues on mobile screens.", "section": "typography" },
+      { "name": "The No-Ghost Rule", "body": "Avoid pairing a 1px border with a soft, wide drop shadow (M >= 16px) on the same element at rest. Pick either a clean border or a subtle rest shadow, never both.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do maintain a strict 4.5:1 contrast ratio for all descriptive text.",
+      "Do wrap long headers with text-wrap: balance to prevent awkward line wraps.",
+      "Do respect the user's prefers-reduced-motion settings by transitioning with a soft crossfade."
+    ],
+    "donts": [
+      "Don't use border-left or border-right accent stripes on card containers.",
+      "Don't apply gradient backgrounds or text clipping.",
+      "Don't use amateurish hand-drawn/sketchy SVG doodles.",
+      "Don't use card radii exceeding 24px."
+    ]
+  }
+}

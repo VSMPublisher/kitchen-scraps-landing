@@ -16,7 +16,7 @@ export default function CtaCloser() {
         <h2 className="text-2xl md:text-3xl font-bold text-brand-primary tracking-tight font-sans">
           Ready to Stop Second-Guessing Your Waste?
         </h2>
-        <p className="text-zinc-800 mt-3 text-sm md:text-base max-w-md mx-auto">
+        <p className="text-brand-primary mt-3 text-sm md:text-base max-w-md mx-auto">
           Get the free app now and instantly master composting rules in just 30 seconds.
         </p>
         
@@ -31,7 +31,7 @@ export default function CtaCloser() {
             <Link
               href="/download"
               onClick={() => handleCtaClick("Download APK", "/download")}
-              className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full text-center cursor-pointer"
+              className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
             >
               Download for Android
             </Link>
@@ -42,7 +42,7 @@ export default function CtaCloser() {
             <Link
               href="https://kitchen-scraps-quiz.web.app"
               onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-              className="border-2 border-emerald-900 text-emerald-900 hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center order-first"
+              className="border-2 border-emerald-900 text-emerald-900 hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
             >
               Try Web Teaser
             </Link>

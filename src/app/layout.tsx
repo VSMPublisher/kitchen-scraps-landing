@@ -10,7 +10,6 @@ const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat
 const siteUrl = "https://kitchen-scraps.web.app";
 
 export const metadata: Metadata = {
-  // FIXED: Standardized page title structure to verify the brand alignment with the JSON-LD schema
   title: "Composting Quiz — Know What Goes In Your Bin | Kitchen Scraps & Food Waste Quiz",
   description:
     "Not sure if coffee grounds belong in compost? Take our free 60-question quiz across 6 categories and finally learn what to compost — and what to toss.",
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
     ],
   },
   metadataBase: new URL(siteUrl),
-  
+
   // Google Search Console Site Verification:
   verification: {
     google: "ymeXpfXiEZQw3VqV-iDF0TpCT31QwCyTlcUOsbQlpAY",
@@ -73,7 +72,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // FIX 1: Added suppressHydrationWarning to ignore extension conflicts in the browser
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${montserrat.variable} antialiased font-sans`}>
         <JsonLd />
         {children}
@@ -93,6 +93,14 @@ export default function RootLayout({
             </Script>
           </>
         )}
+
+        {/* impeccable-live-start */}
+        {/* FIX 2: Optimized using Next.js Script component to prevent execution sync errors */}
+        <Script
+          src="http://localhost:8400/live.js"
+          strategy="afterInteractive"
+        />
+        {/* impeccable-live-end */}
       </body>
     </html>
   );

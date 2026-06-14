@@ -34,7 +34,7 @@ export default function ValueGapMatrix() {
 
   return (
     <section id="web-vs-app" className="py-20 px-6 max-w-6xl mx-auto scroll-mt-20">
-      <div className="bg-white rounded-[2.5rem] border border-brand-border p-8 sm:p-12 shadow-premium relative overflow-hidden">
+      <div className="bg-white rounded-3xl border border-brand-border p-8 sm:p-12 shadow-premium-sm relative overflow-hidden">
         {/* Glow decoration */}
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-soft-bg rounded-full blur-3xl pointer-events-none" />
 
@@ -45,7 +45,7 @@ export default function ValueGapMatrix() {
           <h2 className="text-3xl font-bold text-emerald-800 tracking-tight mt-2">
             Web Teaser vs. Mobile App Edition
           </h2>
-          <p className="text-gray-700 mt-2 max-w-lg mx-auto font-medium">
+          <p className="text-brand-primary-light mt-2 max-w-lg mx-auto font-medium">
             While the web build serves as a quick trial, downloading the zero-permission native APK delivers our full suite of gardening features.
           </p>
         </div>
@@ -69,20 +69,20 @@ export default function ValueGapMatrix() {
                     {row.feature}
                   </td>
                   
-                  {/* Web Play column - Soft, easy to read gray */}
-                  <td className="p-5 text-xs text-gray-600 font-normal leading-relaxed align-top">
-                    {row.web}
-                  </td>
+                   {/* Web Play column - Soft, easy to read gray */}
+                   <td className="p-5 text-xs text-brand-primary-light font-normal leading-relaxed align-top">
+                     {row.web}
+                   </td>
                   
                   {/* Android Native - Clean Semibold green with very soft highlight background */}
                   <td className="p-5 text-xs text-emerald-950 font-semibold leading-relaxed bg-brand-soft-bg/20 align-top">
                     {row.app}
                   </td>
                   
-                  {/* Conversion Focus - High-readability neutral dark zinc */}
-                  <td className="p-5 text-xs text-zinc-700 font-medium leading-relaxed align-top">
-                    {row.psychology}
-                  </td>
+                   {/* Conversion Focus - High-readability neutral dark zinc */}
+                   <td className="p-5 text-xs text-brand-muted font-medium leading-relaxed align-top">
+                     {row.psychology}
+                   </td>
                 </tr>
               ))}
             </tbody>
@@ -98,8 +98,8 @@ export default function ValueGapMatrix() {
               </h3>
               <div className="space-y-3">
                 <div className="text-xs">
-                  <span className="font-bold text-gray-500 block mb-0.5">🌐 WEB TEASER</span>
-                  <p className="text-gray-700 font-normal leading-relaxed">{row.web}</p>
+                  <span className="font-bold text-brand-muted block mb-0.5">🌐 WEB TEASER</span>
+                  <p className="text-brand-primary-light font-normal leading-relaxed">{row.web}</p>
                 </div>
                 <div className="text-xs pt-2 border-t border-brand-border/40">
                   <span className="font-bold text-brand-hero-accent block mb-0.5">🤖 NATIVE APP</span>
@@ -107,7 +107,7 @@ export default function ValueGapMatrix() {
                 </div>
                 <div className="text-xs pt-2 border-t border-brand-border/40">
                   <span className="font-bold text-emerald-800 block mb-0.5">CONVERSION FOCUS</span>
-                  <p className="text-zinc-700 font-medium leading-relaxed">{row.psychology}</p>
+                  <p className="text-brand-muted font-medium leading-relaxed">{row.psychology}</p>
                 </div>
               </div>
             </div>

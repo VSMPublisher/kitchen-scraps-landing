@@ -60,7 +60,7 @@ export default function Footer() {
         </h2>
         {/* FIXED: Darkened contrasting tone layer from white/80 to emerald-50 */}
         <p className="mb-10 text-emerald-50 italic text-base leading-relaxed max-w-xl mx-auto">
-          &ldquo;One quiz at a time, we're making composting less confusing and a lot more fun.&rdquo;
+          &ldquo;One quiz at a time, we&apos;re making composting less confusing and a lot more fun.&rdquo;
         </p>
 
         {/* Social Links */}
@@ -73,7 +73,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               onClick={() => handleOutboundClick(link.href, link.label)}
               aria-label={link.label}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-brand-header text-white flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-premium-sm"
+              className="w-11 h-11 rounded-full bg-white/10 hover:bg-brand-header text-white flex items-center justify-center transition-all duration-300 transform hover:scale-110 shadow-premium-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               {link.icon}
             </a>
@@ -92,7 +92,7 @@ export default function Footer() {
                 "Privacy Policy"
               )
             }
-            className="hover:text-brand-cta transition-colors decoration-brand-header underline underline-offset-8 decoration-2"
+            className="hover:text-brand-cta transition-colors decoration-brand-header underline underline-offset-8 decoration-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary rounded px-2 py-0.5"
           >
             Privacy Policy
           </Link>
@@ -106,7 +106,7 @@ export default function Footer() {
                 "Terms of Service"
               )
             }
-            className="hover:text-brand-cta transition-colors decoration-brand-header underline underline-offset-8 decoration-2"
+            className="hover:text-brand-cta transition-colors decoration-brand-header underline underline-offset-8 decoration-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary rounded px-2 py-0.5"
           >
             Terms of Service
           </Link>

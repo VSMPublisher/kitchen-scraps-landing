@@ -39,7 +39,7 @@ export default function Features() {
           <h2 className="text-3xl font-bold text-emerald-800 text-center">
             Learn Kitchen Waste Sorting Rules Faster
           </h2>
-          <p className="text-center text-gray-700 mt-2">
+          <p className="text-center text-brand-primary-light mt-2">
             Composting rules can be dry and confusing. That is why we packed our quiz with fun, rewarding elements that turn learning into a game.
           </p>
         </div>
@@ -51,7 +51,9 @@ export default function Features() {
               className="bg-brand-bg p-6 rounded-2xl border border-brand-border/50 hover-lift shadow-premium-sm hover:shadow-premium flex items-start gap-4 transition-all duration-300"
             >
               <div className="w-12 h-12 rounded-xl bg-white border border-brand-border flex items-center justify-center text-2xl flex-shrink-0 shadow-premium-sm">
-                {feat.icon}
+                <span aria-hidden="true">
+                  {feat.icon}
+                </span>
               </div>
               <div className="space-y-1">
                 {/* FIXED: Shifted from h4 to h3 for semantic hierarchy compliance */}
@@ -59,7 +61,7 @@ export default function Features() {
                   {feat.title}
                 </h3>
                 {/* FIXED: Upgraded translucent utility to crisp text-gray-700 */}
-                <p className="text-sm text-gray-700 leading-relaxed font-medium">
+                <p className="text-sm text-brand-primary-light leading-relaxed font-medium">
                   {feat.desc}
                 </p>
               </div>

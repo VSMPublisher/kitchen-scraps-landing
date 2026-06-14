@@ -5,9 +5,15 @@
  * @param url The target outbound URL.
  * @param label A descriptive label for the link clicked (e.g. 'Privacy Policy', 'Terms of Service', 'YouTube').
  */
+declare global {
+  interface Window {
+    gtag: (...args: unknown[]) => void;
+  }
+}
+
 export function trackOutboundLink(url: string, label: string): void {
-  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
-    (window as any).gtag("event", "click_outbound", {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", "click_outbound", {
       event_category: "Outbound Links",
       event_label: label,
       value: url,

@@ -24,7 +24,7 @@ export default function HowItWorks() {
 
   return (
     <section id="how-it-works" className="py-20 px-6 max-w-6xl mx-auto scroll-mt-20">
-      <div className="bg-brand-primary rounded-[2.5rem] border border-brand-primary-light p-8 sm:p-12 md:p-16 shadow-premium relative overflow-hidden text-white">
+      <div className="bg-brand-primary rounded-3xl border border-brand-primary-light p-8 sm:p-12 md:p-16 shadow-premium relative overflow-hidden text-white">
         {/* Glow decoration */}
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-header/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -43,10 +43,10 @@ export default function HowItWorks() {
               {/* Image Showcase frame container */}
               <div className="w-full max-w-[240px] mb-8 relative">
                 {/* Outer soft shadow */}
-                <div className="absolute -inset-1 bg-gradient-to-b from-brand-header/30 to-brand-cta/30 rounded-[2.2rem] blur-lg group-hover:blur-xl transition-all duration-300 pointer-events-none" />
+                <div className="absolute -inset-1 bg-gradient-to-b from-brand-header/30 to-brand-cta/30 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-300 pointer-events-none" />
                 
                 {/* Device Mockup Shadow Container */}
-                <div className="relative rounded-[2rem] overflow-hidden border border-white/10 shadow-premium bg-white aspect-[9/19]">
+                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-premium bg-white aspect-[9/19]">
                   <Image
                     src={item.image}
                     alt={`Kitchen Scraps App Setup Step ${item.step}: ${item.title}`}

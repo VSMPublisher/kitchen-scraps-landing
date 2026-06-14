@@ -24,7 +24,7 @@ export default function CoreValues() {
 
   return (
     <section id="core-values" className="py-20 px-6 max-w-6xl mx-auto scroll-mt-20">
-      <div className="bg-white rounded-[2.5rem] border border-brand-border p-8 sm:p-12 shadow-premium relative overflow-hidden">
+      <div className="bg-white rounded-3xl border border-brand-border p-8 sm:p-12 shadow-premium relative overflow-hidden">
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-soft-bg rounded-full blur-3xl pointer-events-none" />
 
         <div className="text-center mb-16 max-w-2xl mx-auto relative z-10">
@@ -34,7 +34,7 @@ export default function CoreValues() {
           <h2 className="text-3xl font-bold text-emerald-800 text-center tracking-tight mt-2">
             Core Values
           </h2>
-          <p className="text-center text-gray-700 mt-2 max-w-xl mx-auto font-medium">
+          <p className="text-center text-brand-primary-light mt-2 max-w-xl mx-auto font-medium">
             We are a mass-market utility driven by a practical purpose to simplify environmental action.
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function CoreValues() {
                 <h3 className="font-display font-extrabold text-lg text-brand-primary">
                   {val.title}
                 </h3>
-                <p className="text-sm text-gray-700 leading-relaxed font-medium">
+                <p className="text-sm text-brand-primary-light leading-relaxed font-medium">
                   {val.desc}
                 </p>
               </div>

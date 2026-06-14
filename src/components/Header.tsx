@@ -29,7 +29,7 @@ export default function Header() {
         {/* Logo Section */}
         <button
           onClick={scrollToTop}
-          className="flex items-center gap-3 text-left focus:outline-none hover:opacity-90 transition-opacity cursor-pointer z-10"
+          className="flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-header rounded-xl p-1 hover:opacity-90 transition-opacity cursor-pointer z-10"
           aria-label="Scroll to top"
         >
           <div className="relative w-8 h-8 flex items-center justify-center bg-transparent">
@@ -52,7 +52,7 @@ export default function Header() {
             <a
               key={idx}
               href={link.href}
-              className="text-white hover:text-white/80 font-semibold text-sm transition-colors"
+              className="text-white hover:text-white/80 font-semibold text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-header rounded px-2 py-1"
             >
               {link.label}
             </a>
@@ -62,7 +62,7 @@ export default function Header() {
         {/* Hamburger Menu Toggle Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="lg:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 focus:outline-none z-10 cursor-pointer"
+          className="lg:hidden flex flex-col justify-center items-center w-11 h-11 gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-header rounded-xl z-10 cursor-pointer"
           aria-label="Toggle navigation menu"
           aria-expanded={isMobileMenuOpen}
         >
@@ -97,7 +97,7 @@ export default function Header() {
                 key={idx}
                 href={link.href}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="text-white hover:bg-white/10 font-semibold text-base py-2.5 px-4 rounded-xl transition-all"
+                className="text-white hover:bg-white/10 font-semibold text-base py-2.5 px-4 rounded-xl transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 {link.label}
               </a>

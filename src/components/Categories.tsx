@@ -36,7 +36,7 @@ export default function Categories() {
 
   return (
     <section id="categories" className="py-20 px-6 max-w-6xl mx-auto scroll-mt-20">
-      <div className="bg-white rounded-[2.5rem] border border-brand-border p-8 sm:p-12 shadow-premium relative overflow-hidden">
+      <div className="bg-white rounded-3xl border border-brand-border p-8 sm:p-12 shadow-premium relative overflow-hidden">
         {/* Glow decoration */}
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-soft-bg rounded-full blur-3xl pointer-events-none" />
 
@@ -44,16 +44,28 @@ export default function Categories() {
           <h2 className="text-3xl font-bold text-emerald-800 text-center">
             Master 6 Gamified Quiz Categories
           </h2>
-          <p className="text-center text-zinc-800 mt-2">
+          <p className="text-center text-brand-primary-light mt-2">
             Master every aspect of waste reduction. Learn rules for standard piles, specialized bins, organic garden science, and structural setups.
           </p>
+        </div>
+
+        {/* Start Here Guidance for Beginners */}
+        <div className="mb-10 p-4 bg-brand-soft-bg/50 border border-brand-header/20 rounded-2xl relative z-10">
+          <div className="flex items-center gap-2 justify-center text-sm">
+            <span className="w-6 h-6 rounded-full bg-brand-header text-white font-display font-bold text-xs flex items-center justify-center shrink-0">
+              🌱
+            </span>
+            <span className="font-display font-semibold text-brand-primary">
+              New to composting? Start with <strong className="text-brand-header">Go/No-Go</strong> — the fastest way to learn what belongs in your bin.
+            </span>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
           {categories.map((cat, idx) => (
             <div
               key={idx}
-              className="bg-brand-bg p-8 rounded-2xl border border-brand-border/60 border-b-4 border-b-brand-header hover-lift shadow-premium-sm hover:shadow-premium transition-all duration-300 flex flex-col items-center text-center group"
+              className="bg-brand-bg p-8 rounded-2xl border border-brand-border/60 hover-lift shadow-premium-sm hover:shadow-premium transition-all duration-300 flex flex-col items-center text-center group"
             >
               {/* Icon container housing the optimized custom colored asset */}
               <div className="w-16 h-16 rounded-2xl bg-white border border-brand-border flex items-center justify-center mb-6 shadow-premium-sm group-hover:scale-105 group-hover:bg-brand-soft-bg transition-all duration-300">
@@ -64,7 +76,7 @@ export default function Categories() {
                     alt={`${cat.title} Category Icon`}
                     fill
                     sizes="48px"
-                    className="object-contain"
+                    className="object-contain category-icon"
                     style={{ 
                       // Converts black-and-white asset directly into our primary brand green shade (#2D4A22)
                       filter: "brightness(0) saturate(100%) invert(21%) sepia(21%) saturate(1478%) hue-rotate(63deg) brightness(97%) contrast(92%)" 
@@ -72,12 +84,12 @@ export default function Categories() {
                   />
                 </div>
               </div>
-              
+
               <h3 className="font-display font-extrabold text-lg text-brand-primary mb-3">
                 {cat.title}
               </h3>
-              
-              <p className="text-sm text-zinc-800 leading-relaxed font-medium">
+
+              <p className="text-sm text-brand-primary-light leading-relaxed font-medium">
                 {cat.desc}
               </p>
             </div>

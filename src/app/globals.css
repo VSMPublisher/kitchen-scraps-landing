@@ -58,3 +58,28 @@ body {
 .hover-lift:hover {
   transform: translateY(-4px);
 }
+
+/* Respect prefers-reduced-motion for all animations and transitions */
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift,
+  .animate-fade-in-up,
+  .animate-pulse-slow,
+  [style*="animation"],
+  [style*="transition"] {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+}
+
+/* High Contrast Mode (forced-colors) support for category icons */
+@media (forced-colors: active) {
+  .category-icon {
+    filter: none !important;
+  }
+  .category-icon + .sr-only {
+    /* Ensure screen readers still get the alt text */
+  }
+}
