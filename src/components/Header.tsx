@@ -23,16 +23,16 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-header py-4 px-6 shadow-premium transition-all duration-300">
+    <header className="sticky top-0 z-50 bg-brand-header py-2.5 md:py-3 px-4 md:px-6 shadow-premium transition-all duration-300">
       <div className="max-w-6xl mx-auto flex items-center justify-between relative">
-        
+
         {/* Logo Section */}
         <button
           onClick={scrollToTop}
           className="flex items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-header rounded-xl p-1 hover:opacity-90 transition-opacity cursor-pointer z-10"
           aria-label="Scroll to top"
         >
-          <div className="relative w-8 h-8 flex items-center justify-center bg-transparent">
+          <div className="relative w-8 h-8 flex items-center justify-center bg-transparent shrink-0">
             <Image
               src="/app-icon.png"
               alt="Kitchen Scraps Logo"
@@ -41,8 +41,17 @@ export default function Header() {
               className="w-7 h-auto rounded-lg object-contain"
             />
           </div>
-          <span className="text-white font-display font-bold text-base sm:text-xl tracking-normal">
-            Kitchen Scraps & Food Waste Quiz
+
+          <span className="text-white font-display font-bold tracking-normal">
+            {/* Mobile Title (Shortened to fit single line on phone displays) */}
+            <span className="inline md:hidden text-sm sm:text-base">
+              Kitchen Scraps Quiz
+            </span>
+
+            {/* Desktop Title (Revealed once horizontal room allows) */}
+            <span className="hidden md:inline text-lg lg:text-xl">
+              Kitchen Scraps & Food Waste Quiz
+            </span>
           </span>
         </button>
 
@@ -67,29 +76,25 @@ export default function Header() {
           aria-expanded={isMobileMenuOpen}
         >
           <span
-            className={`w-6 h-0.5 bg-white transition-transform duration-300 ${
-              isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
-            }`}
+            className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
           />
           <span
-            className={`w-6 h-0.5 bg-white transition-opacity duration-300 ${
-              isMobileMenuOpen ? "opacity-0" : ""
-            }`}
+            className={`w-6 h-0.5 bg-white transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-0" : ""
+              }`}
           />
           <span
-            className={`w-6 h-0.5 bg-white transition-transform duration-300 ${
-              isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-            }`}
+            className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
           />
         </button>
 
         {/* Responsive Mobile Navigation Drawer */}
         <div
-          className={`absolute top-[100%] left-0 w-full bg-brand-header border-t border-white/10 shadow-premium transition-all duration-300 ease-in-out origin-top ${
-            isMobileMenuOpen
+          className={`absolute top-[100%] left-0 w-full bg-brand-header border-t border-white/10 shadow-premium transition-all duration-300 ease-in-out origin-top ${isMobileMenuOpen
               ? "opacity-100 scale-y-100 visible pointer-events-auto"
               : "opacity-0 scale-y-95 invisible pointer-events-none"
-          } lg:hidden`}
+            } lg:hidden`}
         >
           <nav className="flex flex-col p-6 gap-4">
             {navLinks.map((link, idx) => (
