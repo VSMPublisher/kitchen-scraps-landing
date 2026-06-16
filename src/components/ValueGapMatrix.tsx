@@ -1,34 +1,77 @@
+const CheckIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={`inline-block w-4 h-4 align-middle ${className}`}
+  >
+    <circle cx="10" cy="10" r="10" fill="currentColor" className="text-emerald-500" />
+    <path
+      d="M6 10.5L8.5 13L14 7.5"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const XIcon = ({ className = "" }: { className?: string }) => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={`inline-block w-4 h-4 align-middle ${className}`}
+  >
+    <circle cx="10" cy="10" r="10" fill="currentColor" className="text-red-400" />
+    <path
+      d="M7 7L13 13M13 7L7 13"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 export default function ValueGapMatrix() {
   const comparisonRows = [
     {
       feature: "Question Pool",
       web: "Teaser Preview: Limited to 10 fixed questions/category",
       app: "Full Experience: Unlimited, dynamic pool of 60+ verified organic composting levels",
-      psychology: "Curiosity: Finish teaser and check knowledge on complex items"
+      psychology: "Curiosity: Finish teaser and check knowledge on complex items",
+      webHasFeature: false
     },
     {
       feature: "Interactive Hints",
       web: "Disabled: Must proceed solely on guesswork without science tips",
       app: "Active Reward System: Spend in-game credits to review background science hints",
-      psychology: "Gamified Support: Helps maintain correct educational streaks"
+      psychology: "Gamified Support: Helps maintain correct educational streaks",
+      webHasFeature: false
     },
     {
       feature: "Offline Compatibility",
       web: "Disabled: Requires steady connection; loading breaks in signal drops",
       app: "100% Offline-Enabled: Play in remote outdoor gardens, farms, or compost heaps",
-      psychology: "Utility: Composting is outdoors. Portable off-grid resources are mandatory"
+      psychology: "Utility: Composting is outdoors. Portable off-grid resources are mandatory",
+      webHasFeature: false
     },
     {
       feature: "Dynamic Updates",
       web: "Static: Requires continuous manual caching and manual reloads",
       app: "Instant Update Sync: Automatically receive background rule modifications as regional guidelines roll out",
-      psychology: "Longevity: Converts a static website into a permanent garden companion utility"
+      psychology: "Longevity: Converts a static website into a permanent garden companion utility",
+      webHasFeature: false
     },
     {
       feature: "Pricing & Ads",
       web: "100% Free (No forced popups or interrupting ad loops)",
       app: "100% Free (No ads + full offline usage permissions)",
-      psychology: "Transparency: No paywalls, hidden microtransactions, or data mining"
+      psychology: "Transparency: No paywalls, hidden microtransactions, or data mining",
+      webHasFeature: true
     }
   ];
 
@@ -71,12 +114,12 @@ export default function ValueGapMatrix() {
                   
                    {/* Web Play column - Soft, easy to read gray */}
                    <td className="p-5 text-xs text-brand-primary-light font-normal leading-relaxed align-top">
-                     {row.web}
+                     {!row.webHasFeature ? <XIcon className="mr-1.5" /> : <CheckIcon className="mr-1.5" />}{row.web}
                    </td>
-                  
+                   
                   {/* Android Native - Clean Semibold green with very soft highlight background */}
                   <td className="p-5 text-xs text-emerald-950 font-semibold leading-relaxed bg-brand-soft-bg/20 align-top">
-                    {row.app}
+                    <CheckIcon className="mr-1.5" />{row.app}
                   </td>
                   
                    {/* Conversion Focus - High-readability neutral dark zinc */}
@@ -98,11 +141,15 @@ export default function ValueGapMatrix() {
               </h3>
               <div className="space-y-3">
                 <div className="text-xs">
-                  <span className="font-bold text-brand-muted block mb-0.5">🌐 WEB TEASER</span>
+                  <span className="font-bold text-brand-muted block mb-0.5">
+                    🌐 WEB TEASER {!row.webHasFeature ? <XIcon /> : <CheckIcon />}
+                  </span>
                   <p className="text-brand-primary-light font-normal leading-relaxed">{row.web}</p>
                 </div>
                 <div className="text-xs pt-2 border-t border-brand-border/40">
-                  <span className="font-bold text-brand-hero-accent block mb-0.5">🤖 NATIVE APP</span>
+                  <span className="font-bold text-brand-hero-accent block mb-0.5">
+                    🤖 NATIVE APP <CheckIcon />
+                  </span>
                   <p className="text-emerald-950 font-semibold leading-relaxed">{row.app}</p>
                 </div>
                 <div className="text-xs pt-2 border-t border-brand-border/40">
