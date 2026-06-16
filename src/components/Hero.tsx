@@ -62,10 +62,20 @@ const OrganicLeaf = ({ className }: { className: string }) => (
 export default function Hero() {
   const [showSticky, setShowSticky] = useState(false);
 
-  // Scroll detection to trigger the sticky bar once Hero buttons are out of view
+  // Dynamic scroll listener tracking both the top fold and bottom fold
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 400) {
+      const scrollY = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = window.innerHeight;
+
+      // Hide if we are within the first 400px of scrolling (top fold)
+      const isAtTop = scrollY < 400;
+
+      // Hide if the viewport is within 650px of the footer bottom (where CtaCloser is fully visible)
+      const isNearBottom = scrollY + clientHeight >= scrollHeight - 650;
+
+      if (!isAtTop && !isNearBottom) {
         setShowSticky(true);
       } else {
         setShowSticky(false);
@@ -73,6 +83,9 @@ export default function Hero() {
     };
 
     window.addEventListener("scroll", handleScroll);
+    // Trigger once on mount to set initial layout state
+    handleScroll();
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -128,7 +141,7 @@ export default function Hero() {
 
           {/* Call To Actions */}
           <div className="flex flex-col md:flex-row justify-center lg:justify-start items-start gap-6 max-w-md md:max-w-none mx-auto lg:mx-0">
-            {/* Download CTA (Primary Action - Deep Brand Green) */}
+            {/* Download CTA (Primary Action) */}
             <div className="flex flex-col w-full md:w-auto">
               <Link
                 href="/download"
@@ -207,7 +220,7 @@ export default function Hero() {
           </Link>
         </div>
 
-        {/* Compact, Honest Trust Badge (No fake numbers, 100% true indicators) */}
+        {/* Compact Trust Badge */}
         <div className="max-w-6xl mx-auto mt-2 flex justify-center">
           <TrustBadge />
         </div>
