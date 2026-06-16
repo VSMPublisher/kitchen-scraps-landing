@@ -1,12 +1,12 @@
 export default function Faq() {
   const faqs = [
     {
-      q: "Is this really free?",
-      a: "Yes. Absolutely free. No signups, no paywalls, no forced popup ads, and no catches. Just open your browser and start building sorting habits instantly.",
-    },
-    {
       q: "Is the Android APK safe, and how do I install it?",
       a: "Yes! The application is 100% safe, completely ad-free, and open-source. Because you are downloading it directly rather than through the Play Store, your phone may show a warning prompt. To install safely: (1) Click 'Download for Android', (2) Open the downloaded file from your browser notifications, and (3) If prompted, allow 'Install from Unknown Sources' in your browser settings to finish setup."
+    },
+    {
+      q: "Is this really free?",
+      a: "Yes. Absolutely free. No signups, no paywalls, no forced popup ads, and no catches. Just open your browser and start building sorting habits instantly.",
     },
     {
       q: "Do I need composting experience?",

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { trackOutboundLink } from "@/utils/analytics";
+import TrustBadge from "./TrustBadge";
 
 const OrganicLeaf = ({ className }: { className: string }) => (
   <svg 
@@ -110,7 +111,7 @@ export default function Hero() {
           </p>
 
           {/* Call To Actions */}
-          <div className="flex flex-col md:flex-row justify-center lg:justify-start items-center md:items-end gap-6 max-w-md md:max-w-none mx-auto lg:mx-0">
+          <div className="flex flex-col md:flex-row justify-center lg:justify-start items-start gap-6 max-w-md md:max-w-none mx-auto lg:mx-0">
             {/* Download CTA (Primary Action - Deep Brand Green) */}
             <div className="flex flex-col w-full md:w-auto">
               <Link
@@ -120,6 +121,7 @@ export default function Hero() {
               >
                 Download for Android
               </Link>
+              <TrustBadge className="mt-3 justify-center lg:justify-start" />
             </div>
             
             {/* Teaser CTA (Secondary Action - Clean Outline with Repositioned Tag) */}
@@ -141,18 +143,6 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Safety badges and notice layouts */}
-          <div className="mt-6 text-xs text-brand-primary-light font-medium tracking-wide space-y-1.5 pl-1">
-            <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
-              <span className="shrink-0" aria-hidden="true">🛡️</span> 
-              <span>Safe direct APK download • Zero device permissions required • Compact 60MB</span>
-            </p>
-            <p className="flex items-start gap-2 justify-center lg:justify-start text-center lg:text-left">
-              <span className="shrink-0" aria-hidden="true">⚡</span> 
-              <span>Play instantly in your browser — no installation required</span>
-            </p>
-          </div>
-          
           <p className="text-xs text-brand-muted mt-4 italic font-medium">
             Note: Question pool updates and user-rewarded hint features roll out exclusively on the Android application.
           </p>
@@ -178,7 +168,7 @@ export default function Hero() {
 
       {/* Mobile Sticky CTA Bar - Thumb Zone Access */}
       <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-sm border-t border-brand-border/50 shadow-premium-lg p-4 safe-area-pb">
-        <div className="max-w-6xl mx-auto flex gap-3">
+        <div className="max-w-6xl mx-auto flex flex-row gap-3">
           <Link
             href="/download"
             onClick={() => handleCtaClick("Download APK - Mobile CTA", "/download")}
@@ -193,6 +183,9 @@ export default function Hero() {
           >
             Try Web Teaser
           </Link>
+        </div>
+        <div className="max-w-6xl mx-auto mt-2.5 flex justify-center">
+          <TrustBadge />
         </div>
       </div>
 

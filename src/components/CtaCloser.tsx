@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { trackOutboundLink } from "@/utils/analytics";
+import TrustBadge from "./TrustBadge";
 
 export default function CtaCloser() {
 
@@ -52,10 +53,10 @@ export default function CtaCloser() {
           </div>
         </div>
 
-        {/* Technical Reassurance Badge - Handled in high-contrast emerald-950 color */}
-        <p className="text-emerald-950 text-xs font-semibold mt-6 tracking-wide">
-          v1.0.0 • Secure Standalone APK (60MB) • Zero Device Permissions Required
-        </p>
+        {/* Trust Badge */}
+        <div className="mt-6 flex justify-center">
+          <TrustBadge />
+        </div>
       </div>
     </section>
   );
