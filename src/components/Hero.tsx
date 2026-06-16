@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { trackOutboundLink } from "@/utils/analytics";
@@ -59,6 +60,21 @@ const OrganicLeaf = ({ className }: { className: string }) => (
 );
 
 export default function Hero() {
+  const [showSticky, setShowSticky] = useState(false);
+
+  // Scroll detection to trigger the sticky bar once Hero buttons are out of view
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowSticky(true);
+      } else {
+        setShowSticky(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleCtaClick = (label: string, url: string) => {
     trackOutboundLink(url, label);
@@ -124,7 +140,7 @@ export default function Hero() {
               <TrustBadge className="mt-3 justify-center lg:justify-start" />
             </div>
 
-            {/* Teaser CTA (Secondary Action - Clean Outline with Repositioned Tag) */}
+            {/* Teaser CTA (Secondary Action) */}
             <div className="flex flex-col md:flex-row items-center w-full md:w-auto gap-3">
               <Link
                 href="https://kitchen-scraps-quiz.web.app"
@@ -162,10 +178,15 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Mobile Sticky CTA Bar - Thumb Zone Access (Highly Compact Layout) */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-md border-t border-brand-border/40 shadow-premium-lg py-2.5 px-3.5 safe-area-pb">
+      {/* Point 10: Mobile Sticky CTA Bar - Scroll Activated (Smooth Slide transition) */}
+      <div
+        className={`lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-md border-t border-brand-border/40 shadow-premium-lg py-2.5 px-3.5 safe-area-pb transition-all duration-300 transform ${showSticky
+            ? "translate-y-0 opacity-100"
+            : "translate-y-full opacity-0 pointer-events-none"
+          }`}
+      >
         <div className="max-w-6xl mx-auto flex flex-row gap-2.5">
-          {/* Compressed Mobile Download Button */}
+          {/* Mobile Download Button */}
           <Link
             href="/download"
             onClick={() => handleCtaClick("Download APK - Mobile CTA", "/download")}
@@ -175,7 +196,7 @@ export default function Hero() {
             <span className="hidden sm:inline">Download for Android</span>
           </Link>
 
-          {/* Compressed Mobile Play Button */}
+          {/* Mobile Play Button */}
           <Link
             href="https://kitchen-scraps-quiz.web.app"
             onClick={() => handleCtaClick("Play Now - Web - Mobile CTA", "https://kitchen-scraps-quiz.web.app")}
@@ -186,7 +207,7 @@ export default function Hero() {
           </Link>
         </div>
 
-        {/* Compact Trust Badge */}
+        {/* Compact, Honest Trust Badge (No fake numbers, 100% true indicators) */}
         <div className="max-w-6xl mx-auto mt-2 flex justify-center">
           <TrustBadge />
         </div>
