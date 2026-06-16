@@ -64,16 +64,21 @@ export default function DownloadPage() {
   // Constants
   const fileSizeMB = 60;
   const apkSha256 = "90f28ff17c1db7a86bcc87b9b13ae788b4646769621674d1f19323bf464a31f5";
+  const apkUrl = "/kitchen-scraps-quiz-v1.0.apk";
 
   // Auto-trigger download after 1 second
   useEffect(() => {
     const downloadTimer = setTimeout(() => {
-      window.location.href = "/kitchen-scraps-quiz-v1.0.apk";
+      window.location.href = apkUrl;
       setDownloadTriggered(true);
     }, 1000);
 
     return () => clearTimeout(downloadTimer);
   }, []);
+
+  const handleRetryDownload = () => {
+    window.location.href = apkUrl;
+  };
 
   const handleCopyCode = async () => {
     try {
@@ -130,7 +135,7 @@ export default function DownloadPage() {
             <div className="text-left sm:text-right font-display font-bold">
               <span className="text-sm text-brand-primary-light block">Status</span>
               <span className="text-lg text-emerald-900">
-                {downloadTriggered ? `Download started` : `Preparing your verified APK…`}
+                {downloadTriggered ? `Download started` : `Preparing...`}
               </span>
             </div>
           </div>
@@ -138,14 +143,27 @@ export default function DownloadPage() {
           {/* Indeterminate Progress Indicator */}
           <div className="mt-6">
             <div className="flex justify-between text-xs font-bold text-brand-primary mb-2">
-              <span>Preparing download</span>
+              <span>{downloadTriggered ? `File sent to browser` : `Generating secure link...`}</span>
               <span>{fileSizeMB}MB verified</span>
             </div>
             <div className="w-full h-4 bg-brand-border rounded-full overflow-hidden">
               <div className="h-full bg-brand-header rounded-full animate-pulse" style={{ width: "100%" }} />
             </div>
             <p className="text-xs text-brand-primary-light mt-2 text-center">
-              Your secure APK is being prepared. The download will begin automatically.
+              {downloadTriggered ? (
+                <>
+                  Your download has begun. If it did not start,{" "}
+                  <button
+                    onClick={handleRetryDownload}
+                    className="font-bold text-brand-primary hover:text-brand-header underline cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-header"
+                  >
+                    tap here to try again
+                  </button>
+                  .
+                </>
+              ) : (
+                `Please wait a moment while we verify the package...`
+              )}
             </p>
           </div>
         </div>
