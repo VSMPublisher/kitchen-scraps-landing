@@ -25,26 +25,21 @@ export default function CtaCloser() {
 
   return (
     <section className="bg-brand-bg py-12 px-4 border-t border-brand-primary/5">
-      {/* 
-        Container Card with optimized mobile padding (px-4.5) to free up 32px of extra 
-        horizontal breathing room on mobile screens, while preserving desktop padding.
-      */}
+      {/* Container Card with optimized mobile padding */}
       <div className="max-w-4xl mx-auto bg-emerald-50/40 rounded-3xl px-4.5 py-8 sm:p-12 text-center border border-emerald-600/10 shadow-sm relative overflow-hidden">
 
         {/* 
-          Point 7 Fix: Responsive Scarcity Badge.
-          Displays a concise text string on mobile to stay strictly on a single line, 
-          and reveals the full explanatory text on desktop sizes.
+          Urgency Badge - Reverted to "Amber Gold" to match your #E9B15D token.
         */}
-        <div className="inline-flex items-center justify-center bg-amber-50 border border-amber-200/80 px-3 py-1 rounded-full text-amber-800 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wide sm:tracking-wider mb-5 animate-pulse select-none max-w-full text-center">
-          {/* Mobile Text (Fits on a single line on any screen > 320px) */}
+        <div className="inline-flex items-center justify-center bg-amber-50 border border-amber-200/80 px-3.5 py-1 rounded-full text-amber-800 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wide sm:tracking-wider mb-5 animate-pulse select-none max-w-full text-center">
+          {/* Mobile Text (Fits on a single line on any mobile screen) */}
           <span className="inline sm:hidden">
-            🔥 CODE: <span className="underline decoration-amber-500 font-black">GARDENGOLD99</span> EXPIRES {expiryDate}!
+            🔥 AMBER GOLD SKIN UNLOCK EXPIRES {expiryDate}!
           </span>
 
           {/* Desktop Text */}
           <span className="hidden sm:inline">
-            🔥 PROMO: SKIN UNLOCK CODE <span className="underline decoration-amber-500 font-black">GARDENGOLD99</span> EXPIRES {expiryDate}!
+            🔥 PROMO: CLAIM YOUR FREE AMBER GOLD SKIN BEFORE {expiryDate}!
           </span>
         </div>
 
@@ -73,7 +68,7 @@ export default function CtaCloser() {
             <Link
               href="https://kitchen-scraps-quiz.web.app"
               onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-              className="border-2 border-emerald-900 text-emerald-900 hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50 animate-fade-in-up"
+              className="border-2 border-emerald-900 text-emerald-900 hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
             >
               Try Web Teaser
             </Link>
