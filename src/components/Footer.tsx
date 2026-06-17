@@ -114,8 +114,19 @@ export default function Footer() {
 
         {/* Copyright */}
         {/* FIXED: Shifted light opacity to a stable contrast emerald-100 token */}
-        <div className="pt-8 border-t border-white/10 text-xs text-emerald-100 font-medium">
-          &copy; {new Date().getFullYear()} VSMPublisher. All rights reserved.
+        <div className="pt-8 border-t border-white/10 text-xs text-emerald-100 font-medium space-y-2">
+          <div>
+            &copy; {new Date().getFullYear()} VSMPublisher. All rights reserved.
+          </div>
+          <div className="text-white/60 font-normal">
+            Need help or have feedback? Contact Support at:{' '}
+            <a
+              href="mailto:kitchenscrapsquiz@gmail.com"
+              className="text-emerald-400 hover:text-emerald-300 underline font-semibold transition"
+            >
+              kitchenscrapsquiz@gmail.com
+            </a>
+          </div>
         </div>
       </div>
     </footer>
