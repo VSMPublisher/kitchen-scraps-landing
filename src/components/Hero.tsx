@@ -128,11 +128,11 @@ export default function Hero() {
           </p>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-primary leading-[1.1] tracking-tight">
-            Turn Your Kitchen Scraps Into Garden <span className="text-brand-cta-text">Gold</span>
+            Stop Guessing at the <span className="text-brand-cta-text">Compost Bin</span>
           </h1>
 
           <p className="text-lg sm:text-xl mb-4 text-brand-primary max-w-2xl leading-relaxed font-semibold">
-            Wondering how to compost kitchen scraps like coffee grounds or banana peels? Our free, gamified learning platform teaches you smart <strong className="text-emerald-900 font-bold">kitchen waste management app</strong> rules through interactive play in just 30 seconds.
+            Test your skills with our free 60-question composting quiz. Learn exactly what to compost and what to toss in just <strong className="text-emerald-900 font-bold"> 5 minutes a day—with zero guesswork.</strong>
           </p>
 
           <p className="text-base mb-8 text-brand-primary-light font-medium tracking-tight">
@@ -194,8 +194,8 @@ export default function Hero() {
       {/* Point 10: Mobile Sticky CTA Bar - Scroll Activated (Smooth Slide transition) */}
       <div
         className={`lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-md border-t border-brand-border/40 shadow-premium-lg py-2.5 px-3.5 safe-area-pb transition-all duration-300 transform ${showSticky
-            ? "translate-y-0 opacity-100"
-            : "translate-y-full opacity-0 pointer-events-none"
+          ? "translate-y-0 opacity-100"
+          : "translate-y-full opacity-0 pointer-events-none"
           }`}
       >
         <div className="max-w-6xl mx-auto flex flex-row gap-2.5">
