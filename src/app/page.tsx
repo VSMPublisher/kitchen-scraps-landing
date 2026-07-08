@@ -5,6 +5,7 @@ import HowItWorks from "@/components/HowItWorks";
 import Categories from "@/components/Categories";
 import Features from "@/components/Features";
 import ValueGapMatrix from "@/components/ValueGapMatrix"; // Integrated
+import LeadCapture from "@/components/LeadCapture";
 import CoreValues from "@/components/CoreValues";
 import Faq from "@/components/Faq";
 import CtaCloser from "@/components/CtaCloser";
@@ -21,6 +22,7 @@ export default function LandingPage() {
         <Categories />
         <Features />
         <ValueGapMatrix /> {/* Positioned directly following Features */}
+        <LeadCapture />
         <CoreValues />
         <Faq />
         <CtaCloser />
