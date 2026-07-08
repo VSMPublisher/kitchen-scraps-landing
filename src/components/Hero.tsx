@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Download } from "lucide-react";
 import { trackOutboundLink } from "@/utils/analytics";
 import TrustBadge from "./TrustBadge";
 
@@ -128,16 +129,24 @@ export default function Hero() {
           </p>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-primary leading-[1.1] tracking-tight">
-            Stop Guessing at the <span className="text-brand-cta-text">Compost Bin</span>
+            Stop Guessing At The <span className="block text-brand-cta-text">Compost Bin</span>
           </h1>
 
-          <p className="text-lg sm:text-xl mb-4 text-brand-primary max-w-2xl leading-relaxed font-semibold">
-            Test your skills with our free 60-question composting quiz. Learn exactly what to compost and what to toss in just <strong className="text-emerald-900 font-bold"> 5 minutes a day—with zero guesswork.</strong>
+          <p className="text-lg sm:text-xl mb-5 text-brand-primary max-w-2xl leading-relaxed font-semibold">
+            Stop second-guessing your green/brown balance. Practice waste sorting across 6 essential categories in just <span className="text-emerald-950 font-bold bg-brand-soft-bg/80 px-2 py-0.5 rounded">5 minutes a day</span>.
+            <span className="block mt-2.5 text-emerald-800 font-extrabold text-base sm:text-lg flex items-center justify-center lg:justify-start gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              100% free, no signup required
+            </span>
           </p>
 
-          <p className="text-base mb-8 text-brand-primary-light font-medium tracking-tight">
-            10 questions per run • 6 specialized categories • No signup, ever.
-          </p>
+          <div className="inline-flex items-center gap-2 bg-amber-50/90 border border-amber-200/50 px-3.5 py-1.5 rounded-xl mb-8 text-xs sm:text-sm text-amber-900/95 font-medium tracking-tight shadow-sm justify-center lg:justify-start">
+            <span className="text-base select-none">🌱</span>
+            <span>Designed specifically for backyard gardeners, indoor kitchen composters, and balcony growers.</span>
+          </div>
 
           {/* Call To Actions */}
           <div className="flex flex-col md:flex-row justify-center lg:justify-start items-start gap-6 max-w-md md:max-w-none mx-auto lg:mx-0">
@@ -146,9 +155,10 @@ export default function Hero() {
               <Link
                 href="/download"
                 onClick={() => handleCtaClick("Download APK", "/download")}
-                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
+                className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full flex items-center justify-center gap-2.5 cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
               >
-                Download for Android
+                <Download className="w-5 h-5 shrink-0" />
+                <span>Download for Android</span>
               </Link>
               <TrustBadge className="mt-3 justify-center lg:justify-start" />
             </div>
