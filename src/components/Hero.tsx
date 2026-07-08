@@ -2,10 +2,48 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Download } from "lucide-react";
+import { Download, Lightbulb, ArrowRight, RotateCcw } from "lucide-react";
 import { trackOutboundLink } from "@/utils/analytics";
 import TrustBadge from "./TrustBadge";
+
+const DEMO_QUESTIONS = [
+  {
+    category: "Greens vs Browns",
+    question: "Are coffee grounds 'greens' or 'browns'?",
+    emojis: "☕️🤎",
+    difficulty: "Medium",
+    options: [
+      { label: "Greens (Nitrogen)", value: "Greens" },
+      { label: "Browns (Carbon)", value: "Browns" }
+    ],
+    correctValue: "Greens",
+    explanation: "Even though they look dark brown, they are rich in nitrogen (greens) and provide rapid fuel for composting microbes!"
+  },
+  {
+    category: "Go / No-Go",
+    question: "Can dairy products (milk, cheese, yogurt) be added to home compost?",
+    emojis: "🥛🧀",
+    difficulty: "Medium",
+    options: [
+      { label: "Go (Compost)", value: "Go" },
+      { label: "No-Go (Toss)", value: "No-Go" }
+    ],
+    correctValue: "No-Go",
+    explanation: "Dairy decomposes slowly, creates severe odor issues, and attracts unwanted nocturnal pests to backyard bins."
+  },
+  {
+    category: "Apartment & Balcony",
+    question: "Can citrus peels go into a worm farm (vermicomposting)?",
+    emojis: "🍋🐛",
+    difficulty: "Hard",
+    options: [
+      { label: "Go (Safe)", value: "Go" },
+      { label: "No-Go (Avoid)", value: "No-Go" }
+    ],
+    correctValue: "No-Go",
+    explanation: "Citrus peels are highly acidic and contain natural oils that irritate worms' sensitive organic skin."
+  }
+];
 
 const OrganicLeaf = ({ className }: { className: string }) => (
   <svg
@@ -62,6 +100,62 @@ const OrganicLeaf = ({ className }: { className: string }) => (
 
 export default function Hero() {
   const [showSticky, setShowSticky] = useState(false);
+
+  // Mini-Quiz interactive simulator states
+  const [currentQIndex, setCurrentQIndex] = useState(0);
+  const [selectedAns, setSelectedAns] = useState<string | null>(null);
+  const [isAnsLocked, setIsAnsLocked] = useState(false);
+  const [score, setScore] = useState(0);
+  const [timerProgress, setTimerProgress] = useState(100);
+  const [streak, setStreak] = useState(11);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  // Simulated countdown effect inside mockup
+  useEffect(() => {
+    if (isAnsLocked || isCompleted) return;
+    const interval = setInterval(() => {
+      setTimerProgress((prev) => {
+        if (prev <= 2) {
+          return 0;
+        }
+        return prev - 1.5;
+      });
+    }, 150);
+    return () => clearInterval(interval);
+  }, [currentQIndex, isAnsLocked, isCompleted]);
+
+  const handleSelectOption = (optionValue: string) => {
+    if (isAnsLocked) return;
+    setSelectedAns(optionValue);
+    setIsAnsLocked(true);
+
+    const isCorrect = optionValue === DEMO_QUESTIONS[currentQIndex].correctValue;
+    if (isCorrect) {
+      setScore((prev) => prev + 1);
+      setStreak((prev) => prev + 1);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    if (currentQIndex < DEMO_QUESTIONS.length - 1) {
+      setTimerProgress(100);
+      setCurrentQIndex((prev) => prev + 1);
+      setSelectedAns(null);
+      setIsAnsLocked(false);
+    } else {
+      setIsCompleted(true);
+    }
+  };
+
+  const handleResetQuiz = () => {
+    setCurrentQIndex(0);
+    setSelectedAns(null);
+    setIsAnsLocked(false);
+    setScore(0);
+    setStreak(11);
+    setIsCompleted(false);
+    setTimerProgress(100);
+  };
 
   // Dynamic scroll listener tracking both the top fold and bottom fold
   useEffect(() => {
@@ -129,7 +223,7 @@ export default function Hero() {
           </p>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-extrabold my-6 text-brand-primary leading-[1.1] tracking-tight">
-            Stop Guessing At The <span className="block text-brand-cta-text">Compost Bin</span>
+            Stop Guessing at the <span className="block text-brand-cta-text">Compost Bin</span>
           </h1>
 
           <p className="text-lg sm:text-xl mb-5 text-brand-primary max-w-2xl leading-relaxed font-semibold">
@@ -183,20 +277,149 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Right Side: Phone Mockup */}
-        <div className="flex-shrink-0 w-full max-w-[190px] sm:max-w-[210px] lg:max-w-[260px] relative group h-fit z-10 self-center lg:self-end">
-          <div className="absolute -inset-2 bg-gradient-to-tr from-brand-header/20 to-brand-cta/20 rounded-[3rem] blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+        {/* Right Side: Interactive Phone Simulator (Point 5 Visual "Aha Moment" Preview) */}
+        <div className="flex-shrink-0 w-full max-w-[215px] sm:max-w-[235px] lg:max-w-[285px] relative group h-fit z-10 self-center lg:self-end">
+          {/* Glowing ambient decoration */}
+          <div className="absolute -inset-3 bg-gradient-to-tr from-emerald-600/15 to-amber-500/15 rounded-[2.5rem] blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-          {/* Bezel Frame Container */}
-          <div className="relative w-full aspect-[450/952] rounded-[2.2rem] overflow-hidden border-4 border-zinc-900 bg-brand-primary/10 shadow-mockup">
-            <Image
-              src="/hero-mockup.png"
-              alt="Kitchen Scraps & Food Waste Quiz Android App Gameplay Screen"
-              fill
-              sizes="(max-width: 260px) 100vw, 260px"
-              priority
-              className="object-cover"
-            />
+          {/* Phone Frame */}
+          <div className="relative w-full aspect-[9/19] rounded-[2.2rem] border-[8px] border-zinc-800 bg-[#FAF9F5] shadow-mockup flex flex-col overflow-hidden select-none">
+
+            {/* Safe Area Notch & Status Bar */}
+            <div className="h-5 bg-emerald-700 w-full flex items-center justify-between px-3 text-[9px] text-emerald-100 font-sans tracking-tight shrink-0 select-none relative">
+              <span>9:41 AM</span>
+              <div className="w-12 h-3.5 bg-zinc-850 rounded-b-xl absolute left-1/2 -translate-x-1/2 top-0 flex items-center justify-center pointer-events-none">
+                <span className="w-1.5 h-1.5 bg-zinc-700 rounded-full" />
+              </div>
+              <div className="flex items-center gap-1 select-none">
+                <span>📶</span>
+                <span>🔋</span>
+              </div>
+            </div>
+
+            {/* Simulated App Header */}
+            <div className="bg-brand-header py-2 px-3 text-white font-display font-extrabold text-[11px] sm:text-xs tracking-tight text-center relative flex items-center justify-between shrink-0 shadow-sm select-none">
+              <span>Go/No-Go Quiz</span>
+              <span className="text-[9px] bg-emerald-600 px-1.5 py-0.5 rounded border border-emerald-500/30 font-mono flex items-center gap-0.5 select-none">
+                ⏱️ {isAnsLocked ? "Paused" : "Active"}
+              </span>
+            </div>
+
+            {/* Timer countdown progress bar */}
+            <div className="h-1 bg-emerald-950/20 w-full shrink-0 relative overflow-hidden select-none">
+              <div
+                className="absolute left-0 top-0 h-full bg-amber-400 transition-all duration-150 ease-linear"
+                style={{ width: `${timerProgress}%` }}
+              />
+            </div>
+
+            {/* Quiz Screen Content */}
+            {!isCompleted ? (
+              <div className="p-2.5 flex-1 flex flex-col justify-between gap-2 overflow-y-auto min-h-0 select-none">
+                {/* Question Info Bar */}
+                <div className="flex justify-between items-center text-[10px] font-bold text-brand-primary/70 px-0.5 shrink-0 select-none">
+                  <span>Q {currentQIndex + 1} of 3</span>
+                  <span className="text-amber-700 flex items-center gap-0.5 select-none">
+                    ⚡ {streak} Points
+                  </span>
+                </div>
+
+                {/* Question Details */}
+                <div className="bg-white border border-brand-primary-light/10 rounded-2xl p-2.5 flex-1 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden select-none">
+                  <div className="text-3xl mb-1 animate-pulse select-none">
+                    {DEMO_QUESTIONS[currentQIndex].emojis}
+                  </div>
+                  <span className="text-[9px] font-extrabold bg-brand-soft-bg text-emerald-900 px-2 py-0.5 rounded-full uppercase tracking-wider scale-90 mb-1 select-none">
+                    {DEMO_QUESTIONS[currentQIndex].category}
+                  </span>
+                  <h3 className="text-[11px] sm:text-xs font-display font-extrabold text-emerald-950 leading-tight">
+                    {DEMO_QUESTIONS[currentQIndex].question}
+                  </h3>
+                  <div className="mt-1.5 text-[9px] font-extrabold bg-amber-50 text-amber-800 border border-amber-100 px-1.5 py-0.5 rounded select-none">
+                    Difficulty: {DEMO_QUESTIONS[currentQIndex].difficulty}
+                  </div>
+                </div>
+
+                {/* Slide-up Instant Science Explanation */}
+                {isAnsLocked && (
+                  <div className="bg-amber-50/95 border border-amber-200/50 rounded-xl p-2 text-[10px] sm:text-[10px] leading-normal text-amber-950 flex gap-1.5 animate-fade-in-up shadow-sm select-none">
+                    <Lightbulb className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="font-extrabold block text-amber-900 mb-0.5 select-none">
+                        {selectedAns === DEMO_QUESTIONS[currentQIndex].correctValue ? "✅ Correct!" : "❌ Not Quite!"}
+                      </span>
+                      <span className="select-text">{DEMO_QUESTIONS[currentQIndex].explanation}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Dynamic Buttons Area */}
+                <div className="space-y-1.5 shrink-0 select-none">
+                  {!isAnsLocked ? (
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {DEMO_QUESTIONS[currentQIndex].options.map((opt) => (
+                        <button
+                          key={opt.value}
+                          onClick={() => handleSelectOption(opt.value)}
+                          className="bg-white hover:bg-amber-50/60 active:scale-95 border border-amber-150 text-emerald-950 py-2 rounded-xl font-extrabold text-[10px] text-center transition-all shadow-sm cursor-pointer select-none"
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <button
+                      onClick={handleNextQuestion}
+                      className="bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-[11px] py-2 rounded-xl shadow-md w-full flex items-center justify-center gap-1 cursor-pointer animate-pulse select-none"
+                    >
+                      <span>{currentQIndex === DEMO_QUESTIONS.length - 1 ? "See Final Score" : "Next Question"}</span>
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            ) : (
+              /* Victory/Teaser Completed Screen */
+              <div className="p-4 flex-1 flex flex-col items-center justify-between text-center bg-gradient-to-b from-emerald-50/40 to-white overflow-y-auto select-none">
+                <div className="my-auto space-y-3">
+                  <div className="text-4xl animate-bounce select-none">🏆</div>
+                  <div>
+                    <h3 className="font-display font-black text-emerald-950 text-sm sm:text-base leading-tight select-none">
+                      Score: {score} of 3!
+                    </h3>
+                    <p className="text-[10px] text-brand-primary-light font-bold mt-1 tracking-tight leading-normal select-none">
+                      {score === 3
+                        ? "Perfect score! Soil Master chemistry intuition."
+                        : "Great effort! Composting has tricky guidelines."}
+                    </p>
+                  </div>
+
+                  {/* Streak details badge */}
+                  <div className="inline-flex items-center gap-1 bg-amber-50 border border-amber-100 px-2.5 py-1 rounded-full text-[10px] text-amber-900 font-extrabold mx-auto select-none">
+                    <span>⚡ Max Streak: {streak}</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 w-full mt-auto shrink-0 select-none">
+                  <Link
+                    href="/download"
+                    onClick={() => handleCtaClick("Teaser Phone Victory Download", "/download")}
+                    className="bg-brand-header text-white font-extrabold text-[10px] sm:text-[11px] py-2.5 px-3 rounded-xl shadow-premium hover:bg-brand-hero-accent hover-lift transition-all w-full flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5 shrink-0" />
+                    <span>Download Full App</span>
+                  </Link>
+
+                  <button
+                    onClick={handleResetQuiz}
+                    className="text-[9px] text-brand-muted hover:text-brand-primary font-bold flex items-center justify-center gap-1 mx-auto bg-transparent border-0 cursor-pointer py-1"
+                  >
+                    <RotateCcw className="w-3 h-3 shrink-0" />
+                    <span>Try Again</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
