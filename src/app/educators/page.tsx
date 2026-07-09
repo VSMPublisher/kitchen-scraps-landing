@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Download, FileText, CheckCircle, Mail, MapPin } from "lucide-react";
+import { ArrowLeft, Download, FileText } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -61,7 +61,7 @@ export default function EducatorsPage() {
             } else {
                 setErrorMessage(data.message || "Failed to submit request. Please try again.");
             }
-        } catch (err) {
+        } catch (_err) {
             setErrorMessage("Network error: Failed to connect to the registration service.");
         } finally {
             setLoading(false);
@@ -123,12 +123,12 @@ export default function EducatorsPage() {
                                             A full-color, high-contrast visual flow chart illustrating exactly where household kitchen scraps belong. Perfect for mounting above community waste stations.
                                         </p>
                                         <a
-                                            href="/flowchart-placeholder.pdf"
-                                            download
+                                            href="/flowchart-printout.svg"
+                                            download="kitchen-scraps-flowchart.svg"
                                             className="inline-flex items-center gap-1.5 mt-3 text-xs font-extrabold text-emerald-800 hover:text-emerald-950 underline decoration-2 underline-offset-4 cursor-pointer"
                                         >
                                             <Download className="w-3.5 h-3.5" />
-                                            <span>Download PDF (1.2 MB)</span>
+                                            <span>Download Printable Vector SVG</span>
                                         </a>
                                     </div>
                                 </div>
@@ -154,12 +154,12 @@ export default function EducatorsPage() {
                                             Hang this in your community garden or classroom. Includes a scan-able QR code that instantly launches our interactive Kitchen Scraps web teaser!
                                         </p>
                                         <a
-                                            href="/poster-placeholder.pdf"
-                                            download
+                                            href="/poster-printout.svg"
+                                            download="kitchen-scraps-interactive-poster.svg"
                                             className="inline-flex items-center gap-1.5 mt-3 text-xs font-extrabold text-emerald-800 hover:text-emerald-950 underline decoration-2 underline-offset-4 cursor-pointer"
                                         >
                                             <Download className="w-3.5 h-3.5" />
-                                            <span>Download PDF (3.8 MB)</span>
+                                            <span>Download Printable Vector SVG</span>
                                         </a>
                                     </div>
                                 </div>
@@ -179,12 +179,12 @@ export default function EducatorsPage() {
                                             A simple, structured curriculum guide with 5 engaging chemistry experiments and homework sorting quizzes tailored for K-12 instruction.
                                         </p>
                                         <a
-                                            href="/curriculum-placeholder.pdf"
-                                            download
+                                            href="/worksheet-printout.svg"
+                                            download="kitchen-scraps-kids-worksheet.svg"
                                             className="inline-flex items-center gap-1.5 mt-3 text-xs font-extrabold text-emerald-800 hover:text-emerald-950 underline decoration-2 underline-offset-4 cursor-pointer"
                                         >
                                             <Download className="w-3.5 h-3.5" />
-                                            <span>Download PDF (850 KB)</span>
+                                            <span>Download Printable Vector SVG</span>
                                         </a>
                                     </div>
                                 </div>

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="100%" height="100%" style="background-color: #FAF9F5; font-family: system-ui, -apple-system, sans-serif;">
+  <!-- Border and Background Frame -->
+  <rect x="20" y="20" width="760" height="1060" rx="32" fill="#ffffff" stroke="#059669" stroke-width="5" />
+  <rect x="35" y="35" width="730" height="1030" rx="24" fill="none" stroke="#6ee7b7" stroke-width="2" />
+
+  <!-- Header Section with wrapped summary text -->
+  <g transform="translate(80, 80)">
+    <text x="0" y="40" fill="#047857" font-size="14" font-weight="900" letter-spacing="3" text-transform="uppercase">Interactive Soil Intelligence</text>
+    <text x="0" y="95" fill="#064e3b" font-size="44" font-weight="900" letter-spacing="-1">COMPOST WITH</text>
+    <text x="0" y="145" fill="#059669" font-size="44" font-weight="900" letter-spacing="-1">ZERO CONFUSION.</text>
+    <text x="0" y="195" fill="#4b5563" font-size="16" font-weight="600">Test your waste sorting knowledge in seconds. Keep organic scraps</text>
+    <text x="0" y="218" fill="#4b5563" font-size="16" font-weight="600">out of landfills, build rich living soil, and feed the earth.</text>
+  </g>
+
+  <!-- Giant App Mockup Accent inside the poster -->
+  <g transform="translate(80, 330)">
+    <rect x="0" y="0" width="640" height="340" rx="20" fill="#fcfbf7" stroke="#e5e7eb" stroke-width="1.5" />
+    
+    <!-- Left Half: The Compost Formula -->
+    <g transform="translate(30, 35)">
+      <text x="0" y="25" fill="#064e3b" font-size="20" font-weight="900">THE 3-STEP SOIL CYCLE</text>
+      
+      <!-- Step 1 -->
+      <g transform="translate(0, 50)">
+        <circle cx="18" cy="18" r="14" fill="#d1fae5" />
+        <text x="18" y="22" text-anchor="middle" fill="#065f46" font-size="12" font-weight="900">1</text>
+        <text x="44" y="16" fill="#1f2937" font-size="13.5" font-weight="bold">Separate Your Kitchen Scraps</text>
+        <text x="44" y="32" fill="#4b5563" font-size="11">Put peels, coffee grounds, and eggshells in a kitchen caddy.</text>
+      </g>
+
+      <!-- Step 2 -->
+      <g transform="translate(0, 115)">
+        <circle cx="18" cy="18" r="14" fill="#fef3c7" />
+        <text x="18" y="22" text-anchor="middle" fill="#92400e" font-size="12" font-weight="900">2</text>
+        <text x="44" y="16" fill="#1f2937" font-size="13.5" font-weight="bold">Mix 1 Part Greens, 2 Parts Browns</text>
+        <text x="44" y="32" fill="#4b5563" font-size="11">Add dry leaves, cardboard, or twigs to balance nitrogen.</text>
+      </g>
+
+      <!-- Step 3 -->
+      <g transform="translate(0, 180)">
+        <circle cx="18" cy="18" r="14" fill="#dbeafe" />
+        <text x="18" y="22" text-anchor="middle" fill="#1e40af" font-size="12" font-weight="900">3</text>
+        <text x="44" y="16" fill="#1f2937" font-size="13.5" font-weight="bold">Water, Aerate, and Wait!</text>
+        <text x="44" y="32" fill="#4b5563" font-size="11">Turn weekly, keep moist like a damp sponge. Harvest in 3-6 months.</text>
+      </g>
+    </g>
+
+    <!-- Vertical Split Divider -->
+    <line x1="430" y1="30" x2="430" y2="310" stroke="#e5e7eb" stroke-dasharray="4,4" stroke-width="1.5" />
+
+    <!-- Right Half: Real-time Stats summary card with wrapped text lines -->
+    <g transform="translate(450, 35)">
+      <text x="0" y="25" fill="#064e3b" font-size="15" font-weight="900" letter-spacing="1">DID YOU KNOW?</text>
+      
+      <!-- Callout Fact 1 -->
+      <g transform="translate(0, 45)">
+        <text x="0" y="20" fill="#d97706" font-size="24" font-weight="900">30%</text>
+        <text x="0" y="36" fill="#1f2937" font-size="11" font-weight="bold">of home waste is</text>
+        <text x="0" y="50" fill="#1f2937" font-size="11" font-weight="bold">compostable.</text>
+        <text x="0" y="66" fill="#6b7280" font-size="10">Most biodegradable trash</text>
+        <text x="0" y="78" fill="#6b7280" font-size="10">winds up generating toxic</text>
+        <text x="0" y="90" fill="#6b7280" font-size="10">methane in local landfills.</text>
+      </g>
+
+      <!-- Callout Fact 2 -->
+      <g transform="translate(0, 150)">
+        <text x="0" y="20" fill="#059669" font-size="24" font-weight="900">100%</text>
+        <text x="0" y="36" fill="#1f2937" font-size="11" font-weight="bold">Private and Secure</text>
+        <text x="0" y="50" fill="#1f2937" font-size="11" font-weight="bold">Offline Play.</text>
+        <text x="0" y="66" fill="#6b7280" font-size="10">Our trivia database is fully</text>
+        <text x="0" y="78" fill="#6b7280" font-size="10">embedded—no ad trackers</text>
+        <text x="0" y="90" fill="#6b7280" font-size="10">or accounts are required!</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Interactive Call to Action Banner -->
+  <g transform="translate(80, 700)">
+    <rect x="0" y="0" width="640" height="280" rx="24" fill="#064e3b" />
+    
+    <!-- Text instructions on the left -->
+    <g transform="translate(40, 45)">
+      <text x="0" y="30" fill="#fef08a" font-size="13" font-weight="900" letter-spacing="3">TAKE THE CHALLENGE</text>
+      <text x="0" y="65" fill="#ffffff" font-size="26" font-weight="900" letter-spacing="-0.5">Scan to Play the Quiz!</text>
+      <text x="0" y="105" fill="#a7f3d0" font-size="14" font-weight="500">Point your smartphone camera at this</text>
+      <text x="0" y="125" fill="#a7f3d0" font-size="14" font-weight="500">QR code. Challenge your friends to</text>
+      <text x="0" y="145" fill="#a7f3d0" font-size="14" font-weight="500">beat your score and learn sorting!</text>
+
+      <rect x="0" y="175" width="220" height="40" rx="10" fill="#10b981" />
+      <text x="110" y="200" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="900">kitchen-scraps.web.app</text>
+    </g>
+
+    <!-- Vector Mock QR Code Graphic -->
+    <g transform="translate(415, 30)">
+      <!-- QR Border Panel -->
+      <rect x="0" y="0" width="180" height="220" rx="16" fill="#ffffff" />
+      
+      <!-- Actual Server-Side QR API Image Integration -->
+      <image href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&amp;data=https://kitchen-scraps.web.app/" x="15" y="15" width="150" height="150" />
+      
+      <!-- Caption -->
+      <text x="90" y="195" text-anchor="middle" fill="#064e3b" font-size="10" font-weight="900" letter-spacing="1">SCAN TO LAUNCH WEB APP</text>
+      <text x="90" y="208" text-anchor="middle" fill="#6b7280" font-size="8.5">NO REGISTRATION REQUIRED</text>
+    </g>
+  </g>
+
+  <!-- Bottom Footer Credit lines (using standard character code instead of entity) -->
+  <text x="400" y="1035" text-anchor="middle" fill="#047857" font-size="12" font-weight="900" letter-spacing="1">KITCHEN SCRAPS SEEDING EDUCATION PROGRAM © 2026</text>
+  <text x="400" y="1055" text-anchor="middle" fill="#9ca3af" font-size="10">Crafted to elevate compost intelligence. Print, distribute, or display un-gated.</text>
+</svg>

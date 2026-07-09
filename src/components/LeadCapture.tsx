@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Mail, Check, ShieldCheck, Sparkles, BookOpen, KeyRound, HelpCircle, ArrowRight, Copy, User } from "lucide-react";
+import { Mail, Check, ShieldCheck, Sparkles, BookOpen, KeyRound, HelpCircle, ArrowRight, User } from "lucide-react";
 import { trackOutboundLink } from "@/utils/analytics";
 
 export default function LeadCapture() {
@@ -10,7 +10,6 @@ export default function LeadCapture() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [loading, setLoading] = useState(false);
     const [showGuide, setShowGuide] = useState(false);
-    const [copied, setCopied] = useState(false);
 
     // Spam protection & verification states
     const [step, setStep] = useState<"input" | "verify">("input");
@@ -45,12 +44,6 @@ export default function LeadCapture() {
         }, 1000);
         return () => clearTimeout(timer);
     }, [resendCooldown]);
-
-    const handleCopy = () => {
-        navigator.clipboard.writeText("GARDENGOLD99");
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
 
     // Client-side spam protection rules (Max 3/day per browser)
     const checkSpamLimits = () => {
