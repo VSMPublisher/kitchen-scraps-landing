@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Check, ShieldCheck, Sparkles, BookOpen, KeyRound, HelpCircle, ArrowRight, Copy, User } from "lucide-react";
 import { trackOutboundLink } from "@/utils/analytics";
 
@@ -12,70 +12,199 @@ export default function LeadCapture() {
     const [showGuide, setShowGuide] = useState(false);
     const [copied, setCopied] = useState(false);
 
+    // Spam protection & verification states
+    const [step, setStep] = useState<"input" | "verify">("input");
+    const [otp, setOtp] = useState("");
+    const [otpLoading, setOtpLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [resendCooldown, setResendCooldown] = useState(0);
+    const [clientIp, setClientIp] = useState("unknown");
+
+    // Fetch client IP on mount for server-side rate-limiting
+    useEffect(() => {
+        const fetchIp = async () => {
+            try {
+                const res = await fetch("https://api.ipify.org?format=json");
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.ip) setClientIp(data.ip);
+                }
+            } catch (err) {
+                console.warn("Could not retrieve client IP address, using fallback indicator", err);
+            }
+        };
+        fetchIp();
+    }, []);
+
+    // Cooldown timer for resending OTP
+    useEffect(() => {
+        if (resendCooldown <= 0) return;
+        const timer = setTimeout(() => {
+            setResendCooldown((prev) => prev - 1);
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [resendCooldown]);
+
     const handleCopy = () => {
         navigator.clipboard.writeText("GARDENGOLD99");
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    // Client-side spam protection rules (Max 3/day per browser)
+    const checkSpamLimits = () => {
+        try {
+            const today = new Date().toDateString();
+            const localData = localStorage.getItem("ks_submit_data");
+            if (localData) {
+                const parsed = JSON.parse(localData);
+                if (parsed.date === today) {
+                    if (parsed.count >= 3) {
+                        return "Daily submission limit reached. You can only request up to 3 welcome kits per day.";
+                    }
+                }
+            }
+        } catch (e) {
+            console.warn("localStorage count check bypassed", e);
+        }
+        return "";
+    };
+
+    const incrementSubmissionCount = () => {
+        try {
+            const today = new Date().toDateString();
+            const localData = localStorage.getItem("ks_submit_data");
+            let count = 1;
+            if (localData) {
+                const parsed = JSON.parse(localData);
+                if (parsed.date === today) {
+                    count = (parsed.count || 0) + 1;
+                }
+            }
+            localStorage.setItem("ks_submit_data", JSON.stringify({ date: today, count }));
+        } catch (e) {
+            console.warn("localStorage persistence bypassed", e);
+        }
+    };
+
+    // Step 1: Send the 4-digit verification code (OTP) via Google Apps Script
+    const handleSendOtp = async (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
         if (!email || !email.includes("@")) return;
 
-        setLoading(true);
-
-        // Check if user has specified an endpoint URL in environment variables
-        const customEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
-
-        if (customEndpoint) {
-            try {
-                const isGoogleScript = customEndpoint.includes("script.google.com");
-                const isFormSubmit = customEndpoint.includes("formsubmit.co");
-
-                if (isGoogleScript || isFormSubmit) {
-                    // Google Apps Script and FormSubmit prefer application/x-www-form-urlencoded or multipart/form-data
-                    const formData = new URLSearchParams();
-                    formData.append("name", name || "Gardener");
-                    formData.append("email", email);
-                    formData.append("source", "Kitchen Scraps Landing Page");
-                    formData.append("timestamp", new Date().toISOString());
-
-                    await fetch(customEndpoint, {
-                        method: "POST",
-                        mode: "no-cors", // Essential to bypass CORS preflight restrictions on third-party domains
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded",
-                        },
-                        body: formData.toString()
-                    });
-                } else {
-                    // Standard JSON Post
-                    await fetch(customEndpoint, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            "Accept": "application/json"
-                        },
-                        body: JSON.stringify({
-                            name: name || "Gardener",
-                            email: email,
-                            source: "Kitchen Scraps Landing Page",
-                            timestamp: new Date().toISOString()
-                        })
-                    });
-                }
-            } catch (err) {
-                console.warn("Could not post to configured endpoint, proceeding with local success flow", err);
-            }
+        // Check client-side rate limit first
+        const spamError = checkSpamLimits();
+        if (spamError) {
+            setErrorMessage(spamError);
+            return;
         }
 
-        // Direct elegant delay to ensure optimal feedback feel
-        setTimeout(() => {
+        setLoading(true);
+        setErrorMessage("");
+        setSuccessMessage("");
+
+        const customEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+        if (!customEndpoint) {
+            // Demo fallback if no Apps Script endpoint URL is configured
             setLoading(false);
-            setIsSubmitted(true);
-            // Track lead submission in analytics
-            trackOutboundLink(`/lead-captured?email=${encodeURIComponent(email)}`, "Lead Capture Submit");
-        }, 800);
+            setStep("verify");
+            setSuccessMessage("DEMO MODE: Verification code '1234' is simulated for " + email);
+            return;
+        }
+
+        try {
+            // We POST as plain text to completely bypass any CORS preflight/OPTIONS block, Apps Script reads this from e.postData.contents
+            const response = await fetch(customEndpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: JSON.stringify({
+                    action: "send_otp",
+                    name: name || "Gardener",
+                    email: email,
+                    ip: clientIp,
+                    source: "Kitchen Scraps Landing Page"
+                })
+            });
+
+            const data = await response.json();
+            if (data.status === "success") {
+                setStep("verify");
+                setSuccessMessage(`A 4-digit verification code has been sent to ${email}. Please check your inbox!`);
+                setResendCooldown(30); // 30s cooldown before allowing resend
+            } else {
+                setErrorMessage(data.message || "Could not send verification code. Please check your inputs and try again.");
+            }
+        } catch (err) {
+            console.error("Error sending OTP:", err);
+            setErrorMessage("Network error: Failed to reach the verification service. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Step 2: Verify OTP code and register lead
+    const handleVerifyOtp = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!otp || otp.length < 4) {
+            setErrorMessage("Please enter the 4-digit verification code.");
+            return;
+        }
+
+        setOtpLoading(true);
+        setErrorMessage("");
+        setSuccessMessage("");
+
+        const customEndpoint = process.env.NEXT_PUBLIC_FORM_ENDPOINT;
+        if (!customEndpoint) {
+            // Demo fallback
+            if (otp === "1234") {
+                setTimeout(() => {
+                    setOtpLoading(false);
+                    setIsSubmitted(true);
+                    incrementSubmissionCount();
+                    trackOutboundLink(`/lead-captured?email=${encodeURIComponent(email)}`, "Lead Capture Submit");
+                }, 800);
+            } else {
+                setOtpLoading(false);
+                setErrorMessage("DEMO MODE: Incorrect code. Enter '1234' to bypass in preview.");
+            }
+            return;
+        }
+
+        try {
+            const response = await fetch(customEndpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: JSON.stringify({
+                    action: "verify_otp",
+                    name: name || "Gardener",
+                    email: email,
+                    otp: otp,
+                    ip: clientIp,
+                    source: "Kitchen Scraps Landing Page"
+                })
+            });
+
+            const data = await response.json();
+            if (data.status === "success") {
+                setOtpLoading(false);
+                setIsSubmitted(true);
+                incrementSubmissionCount();
+                trackOutboundLink(`/lead-captured?email=${encodeURIComponent(email)}`, "Lead Capture Submit");
+            } else {
+                setErrorMessage(data.message || "Invalid or expired verification code. Please request a new code.");
+            }
+        } catch (err) {
+            console.error("Error verifying OTP:", err);
+            setErrorMessage("Network error: Failed to verify your code. Please check your connection.");
+        } finally {
+            setOtpLoading(false);
+        }
     };
 
     return (
@@ -100,54 +229,143 @@ export default function LeadCapture() {
                             </p>
                         </div>
 
-                        {/* Email Form */}
-                        <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <User className="h-5 w-5 text-amber-300" />
+                        {/* Multi-step Verification Form */}
+                        <div className="max-w-md mx-auto space-y-4">
+                            {errorMessage && (
+                                <div className="p-4 bg-red-950/40 border border-red-500/30 text-red-200 text-sm font-medium rounded-2xl text-center shadow-inner animate-fade-in select-none">
+                                    ⚠️ {errorMessage}
                                 </div>
-                                <input
-                                    type="text"
-                                    required
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="Enter your name..."
-                                    className="block w-full pl-12 pr-4 py-4 bg-black/30 border border-brand-primary-light rounded-2xl text-white placeholder-brand-soft-bg/60 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent font-medium shadow-inner text-base transition-all"
-                                />
-                            </div>
-
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <Mail className="h-5 w-5 text-amber-300" />
+                            )}
+                            {successMessage && (
+                                <div className="p-4 bg-emerald-950/40 border border-emerald-500/30 text-emerald-200 text-sm font-medium rounded-2xl text-center shadow-inner animate-fade-in select-none">
+                                    ✨ {successMessage}
                                 </div>
-                                <input
-                                    type="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Enter your email address..."
-                                    className="block w-full pl-12 pr-4 py-4 bg-black/30 border border-brand-primary-light rounded-2xl text-white placeholder-brand-soft-bg/60 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent font-medium shadow-inner text-base transition-all"
-                                />
-                            </div>
+                            )}
 
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full bg-brand-cta hover:bg-amber-400 text-slate-950 font-black py-4 px-6 rounded-2xl shadow-premium hover:shadow-premium-lg transition-all hover-lift flex items-center justify-center gap-2 cursor-pointer text-base focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
-                            >
-                                {loading ? (
-                                    <span className="flex items-center gap-2">
-                                        <span className="animate-spin rounded-full h-4 w-4 border-2 border-slate-950 border-t-transparent" />
-                                        Preparing Welcome Kit...
-                                    </span>
-                                ) : (
-                                    <>
-                                        <span>Email Me the APK & Promo Code</span>
-                                        <ArrowRight className="w-5 h-5 shrink-0" />
-                                    </>
-                                )}
-                            </button>
-                        </form>
+                            {step === "input" ? (
+                                <form onSubmit={handleSendOtp} className="space-y-4">
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <User className="h-5 w-5 text-amber-300" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            placeholder="Enter your name..."
+                                            className="block w-full pl-12 pr-4 py-4 bg-black/30 border border-brand-primary-light rounded-2xl text-white placeholder-brand-soft-bg/60 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent font-medium shadow-inner text-base transition-all"
+                                        />
+                                    </div>
+
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <Mail className="h-5 w-5 text-amber-300" />
+                                        </div>
+                                        <input
+                                            type="email"
+                                            required
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            placeholder="Enter your email address..."
+                                            className="block w-full pl-12 pr-4 py-4 bg-black/30 border border-brand-primary-light rounded-2xl text-white placeholder-brand-soft-bg/60 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent font-medium shadow-inner text-base transition-all"
+                                        />
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        className="w-full bg-brand-cta hover:bg-amber-400 text-slate-950 font-black py-4 px-6 rounded-2xl shadow-premium hover:shadow-premium-lg transition-all hover-lift flex items-center justify-center gap-2 cursor-pointer text-base focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
+                                    >
+                                        {loading ? (
+                                            <span className="flex items-center gap-2">
+                                                <span className="animate-spin rounded-full h-4 w-4 border-2 border-slate-950 border-t-transparent" />
+                                                Sending Verification...
+                                            </span>
+                                        ) : (
+                                            <>
+                                                <span>Get Verification Code</span>
+                                                <ArrowRight className="w-5 h-5 shrink-0" />
+                                            </>
+                                        )}
+                                    </button>
+                                </form>
+                            ) : (
+                                <form onSubmit={handleVerifyOtp} className="space-y-4">
+                                    {/* Read-only feedback of current email to help if typo occurred */}
+                                    <div className="flex items-center justify-between bg-black/20 border border-brand-primary-light/30 rounded-2xl px-4 py-3 text-xs select-none">
+                                        <span className="text-brand-soft-bg truncate font-medium max-w-[220px]">
+                                            Verifying: <strong className="text-white font-mono">{email}</strong>
+                                        </span>
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setStep("input");
+                                                setErrorMessage("");
+                                                setSuccessMessage("");
+                                                setOtp("");
+                                            }}
+                                            className="text-amber-300 hover:text-amber-200 font-extrabold cursor-pointer transition-colors bg-transparent border-0"
+                                        >
+                                            Change Email
+                                        </button>
+                                    </div>
+
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                            <KeyRound className="h-5 w-5 text-amber-300" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            required
+                                            maxLength={4}
+                                            pattern="[0-9]*"
+                                            inputMode="numeric"
+                                            value={otp}
+                                            onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                                            placeholder="Enter 4-digit code..."
+                                            className="block w-full pl-12 pr-4 py-4 bg-black/30 border border-brand-primary-light rounded-2xl text-white placeholder-brand-soft-bg/60 tracking-[0.25em] text-center font-mono font-extrabold focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent shadow-inner text-lg transition-all"
+                                        />
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        disabled={otpLoading}
+                                        className="w-full bg-brand-cta hover:bg-amber-400 text-slate-950 font-black py-4 px-6 rounded-2xl shadow-premium hover:shadow-premium-lg transition-all hover-lift flex items-center justify-center gap-2 cursor-pointer text-base focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
+                                    >
+                                        {otpLoading ? (
+                                            <span className="flex items-center gap-2">
+                                                <span className="animate-spin rounded-full h-4 w-4 border-2 border-slate-950 border-t-transparent" />
+                                                Verifying Code...
+                                            </span>
+                                        ) : (
+                                            <>
+                                                <span>Verify & Download APK</span>
+                                                <Check className="w-5 h-5 shrink-0" />
+                                            </>
+                                        )}
+                                    </button>
+
+                                    <div className="text-center select-none pt-2">
+                                        <button
+                                            type="button"
+                                            disabled={resendCooldown > 0 || loading}
+                                            onClick={() => handleSendOtp()}
+                                            className="text-xs font-semibold text-brand-soft-bg hover:text-white disabled:text-brand-soft-bg/50 transition-colors cursor-pointer bg-transparent border-0"
+                                        >
+                                            {resendCooldown > 0
+                                                ? `Resend code in ${resendCooldown}s`
+                                                : "Didn't receive the code? Resend Code"}
+                                        </button>
+                                    </div>
+                                </form>
+                            )}
+
+                            {/* Data Disclaimer / Security notice */}
+                            <p className="text-[11px] text-center text-brand-soft-bg/75 leading-relaxed max-w-sm mx-auto select-none pt-1">
+                                🔒 Subscriber data is logged securely on Google Sheets. Please do not enter sensitive private passwords or financial details.
+                            </p>
+                        </div>
 
                         {/* Value Indicators under form */}
                         <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center border-t border-brand-primary-light/40 pt-8 max-w-2xl mx-auto">
@@ -217,32 +435,8 @@ export default function LeadCapture() {
                                     <div className="flex-1">
                                         <h4 className="font-extrabold text-sm text-white">Redeem your Premium Gold Code</h4>
                                         <p className="text-xs text-brand-soft-bg mt-1">
-                                            Launch the app, open Settings, enter your exclusive code to watch the beautiful Amber Gold particles skin your entire interface!
+                                            To get your exclusive unlock code, please <strong className="text-amber-300">open your Welcome Kit email</strong>. Inside, you will find your unique promo code alongside simple settings instructions to instantly activate the premium Amber Gold offline mode!
                                         </p>
-
-                                        {/* Visual copy button card */}
-                                        <div className="mt-3 inline-flex items-center gap-3 bg-black/40 border border-dashed border-amber-300/40 rounded-xl px-4 py-2 w-full sm:w-auto justify-between select-none">
-                                            <span className="font-mono text-sm font-black text-amber-300 tracking-wider">
-                                                GARDENGOLD99
-                                            </span>
-                                            <button
-                                                onClick={handleCopy}
-                                                type="button"
-                                                className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-400 hover:bg-amber-300 text-slate-950 text-[11px] font-black uppercase rounded-lg transition-all cursor-pointer"
-                                            >
-                                                {copied ? (
-                                                    <>
-                                                        <Check className="w-3 h-3 stroke-[3]" />
-                                                        <span>Copied!</span>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Copy className="w-3 h-3" />
-                                                        <span>Copy Code</span>
-                                                    </>
-                                                )}
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
