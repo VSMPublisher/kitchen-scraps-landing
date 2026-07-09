@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Download, Lightbulb, ArrowRight, RotateCcw } from "lucide-react";
 import { trackOutboundLink } from "@/utils/analytics";
 import TrustBadge from "./TrustBadge";
+import { getCreator } from "@/utils/creators";
 
 const DEMO_QUESTIONS = [
   {
@@ -113,15 +114,29 @@ export default function Hero() {
   const [copiedScore, setCopiedScore] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
+  const [referrer, setReferrer] = useState<string | null>(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       setTimeout(() => setIsDesktop(!isMobile), 0);
+
+      // Extract current referrer
+      const checkReferrer = () => {
+        const stored = localStorage.getItem("ks_referrer");
+        setTimeout(() => setReferrer(stored), 0);
+      };
+      checkReferrer();
+      const interval = setInterval(checkReferrer, 1000);
+      return () => clearInterval(interval);
     }
   }, []);
 
   const handleCopyScore = () => {
-    const textToCopy = `🌱 I scored ${score}/3 on the Kitchen Scraps Composting teaser! Can you beat my score? Try it free: https://kitchen-scraps.web.app/`;
+    const shareUrl = referrer
+      ? `https://kitchen-scraps.web.app/?ref=${encodeURIComponent(referrer)}`
+      : "https://kitchen-scraps.web.app/";
+    const textToCopy = `🌱 I scored ${score}/3 on the Kitchen Scraps Composting teaser! Can you beat my score? Try it free: ${shareUrl}`;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText(textToCopy).then(() => {
         setCopiedScore(true);
@@ -248,13 +263,6 @@ export default function Hero() {
 
           <p className="text-lg sm:text-xl mb-5 text-brand-primary max-w-2xl leading-relaxed font-semibold">
             Stop second-guessing your green/brown balance. Practice waste sorting across 6 essential categories in just <span className="text-emerald-950 font-bold bg-brand-soft-bg/80 px-2 py-0.5 rounded">5 minutes a day</span>.
-            <span className="block mt-2.5 text-emerald-800 font-extrabold text-base sm:text-lg flex items-center justify-center lg:justify-start gap-2">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-              </span>
-              100% free, no signup required
-            </span>
           </p>
 
           <div className="inline-flex items-center gap-2 bg-amber-50/90 border border-amber-200/50 px-3.5 py-1.5 rounded-xl mb-8 text-xs sm:text-sm text-amber-900/95 font-medium tracking-tight shadow-sm justify-center lg:justify-start">
@@ -267,7 +275,7 @@ export default function Hero() {
             {/* Download CTA (Primary Action) */}
             <div className="flex flex-col w-full md:w-auto">
               <Link
-                href="/download"
+                href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
                 onClick={() => handleCtaClick("Download APK", "/download")}
                 className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full flex items-center justify-center gap-2.5 cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
               >
@@ -319,7 +327,7 @@ export default function Hero() {
 
             {/* Simulated App Header */}
             <div className="bg-brand-header py-2 px-3 text-white font-display font-extrabold text-[11px] sm:text-xs tracking-tight text-center relative flex items-center justify-between shrink-0 shadow-sm select-none">
-              <span>Go/No-Go Quiz</span>
+              <span>{referrer ? `${getCreator(referrer).name.split(" ")[0]}'s Quiz` : "Go/No-Go Quiz"}</span>
               <span className="text-[9px] bg-emerald-600 px-1.5 py-0.5 rounded border border-emerald-500/30 font-mono flex items-center gap-0.5 select-none">
                 ⏱️ {isAnsLocked ? "Paused" : "Active"}
               </span>
@@ -443,7 +451,7 @@ export default function Hero() {
                   </button>
 
                   <Link
-                    href="/download"
+                    href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
                     onClick={() => handleCtaClick("Teaser Phone Victory Download", "/download")}
                     className="bg-brand-header text-white font-extrabold text-[10px] sm:text-[11px] py-2 px-3 rounded-xl shadow-premium hover:bg-brand-hero-accent hover-lift transition-all w-full flex items-center justify-center gap-1.5 cursor-pointer"
                   >
@@ -475,7 +483,7 @@ export default function Hero() {
         <div className="max-w-6xl mx-auto flex flex-row gap-2.5">
           {/* Mobile Download Button */}
           <Link
-            href="/download"
+            href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
             onClick={() => handleCtaClick("Download APK - Mobile CTA", "/download")}
             className="flex-1 bg-brand-header text-white px-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-hero-accent hover-lift transition-all shadow-premium text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50 flex items-center justify-center min-h-[44px]"
           >

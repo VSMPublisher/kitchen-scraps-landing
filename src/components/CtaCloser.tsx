@@ -7,6 +7,7 @@ import TrustBadge from "./TrustBadge";
 
 export default function CtaCloser() {
   const [expiryDate, setExpiryDate] = useState("this month");
+  const [referrer, setReferrer] = useState<string | null>(null);
 
   // Dynamically calculate the last day of the current month to create fresh, persistent urgency
   useEffect(() => {
@@ -16,7 +17,16 @@ export default function CtaCloser() {
       month: "long",
       day: "numeric"
     });
-    setExpiryDate(formatted);
+    setTimeout(() => {
+      setExpiryDate(formatted);
+    }, 0);
+
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("ks_referrer");
+      if (stored) {
+        setTimeout(() => setReferrer(stored), 0);
+      }
+    }
   }, []);
 
   const handleCtaClick = (label: string, url: string) => {
@@ -55,7 +65,7 @@ export default function CtaCloser() {
           {/* Download CTA (Primary Action - Deep Brand Green) */}
           <div className="flex flex-col w-full sm:w-auto px-4 sm:px-0">
             <Link
-              href="/download"
+              href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
               onClick={() => handleCtaClick("Download APK", "/download")}
               className="bg-brand-header hover:bg-brand-hero-accent text-white font-bold px-6 py-3 rounded-xl transition-all hover-lift shadow-md w-full text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
             >

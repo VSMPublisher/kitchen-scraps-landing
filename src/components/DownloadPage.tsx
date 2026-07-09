@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { getCreator } from "@/utils/creators";
 
 const OrganicLeaf = ({ className }: { className: string }) => (
   <svg
@@ -62,19 +63,36 @@ export default function DownloadPage() {
   const [downloadTriggered, setDownloadTriggered] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [referrer, setReferrer] = useState<string | null>(null);
 
   // Constants
   const fileSizeMB = 60;
   const apkSha256 = "90f28ff17c1db7a86bcc87b9b13ae788b4646769621674d1f19323bf464a31f5";
   const apkUrl = "/kitchen-scraps-quiz-v1.0.apk";
 
-  // Detect desktop browser agent
+  // Check URL parameters & local storage for referrer on mount
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       setTimeout(() => setIsDesktop(!isMobile), 0);
+
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get("ref");
+      if (ref) {
+        setTimeout(() => setReferrer(ref), 0);
+        localStorage.setItem("ks_referrer", ref);
+      } else {
+        const stored = localStorage.getItem("ks_referrer");
+        if (stored) {
+          setTimeout(() => setReferrer(stored), 0);
+        }
+      }
     }
   }, []);
+
+  const promoCode = referrer
+    ? `${referrer.replace(/[-_@]+/g, "").toUpperCase()}99`
+    : "GARDENGOLD99";
 
   // Auto-trigger download after 3 seconds (Point 8.1 - takes ~3s)
   useEffect(() => {
@@ -102,7 +120,7 @@ export default function DownloadPage() {
 
   const handleCopyCode = async () => {
     try {
-      await navigator.clipboard.writeText("GARDENGOLD99");
+      await navigator.clipboard.writeText(promoCode);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
     } catch (_err) {
@@ -155,6 +173,38 @@ export default function DownloadPage() {
       <OrganicLeaf className="bottom-[5%] right-[15%] w-24 h-24 md:w-36 md:h-36 rotate-[195deg] hidden sm:block opacity-80" />
 
       <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:py-16 relative z-10">
+
+        {referrer && (() => {
+          const creator = getCreator(referrer);
+          return (
+            <div className="bg-amber-400 text-slate-950 p-6 rounded-3xl border border-amber-500 shadow-premium mb-8 flex flex-col sm:flex-row items-center gap-5 animate-fade-in relative overflow-hidden">
+              <div
+                className="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,0.15),transparent)] pointer-events-none"
+                aria-hidden="true"
+              />
+              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white bg-amber-100 shrink-0 shadow-sm">
+                <img
+                  src={creator.avatar}
+                  alt={creator.name}
+                  width={64}
+                  height={64}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1 text-center sm:text-left relative z-10">
+                <span className="text-[10px] font-black uppercase tracking-wider bg-black/10 px-2.5 py-0.5 rounded-full select-none">
+                  Special Advocate Invite
+                </span>
+                <h2 className="text-lg font-black tracking-tight mt-1">
+                  You Were Invited by {creator.name}!
+                </h2>
+                <p className="text-xs font-bold text-slate-900 mt-1 leading-relaxed">
+                  Enjoy free, ad-free access to all 60+ composting quiz puzzles. Your exclusive skin coupon <span className="font-mono bg-black/10 px-1 py-0.5 rounded font-black">{promoCode}</span> is active and ready to be redeemed.
+                </p>
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Page Header - Honest Status */}
         <div className="bg-white rounded-3xl border border-brand-border shadow-premium-lg p-8 sm:p-10 mb-8">
@@ -412,7 +462,7 @@ export default function DownloadPage() {
 
                   <div className="flex items-center justify-center gap-2 max-w-xs mx-auto">
                     <span className="bg-zinc-950/20 text-white font-mono font-bold text-lg border border-white/20 tracking-wider px-4 py-1.5 rounded-lg select-all w-full text-center">
-                      GARDENGOLD99
+                      {promoCode}
                     </span>
                     <button
                       onClick={handleCopyCode}
