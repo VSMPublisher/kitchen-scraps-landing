@@ -110,6 +110,26 @@ export default function Hero() {
   const [streak, setStreak] = useState(11);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const [copiedScore, setCopiedScore] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setTimeout(() => setIsDesktop(!isMobile), 0);
+    }
+  }, []);
+
+  const handleCopyScore = () => {
+    const textToCopy = `🌱 I scored ${score}/3 on the Kitchen Scraps Composting teaser! Can you beat my score? Try it free: https://kitchen-scraps.web.app/`;
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        setCopiedScore(true);
+        setTimeout(() => setCopiedScore(false), 2000);
+      });
+    }
+  };
+
   // Simulated countdown effect inside mockup
   useEffect(() => {
     if (isAnsLocked || isCompleted) return;
@@ -380,9 +400,9 @@ export default function Hero() {
               </div>
             ) : (
               /* Victory/Teaser Completed Screen */
-              <div className="p-4 flex-1 flex flex-col items-center justify-between text-center bg-gradient-to-b from-emerald-50/40 to-white overflow-y-auto select-none">
-                <div className="my-auto space-y-3">
-                  <div className="text-4xl animate-bounce select-none">🏆</div>
+              <div className="p-3.5 flex-1 flex flex-col items-center justify-between text-center bg-gradient-to-b from-emerald-50/40 to-white overflow-y-auto select-none gap-2">
+                <div className="my-auto space-y-2.5">
+                  <div className="text-3xl animate-bounce select-none">🏆</div>
                   <div>
                     <h3 className="font-display font-black text-emerald-950 text-sm sm:text-base leading-tight select-none">
                       Score: {score} of 3!
@@ -395,16 +415,37 @@ export default function Hero() {
                   </div>
 
                   {/* Streak details badge */}
-                  <div className="inline-flex items-center gap-1 bg-amber-50 border border-amber-100 px-2.5 py-1 rounded-full text-[10px] text-amber-900 font-extrabold mx-auto select-none">
-                    <span>⚡ Max Streak: {streak}</span>
+                  <div className="inline-flex items-center gap-1 bg-amber-50 border border-amber-100 px-2.5 py-0.5 rounded-full text-[10px] text-amber-900 font-extrabold mx-auto select-none">
+                    <span>⚡ Streak: {streak}</span>
                   </div>
+
+                  {/* QR Code for Desktop Sideloading */}
+                  {isDesktop && (
+                    <div className="flex flex-col items-center gap-1 bg-white p-1.5 rounded-xl border border-brand-border shadow-sm mx-auto w-fit">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent("https://kitchen-scraps.web.app/download")}`}
+                        alt="Scan to Download APK"
+                        className="w-[72px] h-[72px] select-none"
+                      />
+                      <span className="text-[8px] font-bold text-brand-primary-light uppercase tracking-wide">Scan to install APK</span>
+                    </div>
+                  )}
                 </div>
 
-                <div className="space-y-2 w-full mt-auto shrink-0 select-none">
+                <div className="space-y-1.5 w-full mt-auto shrink-0 select-none">
+                  {/* Scoreboard Share/Copy Button */}
+                  <button
+                    onClick={handleCopyScore}
+                    className="w-full bg-emerald-50 border border-emerald-150 hover:bg-emerald-100 text-emerald-900 font-extrabold text-[10px] py-2 px-3 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <span>📋</span>
+                    <span>{copiedScore ? "Copied Score!" : "Copy Scorecard"}</span>
+                  </button>
+
                   <Link
                     href="/download"
                     onClick={() => handleCtaClick("Teaser Phone Victory Download", "/download")}
-                    className="bg-brand-header text-white font-extrabold text-[10px] sm:text-[11px] py-2.5 px-3 rounded-xl shadow-premium hover:bg-brand-hero-accent hover-lift transition-all w-full flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="bg-brand-header text-white font-extrabold text-[10px] sm:text-[11px] py-2 px-3 rounded-xl shadow-premium hover:bg-brand-hero-accent hover-lift transition-all w-full flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5 shrink-0" />
                     <span>Download Full App</span>

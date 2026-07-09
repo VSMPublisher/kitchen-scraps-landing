@@ -81,7 +81,13 @@ export default function Footer() {
         </div>
 
         {/* Links */}
-        <div className="flex justify-center gap-10 font-display font-bold text-white mb-12">
+        <div className="flex flex-wrap justify-center gap-10 font-display font-bold text-white mb-12">
+          <Link
+            href="/educators"
+            className="hover:text-brand-cta transition-colors decoration-brand-header underline underline-offset-8 decoration-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary rounded px-2 py-0.5"
+          >
+            Educators Portal
+          </Link>
           <Link
             href="https://vsmpublisher.github.io/kitchen-scraps-legal/privacy_policy.html"
             target="_blank"

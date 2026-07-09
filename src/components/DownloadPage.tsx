@@ -61,11 +61,20 @@ export default function DownloadPage() {
   const [isInstalled, setIsInstalled] = useState(false);
   const [downloadTriggered, setDownloadTriggered] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   // Constants
   const fileSizeMB = 60;
   const apkSha256 = "90f28ff17c1db7a86bcc87b9b13ae788b4646769621674d1f19323bf464a31f5";
   const apkUrl = "/kitchen-scraps-quiz-v1.0.apk";
+
+  // Detect desktop browser agent
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setTimeout(() => setIsDesktop(!isMobile), 0);
+    }
+  }, []);
 
   // Auto-trigger download after 3 seconds (Point 8.1 - takes ~3s)
   useEffect(() => {
@@ -117,8 +126,8 @@ export default function DownloadPage() {
       {/* Point 8.2: Slide-in Success Toast */}
       <div
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-emerald-900 text-white px-5 py-3 rounded-2xl border border-emerald-950 shadow-premium-lg transition-all duration-300 ${showSuccessToast
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-12 opacity-0 pointer-events-none"
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-12 opacity-0 pointer-events-none"
           }`}
       >
         <span className="text-xl">✅</span>
@@ -206,6 +215,30 @@ export default function DownloadPage() {
               <div className="mt-4 p-3 bg-amber-50 border border-amber-200/80 rounded-2xl text-center text-xs sm:text-sm font-extrabold text-amber-950 flex items-center justify-center gap-2 select-none animate-fade-in-up">
                 <span className="animate-bounce shrink-0">👉</span>
                 <span>Check your notifications bar → tap to install</span>
+              </div>
+            )}
+
+            {/* Desktop Transfer QR Code Card */}
+            {isDesktop && (
+              <div className="mt-6 p-5 bg-emerald-50 border border-emerald-600/10 rounded-2xl flex flex-col sm:flex-row items-center gap-5 justify-between animate-fade-in-up">
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="font-display font-extrabold text-sm sm:text-base text-brand-primary flex items-center gap-1.5 justify-center sm:justify-start">
+                    <span>💻</span> Are you visiting from a computer?
+                  </h3>
+                  <p className="text-xs text-brand-primary-light mt-1.5 leading-relaxed">
+                    Sideloading an APK from a desktop requires file cables. To make installation seamless, point your mobile phone camera at this QR code to load the download hub instantly on your phone.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center gap-1 bg-white p-2 border border-brand-border rounded-xl shrink-0 shadow-sm">
+                  <img
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent("https://kitchen-scraps.web.app/download")}`}
+                    alt="Scan to Download on Phone"
+                    width={90}
+                    height={90}
+                    className="w-[90px] h-[90px] select-none"
+                  />
+                  <span className="text-[9px] font-extrabold text-brand-primary-light uppercase tracking-wide">Scan with phone</span>
+                </div>
               </div>
             )}
           </div>

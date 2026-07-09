@@ -114,6 +114,11 @@ export default function LeadCapture() {
         }
 
         try {
+            const storedRef = typeof window !== "undefined" ? localStorage.getItem("ks_referrer") : null;
+            const finalSource = storedRef
+                ? `Kitchen Scraps Landing Page (Ref: ${storedRef})`
+                : "Kitchen Scraps Landing Page";
+
             // We POST as plain text to completely bypass any CORS preflight/OPTIONS block, Apps Script reads this from e.postData.contents
             const response = await fetch(customEndpoint, {
                 method: "POST",
@@ -125,7 +130,7 @@ export default function LeadCapture() {
                     name: name || "Gardener",
                     email: email,
                     ip: clientIp,
-                    source: "Kitchen Scraps Landing Page"
+                    source: finalSource
                 })
             });
 
@@ -175,6 +180,11 @@ export default function LeadCapture() {
         }
 
         try {
+            const storedRef = typeof window !== "undefined" ? localStorage.getItem("ks_referrer") : null;
+            const finalSource = storedRef
+                ? `Kitchen Scraps Landing Page (Ref: ${storedRef})`
+                : "Kitchen Scraps Landing Page";
+
             const response = await fetch(customEndpoint, {
                 method: "POST",
                 headers: {
@@ -186,7 +196,7 @@ export default function LeadCapture() {
                     email: email,
                     otp: otp,
                     ip: clientIp,
-                    source: "Kitchen Scraps Landing Page"
+                    source: finalSource
                 })
             });
 

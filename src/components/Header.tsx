@@ -1,10 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+
+// Simple utility to capitalize and prettify creator names from ids like chef_sarah
+const formatCreatorName = (id: string) => {
+  return id
+    .split(/[-_]+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [referrer, setReferrer] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get("ref") || params.get("code");
+      if (ref) {
+        localStorage.setItem("ks_referrer", ref);
+        setTimeout(() => setReferrer(ref), 0);
+      } else {
+        const stored = localStorage.getItem("ks_referrer");
+        if (stored) {
+          setTimeout(() => setReferrer(stored), 0);
+        }
+      }
+    }
+  }, []);
 
   const scrollToTop = () => {
     setIsMobileMenuOpen(false);
@@ -23,8 +48,26 @@ export default function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-brand-header py-2.5 md:py-3 px-4 md:px-6 shadow-premium transition-all duration-300">
-      <div className="max-w-6xl mx-auto flex items-center justify-between relative">
+    <header className="sticky top-0 z-50 bg-brand-header shadow-premium transition-all duration-300 flex flex-col">
+      {referrer && (
+        <div className="bg-amber-400 text-slate-950 text-xs font-black py-2.5 px-4 text-center select-none flex items-center justify-center gap-2 border-b border-amber-500/30 animate-fade-in">
+          <span>🌱</span>
+          <span>
+            You have been invited by <strong className="underline decoration-2 font-mono">{formatCreatorName(referrer)}</strong>! Sign up below to unlock your premium Welcome Kit.
+          </span>
+          <button
+            onClick={() => {
+              localStorage.removeItem("ks_referrer");
+              setReferrer(null);
+            }}
+            className="ml-2 bg-black/10 text-[9px] hover:bg-black/20 text-slate-950 font-bold px-1.5 py-0.5 rounded cursor-pointer border-0 transition-all uppercase"
+            aria-label="Dismiss invite"
+          >
+            ✕ Dismiss
+          </button>
+        </div>
+      )}
+      <div className="max-w-6xl mx-auto w-full py-2.5 md:py-3 px-4 md:px-6 flex items-center justify-between relative">
 
         {/* Logo Section */}
         <button
@@ -92,8 +135,8 @@ export default function Header() {
         {/* Responsive Mobile Navigation Drawer */}
         <div
           className={`absolute top-[100%] left-0 w-full bg-brand-header border-t border-white/10 shadow-premium transition-all duration-300 ease-in-out origin-top ${isMobileMenuOpen
-              ? "opacity-100 scale-y-100 visible pointer-events-auto"
-              : "opacity-0 scale-y-95 invisible pointer-events-none"
+            ? "opacity-100 scale-y-100 visible pointer-events-auto"
+            : "opacity-0 scale-y-95 invisible pointer-events-none"
             } lg:hidden`}
         >
           <nav className="flex flex-col p-6 gap-4">
