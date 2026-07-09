@@ -89,6 +89,12 @@ export default function Footer() {
             Educators Portal
           </Link>
           <Link
+            href="/advocates"
+            className="hover:text-brand-cta transition-colors decoration-brand-header underline underline-offset-8 decoration-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-brand-primary rounded px-2 py-0.5"
+          >
+            Creator Program
+          </Link>
+          <Link
             href="https://vsmpublisher.github.io/kitchen-scraps-legal/privacy_policy.html"
             target="_blank"
             rel="noopener noreferrer"
