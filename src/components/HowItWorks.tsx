@@ -55,7 +55,7 @@ export default function HowItWorks() {
     },
     {
       step: "2",
-      title: "Play 30-Second Micro-Quizzes",
+      title: "Play 5-Minute Micro-Quizzes",
       desc: "Test your sorting instincts against a rapid countdown timer. Unlock instant scientific explainers, request helpful hints, and earn streak points on every correct decision.",
       image: "/step-play.png",
     },

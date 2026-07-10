@@ -57,7 +57,7 @@ export default function CtaCloser() {
           Ready to Stop Second-Guessing Your Waste?
         </h2>
         <p className="text-brand-primary mt-3 text-sm md:text-base max-w-md mx-auto px-4">
-          Get the free app now and instantly master composting rules in just 30 seconds.
+          Get the free app now and instantly master composting rules in just 5 minutes.
         </p>
 
         {/* Balanced Button Row (Padded safely on mobile) */}
