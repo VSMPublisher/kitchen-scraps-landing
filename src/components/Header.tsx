@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { getCreator } from "@/utils/creators";
+import { getCreator, Creator, saveCreatorToCache } from "@/utils/creators";
+import { fetchCreatorFromFirestore } from "@/lib/firebase";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [referrer, setReferrer] = useState<string | null>(null);
+  const [liveCreator, setLiveCreator] = useState<Creator | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -23,6 +25,22 @@ export default function Header() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (!referrer) return;
+    let isSubscribed = true;
+    fetchCreatorFromFirestore(referrer)
+      .then((fetched) => {
+        if (isSubscribed && fetched && fetched.avatar) {
+          setLiveCreator(fetched);
+          saveCreatorToCache(fetched);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isSubscribed = false;
+    };
+  }, [referrer]);
 
   const scrollToTop = () => {
     setIsMobileMenuOpen(false);
@@ -43,14 +61,14 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-brand-header shadow-premium transition-all duration-300 flex flex-col">
       {referrer && (() => {
-        const creator = getCreator(referrer);
+        const creator = liveCreator || getCreator(referrer);
         return (
           <div className="bg-amber-400 text-slate-950 text-xs font-black py-2.5 px-4 text-center select-none flex items-center justify-center gap-2 border-b border-amber-500/30 animate-fade-in">
             <span>🌱</span>
             <span>
               You have been invited by <strong className="underline decoration-2 font-mono">{creator.name}</strong> ({creator.handle})! Download below to unlock your premium Welcome Kit.
             </span>
-            <button
+            <button 
               onClick={() => {
                 localStorage.removeItem("ks_referrer");
                 setReferrer(null);
@@ -130,9 +148,9 @@ export default function Header() {
 
         {/* Responsive Mobile Navigation Drawer */}
         <div
-          className={`absolute top-[100%] left-0 w-full bg-brand-header border-t border-white/10 shadow-premium transition-all duration-300 ease-in-out origin-top ${isMobileMenuOpen
-            ? "opacity-100 scale-y-100 visible pointer-events-auto"
-            : "opacity-0 scale-y-95 invisible pointer-events-none"
+          className={`absolute top-full left-0 w-full bg-brand-header border-t border-white/10 shadow-premium transition-all duration-300 ease-in-out origin-top ${isMobileMenuOpen
+              ? "opacity-100 scale-y-100 visible pointer-events-auto"
+              : "opacity-0 scale-y-95 invisible pointer-events-none"
             } lg:hidden`}
         >
           <nav className="flex flex-col p-6 gap-4">

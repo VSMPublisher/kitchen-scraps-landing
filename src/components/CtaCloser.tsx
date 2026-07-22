@@ -76,7 +76,7 @@ export default function CtaCloser() {
           {/* Teaser CTA (Secondary Action) */}
           <div className="flex flex-col sm:flex-row items-center w-full sm:w-auto gap-3 px-4 sm:px-0">
             <Link
-              href="https://kitchen-scraps-quiz.web.app"
+              href={referrer ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps-quiz.web.app"}
               onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
               className="border-2 border-emerald-900 text-emerald-900 hover:bg-brand-soft-bg/30 font-bold px-6 py-2.5 rounded-xl transition-all hover-lift shadow-md w-full sm:w-auto text-sm text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
             >

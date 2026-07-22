@@ -62,7 +62,7 @@ export default function Faq() {
               <h3 className="font-display font-extrabold text-brand-primary text-base sm:text-lg pr-4 group-open:text-brand-hero-accent transition-colors duration-300">
                 {faq.q}
               </h3>
-              <span className="flex-shrink-0 w-8 h-8 bg-brand-soft-bg text-brand-hero-accent font-bold rounded-full flex items-center justify-center transition-transform duration-300 group-open:rotate-180">
+              <span className="shrink-0 w-8 h-8 bg-brand-soft-bg text-brand-hero-accent font-bold rounded-full flex items-center justify-center transition-transform duration-300 group-open:rotate-180">
                 ▼
               </span>
             </summary>

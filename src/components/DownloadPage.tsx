@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getCreator } from "@/utils/creators";
+import { getCreator, Creator, saveCreatorToCache } from "@/utils/creators";
+import { fetchCreatorFromFirestore } from "@/lib/firebase";
 
 const OrganicLeaf = ({ className }: { className: string }) => (
   <svg
@@ -64,6 +65,7 @@ export default function DownloadPage() {
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [referrer, setReferrer] = useState<string | null>(null);
+  const [liveCreator, setLiveCreator] = useState<Creator | null>(null);
 
   // Constants
   const fileSizeMB = 60;
@@ -77,21 +79,42 @@ export default function DownloadPage() {
       setTimeout(() => setIsDesktop(!isMobile), 0);
 
       const params = new URLSearchParams(window.location.search);
-      const ref = params.get("ref");
-      if (ref) {
-        setTimeout(() => setReferrer(ref), 0);
-        localStorage.setItem("ks_referrer", ref);
-      } else {
-        const stored = localStorage.getItem("ks_referrer");
-        if (stored) {
-          setTimeout(() => setReferrer(stored), 0);
-        }
+      const candidate = [
+        params.get("ref"),
+        params.get("creator"),
+        params.get("id"),
+        params.get("referral"),
+        params.get("code"),
+      ].find((value): value is string => Boolean(value && value.trim()));
+
+      const resolvedRef = candidate?.trim().replace(/^@/, "") || localStorage.getItem("ks_referrer")?.trim().replace(/^@/, "") || null;
+
+      if (resolvedRef) {
+        setTimeout(() => setReferrer(resolvedRef), 0);
+        localStorage.setItem("ks_referrer", resolvedRef);
       }
     }
   }, []);
 
-  const promoCode = referrer
-    ? `${referrer.replace(/[-_@]+/g, "").toUpperCase()}99`
+  // Fetch live creator profile from Firestore database whenever referrer changes
+  useEffect(() => {
+    if (!referrer) return;
+    let isSubscribed = true;
+    fetchCreatorFromFirestore(referrer)
+      .then((fetched) => {
+        if (isSubscribed && fetched && fetched.avatar) {
+          setLiveCreator(fetched);
+          saveCreatorToCache(fetched);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isSubscribed = false;
+    };
+  }, [referrer]);
+
+  const promoCode = referrer 
+    ? `${referrer.replace(/[-_@]+/g, "").toUpperCase()}99` 
     : "GARDENGOLD99";
 
   // Auto-trigger download after 3 seconds (Point 8.1 - takes ~3s)
@@ -144,8 +167,8 @@ export default function DownloadPage() {
       {/* Point 8.2: Slide-in Success Toast */}
       <div
         className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-emerald-900 text-white px-5 py-3 rounded-2xl border border-emerald-950 shadow-premium-lg transition-all duration-300 ${showSuccessToast
-          ? "translate-y-0 opacity-100"
-          : "-translate-y-12 opacity-0 pointer-events-none"
+            ? "translate-y-0 opacity-100"
+            : "-translate-y-12 opacity-0 pointer-events-none"
           }`}
       >
         <span className="text-xl">✅</span>
@@ -158,29 +181,29 @@ export default function DownloadPage() {
       {/* Decorative background elements */}
       <div
         aria-hidden="true"
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0"
       />
 
       <OrganicLeaf className="top-[3%] left-[2%] w-24 h-24 md:w-36 md:h-36 -rotate-12 opacity-80" />
       <OrganicLeaf className="top-[28%] left-[8%] w-18 h-18 md:w-28 md:h-28 rotate-45 opacity-70" />
-      <OrganicLeaf className="bottom-[8%] left-[2%] w-28 h-28 md:w-40 md:h-40 rotate-[135deg] opacity-80" />
+      <OrganicLeaf className="bottom-[8%] left-[2%] w-28 h-28 md:w-40 md:h-40 rotate-135 opacity-80" />
 
-      <OrganicLeaf className="top-[4%] left-[45%] w-16 h-16 md:w-24 md:h-24 rotate-[60deg] opacity-60" />
-      <OrganicLeaf className="bottom-[14%] left-[28%] w-20 h-20 md:w-32 md:h-32 rotate-[15deg] opacity-75" />
+      <OrganicLeaf className="top-[4%] left-[45%] w-16 h-16 md:w-24 md:h-24 rotate-60 opacity-60" />
+      <OrganicLeaf className="bottom-[14%] left-[28%] w-20 h-20 md:w-32 md:h-32 rotate-15 opacity-75" />
 
       <OrganicLeaf className="top-[8%] right-[28%] w-32 h-32 md:w-48 md:h-48 rotate-90 hidden lg:block opacity-90" />
-      <OrganicLeaf className="top-[45%] right-[2%] w-18 h-18 md:w-28 md:h-28 -rotate-[30deg] hidden md:block opacity-65" />
-      <OrganicLeaf className="bottom-[5%] right-[15%] w-24 h-24 md:w-36 md:h-36 rotate-[195deg] hidden sm:block opacity-80" />
+      <OrganicLeaf className="top-[45%] right-[2%] w-18 h-18 md:w-28 md:h-28 rotate-[-30deg] hidden md:block opacity-65" />
+      <OrganicLeaf className="bottom-[5%] right-[15%] w-24 h-24 md:w-36 md:h-36 rotate-195 hidden sm:block opacity-80" />
 
       <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:py-16 relative z-10">
 
         {referrer && (() => {
-          const creator = getCreator(referrer);
+          const creator = liveCreator || getCreator(referrer);
           return (
             <div className="bg-amber-400 text-slate-950 p-6 rounded-3xl border border-amber-500 shadow-premium mb-8 flex flex-col sm:flex-row items-center gap-5 animate-fade-in relative overflow-hidden">
-              <div
-                className="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,0.15),transparent)] pointer-events-none"
-                aria-hidden="true"
+              <div 
+                className="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,0.15),transparent)] pointer-events-none" 
+                aria-hidden="true" 
               />
               <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white bg-amber-100 shrink-0 shadow-sm">
                 <img
@@ -280,12 +303,14 @@ export default function DownloadPage() {
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-1 bg-white p-2 border border-brand-border rounded-xl shrink-0 shadow-sm">
-                  <img
-                    src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent("https://kitchen-scraps.web.app/download")}`}
+                  <img 
+                    src={`https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(
+                      referrer ? `https://kitchen-scraps.web.app/download?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps.web.app/download"
+                    )}`}
                     alt="Scan to Download on Phone"
                     width={90}
                     height={90}
-                    className="w-[90px] h-[90px] select-none"
+                    className="w-22.5 h-22.5 select-none"
                   />
                   <span className="text-[9px] font-extrabold text-brand-primary-light uppercase tracking-wide">Scan with phone</span>
                 </div>
@@ -305,7 +330,7 @@ export default function DownloadPage() {
 
             {/* VirusTotal Validation Badge */}
             <div className="bg-emerald-50 border border-emerald-600/10 rounded-2xl p-4 flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-premium-sm text-2xl flex-shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-premium-sm text-2xl shrink-0">
                 ✅
               </div>
               <div>
@@ -323,7 +348,7 @@ export default function DownloadPage() {
 
             {/* Proactive Google Play Protect Reassurance Block */}
             <div className="bg-emerald-50 border border-emerald-600/10 rounded-2xl p-4 flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-premium-sm text-2xl flex-shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-premium-sm text-2xl shrink-0">
                 🛡️
               </div>
               <div>

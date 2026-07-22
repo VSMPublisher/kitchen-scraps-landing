@@ -5,7 +5,8 @@ import Link from "next/link";
 import { Download, Lightbulb, ArrowRight, RotateCcw } from "lucide-react";
 import { trackOutboundLink } from "@/utils/analytics";
 import TrustBadge from "./TrustBadge";
-import { getCreator } from "@/utils/creators";
+import { getCreator, Creator, saveCreatorToCache } from "@/utils/creators";
+import { fetchCreatorFromFirestore } from "@/lib/firebase";
 
 const DEMO_QUESTIONS = [
   {
@@ -110,11 +111,12 @@ export default function Hero() {
   const [timerProgress, setTimerProgress] = useState(100);
   const [streak, setStreak] = useState(11);
   const [isCompleted, setIsCompleted] = useState(false);
-
+  
   const [copiedScore, setCopiedScore] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
   const [referrer, setReferrer] = useState<string | null>(null);
+  const [liveCreator, setLiveCreator] = useState<Creator | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -132,9 +134,25 @@ export default function Hero() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!referrer) return;
+    let isSubscribed = true;
+    fetchCreatorFromFirestore(referrer)
+      .then((fetched) => {
+        if (isSubscribed && fetched && fetched.avatar) {
+          setLiveCreator(fetched);
+          saveCreatorToCache(fetched);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isSubscribed = false;
+    };
+  }, [referrer]);
+
   const handleCopyScore = () => {
-    const shareUrl = referrer
-      ? `https://kitchen-scraps.web.app/?ref=${encodeURIComponent(referrer)}`
+    const shareUrl = referrer 
+      ? `https://kitchen-scraps.web.app/?ref=${encodeURIComponent(referrer)}` 
       : "https://kitchen-scraps.web.app/";
     const textToCopy = `🌱 I scored ${score}/3 on the Kitchen Scraps Composting teaser! Can you beat my score? Try it free: ${shareUrl}`;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -163,7 +181,7 @@ export default function Hero() {
     if (isAnsLocked) return;
     setSelectedAns(optionValue);
     setIsAnsLocked(true);
-
+    
     const isCorrect = optionValue === DEMO_QUESTIONS[currentQIndex].correctValue;
     if (isCorrect) {
       setScore((prev) => prev + 1);
@@ -228,19 +246,19 @@ export default function Hero() {
 
       <div
         aria-hidden="true"
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-brand-soft-bg/40 rounded-full blur-[100px] pointer-events-none z-0"
       />
 
       <OrganicLeaf className="top-[3%] left-[2%] w-24 h-24 md:w-36 md:h-36 -rotate-12 opacity-80" />
       <OrganicLeaf className="top-[28%] left-[8%] w-18 h-18 md:w-28 md:h-28 rotate-45 opacity-70" />
-      <OrganicLeaf className="bottom-[8%] left-[2%] w-28 h-28 md:w-40 md:h-40 rotate-[135deg] opacity-80" />
+      <OrganicLeaf className="bottom-[8%] left-[2%] w-28 h-28 md:w-40 md:h-40 rotate-135 opacity-80" />
 
-      <OrganicLeaf className="top-[4%] left-[45%] w-16 h-16 md:w-24 md:h-24 rotate-[60deg] opacity-60" />
-      <OrganicLeaf className="bottom-[14%] left-[28%] w-20 h-20 md:w-32 md:h-32 rotate-[15deg] opacity-75" />
+      <OrganicLeaf className="top-[4%] left-[45%] w-16 h-16 md:w-24 md:h-24 rotate-60 opacity-60" />
+      <OrganicLeaf className="bottom-[14%] left-[28%] w-20 h-20 md:w-32 md:h-32 rotate-15 opacity-75" />
 
       <OrganicLeaf className="top-[8%] right-[28%] w-32 h-32 md:w-48 md:h-48 rotate-90 hidden lg:block opacity-90" />
-      <OrganicLeaf className="top-[45%] right-[2%] w-18 h-18 md:w-28 md:h-28 -rotate-[30deg] hidden md:block opacity-65" />
-      <OrganicLeaf className="bottom-[5%] right-[15%] w-24 h-24 md:w-36 md:h-36 rotate-[195deg] hidden sm:block opacity-80" />
+      <OrganicLeaf className="top-[45%] right-[2%] w-18 h-18 md:w-28 md:h-28 rotate-[-30deg] hidden md:block opacity-65" />
+      <OrganicLeaf className="bottom-[5%] right-[15%] w-24 h-24 md:w-36 md:h-36 rotate-195 hidden sm:block opacity-80" />
 
       <div className="max-w-6xl mx-auto relative flex flex-col lg:flex-row items-center lg:items-end gap-12 lg:gap-16 z-10">
 
@@ -288,9 +306,9 @@ export default function Hero() {
             {/* Teaser CTA (Secondary Action) */}
             <div className="flex flex-col md:flex-row items-center w-full md:w-auto gap-3">
               <Link
-                href="https://kitchen-scraps-quiz.web.app"
+                href={referrer ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps-quiz.web.app"}
                 onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
-                className="border-2 border-emerald-900 text-emerald-900 px-8 py-[14px] rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full md:w-auto text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
+                className="border-2 border-emerald-900 text-emerald-900 px-8 py-3.5 rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full md:w-auto text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
               >
                 Try Web Teaser
               </Link>
@@ -306,13 +324,13 @@ export default function Hero() {
         </div>
 
         {/* Right Side: Interactive Phone Simulator (Point 5 Visual "Aha Moment" Preview) */}
-        <div className="flex-shrink-0 w-full max-w-[215px] sm:max-w-[235px] lg:max-w-[285px] relative group h-fit z-10 self-center lg:self-end">
+        <div className="shrink-0 w-full max-w-53.75 sm:max-w-58.75 lg:max-w-71.25 relative group h-fit z-10 self-center lg:self-end">
           {/* Glowing ambient decoration */}
-          <div className="absolute -inset-3 bg-gradient-to-tr from-emerald-600/15 to-amber-500/15 rounded-[2.5rem] blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+          <div className="absolute -inset-3 bg-linear-to-tr from-emerald-600/15 to-amber-500/15 rounded-[2.5rem] blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
           {/* Phone Frame */}
-          <div className="relative w-full aspect-[9/19] rounded-[2.2rem] border-[8px] border-zinc-800 bg-[#FAF9F5] shadow-mockup flex flex-col overflow-hidden select-none">
-
+          <div className="relative w-full aspect-9/19 rounded-[2.2rem] border-8 border-zinc-800 bg-[#FAF9F5] shadow-mockup flex flex-col overflow-hidden select-none">
+            
             {/* Safe Area Notch & Status Bar */}
             <div className="h-5 bg-emerald-700 w-full flex items-center justify-between px-3 text-[9px] text-emerald-100 font-sans tracking-tight shrink-0 select-none relative">
               <span>9:41 AM</span>
@@ -327,7 +345,7 @@ export default function Hero() {
 
             {/* Simulated App Header */}
             <div className="bg-brand-header py-2 px-3 text-white font-display font-extrabold text-[11px] sm:text-xs tracking-tight text-center relative flex items-center justify-between shrink-0 shadow-sm select-none">
-              <span>{referrer ? `${getCreator(referrer).name.split(" ")[0]}'s Quiz` : "Go/No-Go Quiz"}</span>
+              <span>{referrer ? `${(liveCreator || getCreator(referrer)).name.split(" ")[0]}'s Quiz` : "Go/No-Go Quiz"}</span>
               <span className="text-[9px] bg-emerald-600 px-1.5 py-0.5 rounded border border-emerald-500/30 font-mono flex items-center gap-0.5 select-none">
                 ⏱️ {isAnsLocked ? "Paused" : "Active"}
               </span>
@@ -335,7 +353,7 @@ export default function Hero() {
 
             {/* Timer countdown progress bar */}
             <div className="h-1 bg-emerald-950/20 w-full shrink-0 relative overflow-hidden select-none">
-              <div
+              <div 
                 className="absolute left-0 top-0 h-full bg-amber-400 transition-all duration-150 ease-linear"
                 style={{ width: `${timerProgress}%` }}
               />
@@ -408,7 +426,7 @@ export default function Hero() {
               </div>
             ) : (
               /* Victory/Teaser Completed Screen */
-              <div className="p-3.5 flex-1 flex flex-col items-center justify-between text-center bg-gradient-to-b from-emerald-50/40 to-white overflow-y-auto select-none gap-2">
+              <div className="p-3.5 flex-1 flex flex-col items-center justify-between text-center bg-linear-to-b from-emerald-50/40 to-white overflow-y-auto select-none gap-2">
                 <div className="my-auto space-y-2.5">
                   <div className="text-3xl animate-bounce select-none">🏆</div>
                   <div>
@@ -416,12 +434,12 @@ export default function Hero() {
                       Score: {score} of 3!
                     </h3>
                     <p className="text-[10px] text-brand-primary-light font-bold mt-1 tracking-tight leading-normal select-none">
-                      {score === 3
-                        ? "Perfect score! Soil Master chemistry intuition."
+                      {score === 3 
+                        ? "Perfect score! Soil Master chemistry intuition." 
                         : "Great effort! Composting has tricky guidelines."}
                     </p>
                   </div>
-
+                  
                   {/* Streak details badge */}
                   <div className="inline-flex items-center gap-1 bg-amber-50 border border-amber-100 px-2.5 py-0.5 rounded-full text-[10px] text-amber-900 font-extrabold mx-auto select-none">
                     <span>⚡ Streak: {streak}</span>
@@ -430,10 +448,12 @@ export default function Hero() {
                   {/* QR Code for Desktop Sideloading */}
                   {isDesktop && (
                     <div className="flex flex-col items-center gap-1 bg-white p-1.5 rounded-xl border border-brand-border shadow-sm mx-auto w-fit">
-                      <img
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent("https://kitchen-scraps.web.app/download")}`}
+                      <img 
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(
+                          referrer ? `https://kitchen-scraps.web.app/download?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps.web.app/download"
+                        )}`}
                         alt="Scan to Download APK"
-                        className="w-[72px] h-[72px] select-none"
+                        className="w-18 h-18 select-none"
                       />
                       <span className="text-[8px] font-bold text-brand-primary-light uppercase tracking-wide">Scan to install APK</span>
                     </div>
@@ -476,8 +496,8 @@ export default function Hero() {
       {/* Point 10: Mobile Sticky CTA Bar - Scroll Activated (Smooth Slide transition) */}
       <div
         className={`lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-brand-bg/95 backdrop-blur-md border-t border-brand-border/40 shadow-premium-lg py-2.5 px-3.5 safe-area-pb transition-all duration-300 transform ${showSticky
-          ? "translate-y-0 opacity-100"
-          : "translate-y-full opacity-0 pointer-events-none"
+            ? "translate-y-0 opacity-100"
+            : "translate-y-full opacity-0 pointer-events-none"
           }`}
       >
         <div className="max-w-6xl mx-auto flex flex-row gap-2.5">
@@ -485,7 +505,7 @@ export default function Hero() {
           <Link
             href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
             onClick={() => handleCtaClick("Download APK - Mobile CTA", "/download")}
-            className="flex-1 bg-brand-header text-white px-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-hero-accent hover-lift transition-all shadow-premium text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50 flex items-center justify-center min-h-[44px]"
+            className="flex-1 bg-brand-header text-white px-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-hero-accent hover-lift transition-all shadow-premium text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50 flex items-center justify-center min-h-11"
           >
             <span className="inline sm:hidden">Download APK</span>
             <span className="hidden sm:inline">Download for Android</span>
@@ -493,9 +513,9 @@ export default function Hero() {
 
           {/* Mobile Play Button */}
           <Link
-            href="https://kitchen-scraps-quiz.web.app"
+            href={referrer ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps-quiz.web.app"}
             onClick={() => handleCtaClick("Play Now - Web - Mobile CTA", "https://kitchen-scraps-quiz.web.app")}
-            className="flex-1 border-2 border-emerald-900 text-emerald-900 px-2 py-2 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50 flex items-center justify-center min-h-[44px]"
+            className="flex-1 border-2 border-emerald-900 text-emerald-900 px-2 py-2 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50 flex items-center justify-center min-h-11"
           >
             <span className="inline sm:hidden">Play Web</span>
             <span className="hidden sm:inline">Try Web Teaser</span>
