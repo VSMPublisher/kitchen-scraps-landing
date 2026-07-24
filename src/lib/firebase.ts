@@ -235,6 +235,7 @@ export function normalizeCreatorDoc(id: string, raw: RawCreatorRecord): Creator 
     downloads,
     followers,
     badge,
+    isSyncedFromFirestore: true,
   };
 }
 
@@ -360,6 +361,66 @@ export async function fetchAllCreatorsFromFirestore(): Promise<Creator[]> {
   const collectionsToTry = ["creators", "users", "advocates"];
   const creatorsMap = new Map<string, Creator>();
 
+  const isCreatorDoc = (raw: RawCreatorRecord): boolean => {
+    if (!raw || typeof raw !== "object") return false;
+    return Boolean(
+      raw.name ||
+      raw.displayName ||
+      raw.creatorName ||
+      raw.handle ||
+      raw.username ||
+      raw.referralCode ||
+      raw.code ||
+      raw.isApproved ||
+      raw.isVerified ||
+      raw.status === "approved" ||
+      raw.questions ||
+      raw.quizQuestions ||
+      raw.avatarUrl ||
+      raw.avatar
+    );
+  };
+
+  const processDoc = (docId: string, raw: RawCreatorRecord) => {
+    if (!isCreatorDoc(raw)) return;
+    const creator = normalizeCreatorDoc(docId, raw);
+    if (!creator || !creator.name) return;
+
+    const baseKey = (creator.handle || creator.id || creator.name)
+      .toLowerCase()
+      .trim()
+      .replace(/^@/, "")
+      .replace(/_(instagram|youtube|tiktok|blog)$/i, "");
+
+    if (!baseKey) return;
+
+    if (!creatorsMap.has(baseKey)) {
+      creatorsMap.set(baseKey, creator);
+    } else {
+      const existing = creatorsMap.get(baseKey)!;
+      // Prefer creator with avatarUrl, higher downloads, or approved status
+      const existingHasAvatar = existing.avatar && !existing.avatar.includes("unsplash.com");
+      const currentHasAvatar = creator.avatar && !creator.avatar.includes("unsplash.com");
+
+      const existingFollowers = existing.followers || 0;
+      const creatorFollowers = creator.followers || 0;
+
+      if (
+        (!existingHasAvatar && currentHasAvatar) ||
+        (creator.downloads > existing.downloads) ||
+        (creatorFollowers > existingFollowers)
+      ) {
+        creatorsMap.set(baseKey, {
+          ...existing,
+          ...creator,
+          avatar: currentHasAvatar ? creator.avatar : existing.avatar,
+          downloads: Math.max(existing.downloads, creator.downloads),
+          followers: Math.max(existingFollowers, creatorFollowers),
+        });
+      }
+    }
+  };
+
   // 1. Try Firebase Firestore SDK
   if (db) {
     for (const colName of collectionsToTry) {
@@ -367,11 +428,7 @@ export async function fetchAllCreatorsFromFirestore(): Promise<Creator[]> {
         const colRef = collection(db, colName);
         const querySnap = await getDocs(colRef);
         querySnap.forEach((docSnap: QueryDocumentSnapshot<DocumentData>) => {
-          const data = docSnap.data() as RawCreatorRecord;
-          const creator = normalizeCreatorDoc(docSnap.id, data);
-          if (creator.name && creator.avatar) {
-            creatorsMap.set(creator.id, creator);
-          }
+          processDoc(docSnap.id, docSnap.data() as RawCreatorRecord);
         });
       } catch (err) {
         console.warn(`Firestore SDK list failed on ${colName}:`, err);
@@ -389,10 +446,8 @@ export async function fetchAllCreatorsFromFirestore(): Promise<Creator[]> {
         const docs = json.documents || [];
         for (const d of docs) {
           const raw = parseFirestoreRestFields(d);
-          const creator = normalizeCreatorDoc(String(raw.id || d.name), raw);
-          if (creator.name && creator.avatar) {
-            creatorsMap.set(creator.id, creator);
-          }
+          const docId = String(raw.id || d.name || "").split("/").pop() || "";
+          processDoc(docId, raw);
         }
       }
     } catch (err) {

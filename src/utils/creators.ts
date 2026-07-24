@@ -8,6 +8,7 @@ export interface Creator {
   badge: string;
   avatar: string;
   followers?: number;
+  isSyncedFromFirestore?: boolean;
 }
 
 export interface QuizQuestion {

@@ -34,14 +34,34 @@ export default function AdvocatesPage() {
       .then((fetched) => {
         if (fetched && fetched.length > 0) {
           const map = new Map<string, Creator>();
+
+          const getKey = (c: Creator) => {
+            return (c.id || c.handle || c.name)
+              .toLowerCase()
+              .trim()
+              .replace(/^@/, "")
+              .replace(/_(instagram|youtube|tiktok|blog)$/i, "");
+          };
+
           LEADERBOARD_DATA.forEach((c) => {
-            const key = c.id.toLowerCase().trim();
-            map.set(key, c);
+            map.set(getKey(c), c);
           });
+
           fetched.forEach((c) => {
             if (!c) return;
-            const key = (c.id || c.handle || c.name).toLowerCase().trim().replace(/^@/, "");
-            map.set(key, c);
+            const key = getKey(c);
+            const existing = map.get(key);
+            if (existing) {
+              map.set(key, {
+                ...existing,
+                ...c,
+                downloads: Math.max(existing.downloads || 0, c.downloads || 0),
+                followers: Math.max(existing.followers || 0, c.followers || 0),
+                avatar: (c.avatar && !c.avatar.includes("unsplash.com")) ? c.avatar : existing.avatar,
+              });
+            } else {
+              map.set(key, c);
+            }
             saveCreatorToCache(c);
           });
 
@@ -287,11 +307,26 @@ export default function AdvocatesPage() {
                       </p>
 
                       <button
-                        onClick={() => handleStartTestQuiz(topCreator)}
-                        className="bg-emerald-800 hover:bg-emerald-950 text-white font-extrabold text-xs py-2.5 px-5 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-md mt-2"
+                        onClick={() => topCreator.isSyncedFromFirestore && handleStartTestQuiz(topCreator)}
+                        disabled={!topCreator.isSyncedFromFirestore}
+                        title={topCreator.isSyncedFromFirestore ? `Test ${topCreator.name}'s Quiz` : "Quiz active for Firestore synced creators only"}
+                        className={`font-extrabold text-xs py-2.5 px-5 rounded-xl transition flex items-center gap-1.5 mt-2 ${
+                          topCreator.isSyncedFromFirestore
+                            ? "bg-emerald-800 hover:bg-emerald-950 text-white cursor-pointer shadow-md"
+                            : "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-75"
+                        }`}
                       >
-                        <Play className="w-3.5 h-3.5 fill-white" />
-                        <span>Test {topCreator.name}&apos;s Quiz</span>
+                        {topCreator.isSyncedFromFirestore ? (
+                          <>
+                            <Play className="w-3.5 h-3.5 fill-white" />
+                            <span>Test {topCreator.name}&apos;s Quiz</span>
+                          </>
+                        ) : (
+                          <>
+                            <ShieldAlert className="w-3.5 h-3.5 text-slate-400" />
+                            <span>Sync Required (Placeholder)</span>
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>
@@ -336,13 +371,23 @@ export default function AdvocatesPage() {
                             </div>
 
                             <div>
-                              <div className="flex items-center gap-1.5">
+                              <div className="flex items-center gap-1.5 flex-wrap">
                                 <span className="font-display font-extrabold text-sm text-brand-primary">
                                   {creator.name}
                                 </span>
                                 <span className="text-[10px] text-emerald-800 font-extrabold bg-brand-soft-bg px-2 py-0.5 rounded-full">
                                   {creator.badge}
                                 </span>
+                                {creator.isSyncedFromFirestore ? (
+                                  <span className="text-[9px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-200 px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                                    Synced
+                                  </span>
+                                ) : (
+                                  <span className="text-[9px] font-medium text-slate-400 bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded-md">
+                                    Placeholder
+                                  </span>
+                                )}
                               </div>
                               
                               <span className="text-xs text-slate-500 flex items-center gap-1 font-mono font-semibold mt-0.5">
@@ -361,13 +406,32 @@ export default function AdvocatesPage() {
                               </span>
                             </div>
 
-                            {/* Active Test Quiz Button */}
+                            {/* Active / Disabled Test Quiz Button */}
                             <button
-                              onClick={() => handleStartTestQuiz(creator)}
-                              className="bg-emerald-800 hover:bg-emerald-950 text-white font-extrabold text-xs py-2.5 px-4 rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-sm hover:shadow"
+                              onClick={() => creator.isSyncedFromFirestore && handleStartTestQuiz(creator)}
+                              disabled={!creator.isSyncedFromFirestore}
+                              title={
+                                creator.isSyncedFromFirestore
+                                  ? "Test Quiz (Firestore Synced)"
+                                  : "Quiz active for Firestore synced creators only"
+                              }
+                              className={`font-extrabold text-xs py-2.5 px-4 rounded-xl transition flex items-center gap-1.5 ${
+                                creator.isSyncedFromFirestore
+                                  ? "bg-emerald-800 hover:bg-emerald-950 text-white cursor-pointer shadow-sm hover:shadow"
+                                  : "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-75"
+                              }`}
                             >
-                              <Play className="w-3.5 h-3.5 fill-white" />
-                              <span>Test Quiz</span>
+                              {creator.isSyncedFromFirestore ? (
+                                <>
+                                  <Play className="w-3.5 h-3.5 fill-white" />
+                                  <span>Test Quiz</span>
+                                </>
+                              ) : (
+                                <>
+                                  <ShieldAlert className="w-3.5 h-3.5 text-slate-400" />
+                                  <span>Unsynced</span>
+                                </>
+                              )}
                             </button>
                           </div>
                         </div>
