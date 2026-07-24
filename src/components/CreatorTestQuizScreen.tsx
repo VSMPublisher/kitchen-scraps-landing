@@ -155,6 +155,7 @@ export default function CreatorTestQuizScreen({ creator, onClose }: CreatorTestQ
               src={creator.avatar}
               alt={creator.name}
               fill
+              unoptimized
               referrerPolicy="no-referrer"
               className="object-cover"
             />
@@ -227,11 +228,50 @@ export default function CreatorTestQuizScreen({ creator, onClose }: CreatorTestQ
                 </div>
               </div>
 
-              {/* Question Statement */}
-              <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 mb-6">
-                <h3 className="text-lg sm:text-xl font-display font-extrabold text-brand-primary leading-snug">
-                  {questions[currentQuestionIdx].question}
-                </h3>
+              {/* Question Statement Card */}
+              <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 mb-6 space-y-3">
+                {/* Optional Category & Difficulty Badges */}
+                {(questions[currentQuestionIdx].category || questions[currentQuestionIdx].difficulty) && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {questions[currentQuestionIdx].category && (
+                      <span className="bg-emerald-100 text-emerald-900 border border-emerald-200 font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded-md font-mono">
+                        {questions[currentQuestionIdx].category}
+                      </span>
+                    )}
+                    {questions[currentQuestionIdx].difficulty && (
+                      <span className={`font-extrabold text-[10px] uppercase px-2.5 py-0.5 rounded-md font-mono border ${
+                        questions[currentQuestionIdx].difficulty?.toLowerCase() === "hard"
+                          ? "bg-amber-100 text-amber-900 border-amber-300"
+                          : questions[currentQuestionIdx].difficulty?.toLowerCase() === "medium"
+                          ? "bg-blue-100 text-blue-900 border-blue-200"
+                          : "bg-slate-100 text-slate-700 border-slate-200"
+                      }`}>
+                        Difficulty: {questions[currentQuestionIdx].difficulty}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                <div className="flex items-start gap-3">
+                  {/* Optional Image or Emoji Icon */}
+                  {questions[currentQuestionIdx].image && (
+                    <div className="text-2xl p-2 bg-white rounded-xl border border-slate-200 shadow-xs shrink-0 select-none">
+                      {questions[currentQuestionIdx].image}
+                    </div>
+                  )}
+
+                  <h3 className="text-lg sm:text-xl font-display font-extrabold text-brand-primary leading-snug grow">
+                    {questions[currentQuestionIdx].question}
+                  </h3>
+                </div>
+
+                {/* Optional Hint */}
+                {questions[currentQuestionIdx].hint && (
+                  <div className="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3 text-xs text-amber-950 font-medium flex items-center gap-2">
+                    <span className="shrink-0 text-base">💡</span>
+                    <span><strong>Creator Hint:</strong> {questions[currentQuestionIdx].hint}</span>
+                  </div>
+                )}
               </div>
 
               {/* Options List */}

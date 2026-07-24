@@ -157,11 +157,21 @@ export function normalizeQuizQuestion(qItem: any): QuizQuestion | null {
     "Great job! Keep composting with zero-waste principles."
   );
 
+  const category = qItem.categoryId || qItem.category ? String(qItem.categoryId || qItem.category) : undefined;
+  const difficulty = qItem.difficulty ? String(qItem.difficulty) : undefined;
+  const hint = qItem.hint || qItem.tip ? String(qItem.hint || qItem.tip) : undefined;
+  const image = qItem.image || qItem.imageUrl || qItem.icon ? String(qItem.image || qItem.imageUrl || qItem.icon) : undefined;
+
   return {
+    id: qItem.id ? String(qItem.id) : undefined,
     question: questionStr,
     options: optionsList,
     correctIdx,
     explanation,
+    category,
+    difficulty,
+    hint,
+    image,
   };
 }
 
@@ -226,6 +236,17 @@ export function normalizeCreatorDoc(id: string, raw: RawCreatorRecord): Creator 
   const followers = Number(raw.followers ?? raw.followersCount ?? raw.followerCount ?? 1000);
   const badge = String(raw.badge || (raw.isApproved || raw.isVerified || raw.status === "approved" ? "Certified Advocate 🏆" : fallback.badge));
 
+  let questions: QuizQuestion[] | undefined = undefined;
+  const rawQuestions = raw.questions || raw.quizQuestions || raw.quiz_questions;
+  if (Array.isArray(rawQuestions) && rawQuestions.length > 0) {
+    const list: QuizQuestion[] = [];
+    for (const qItem of rawQuestions) {
+      const parsed = normalizeQuizQuestion(qItem);
+      if (parsed) list.push(parsed);
+    }
+    if (list.length > 0) questions = list;
+  }
+
   return {
     id: cleanId,
     name,
@@ -236,6 +257,13 @@ export function normalizeCreatorDoc(id: string, raw: RawCreatorRecord): Creator 
     followers,
     badge,
     isSyncedFromFirestore: true,
+    email: raw.email ? String(raw.email) : undefined,
+    websiteUrl: raw.websiteUrl || raw.website || raw.link ? String(raw.websiteUrl || raw.website || raw.link) : undefined,
+    quizPlayedCount: raw.quizPlayedCount !== undefined ? Number(raw.quizPlayedCount) : undefined,
+    referredDownloads: raw.referredDownloads !== undefined ? Number(raw.referredDownloads) : undefined,
+    status: raw.status ? String(raw.status) : undefined,
+    isApproved: raw.isApproved !== undefined ? Boolean(raw.isApproved) : undefined,
+    questions,
   };
 }
 

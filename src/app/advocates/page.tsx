@@ -282,6 +282,7 @@ export default function AdvocatesPage() {
                         src={topCreator.avatar} 
                         alt={topCreator.name}
                         fill
+                        unoptimized
                         referrerPolicy="no-referrer"
                         className="object-cover"
                       />
@@ -365,6 +366,7 @@ export default function AdvocatesPage() {
                                 src={creator.avatar} 
                                 alt={creator.name}
                                 fill
+                                unoptimized
                                 referrerPolicy="no-referrer"
                                 className="object-cover"
                               />

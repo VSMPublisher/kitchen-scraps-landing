@@ -9,13 +9,25 @@ export interface Creator {
   avatar: string;
   followers?: number;
   isSyncedFromFirestore?: boolean;
+  email?: string;
+  websiteUrl?: string;
+  quizPlayedCount?: number;
+  referredDownloads?: number;
+  status?: string;
+  isApproved?: boolean;
+  questions?: QuizQuestion[];
 }
 
 export interface QuizQuestion {
+  id?: string;
   question: string;
   options: string[];
   correctIdx: number;
   explanation: string;
+  category?: string;
+  difficulty?: string;
+  hint?: string;
+  image?: string;
 }
 
 export const DEFAULT_QUIZ_QUESTIONS: QuizQuestion[] = [
