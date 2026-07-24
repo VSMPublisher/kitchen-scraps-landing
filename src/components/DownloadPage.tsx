@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getCreator, Creator, saveCreatorToCache } from "@/utils/creators";
+import Image from "next/image";
+import { Creator, saveCreatorToCache, getInitials } from "@/utils/creators";
 import { fetchCreatorFromFirestore } from "@/lib/firebase";
 
 const OrganicLeaf = ({ className }: { className: string }) => (
@@ -98,16 +99,27 @@ export default function DownloadPage() {
 
   // Fetch live creator profile from Firestore database whenever referrer changes
   useEffect(() => {
-    if (!referrer) return;
+    if (!referrer) {
+      setLiveCreator(null);
+      return;
+    }
     let isSubscribed = true;
     fetchCreatorFromFirestore(referrer)
       .then((fetched) => {
-        if (isSubscribed && fetched && fetched.avatar) {
-          setLiveCreator(fetched);
-          saveCreatorToCache(fetched);
+        if (isSubscribed) {
+          if (fetched && fetched.isSyncedFromFirestore) {
+            setLiveCreator(fetched);
+            saveCreatorToCache(fetched);
+          } else {
+            // Unverified referral code in Firestore: silently ignore
+            setLiveCreator(null);
+            localStorage.removeItem("ks_referrer");
+          }
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (isSubscribed) setLiveCreator(null);
+      });
     return () => {
       isSubscribed = false;
     };
@@ -197,37 +209,51 @@ export default function DownloadPage() {
 
       <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:py-16 relative z-10">
 
-        {referrer && (() => {
-          const creator = liveCreator || getCreator(referrer);
-          return (
-            <div className="bg-amber-400 text-slate-950 p-6 rounded-3xl border border-amber-500 shadow-premium mb-8 flex flex-col sm:flex-row items-center gap-5 animate-fade-in relative overflow-hidden">
-              <div 
-                className="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,0.15),transparent)] pointer-events-none" 
-                aria-hidden="true" 
-              />
-              <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white bg-amber-100 shrink-0 shadow-sm">
-                <img
-                  src={creator.avatar}
-                  alt={creator.name}
-                  width={64}
-                  height={64}
-                  className="w-full h-full object-cover"
+        {liveCreator && liveCreator.isSyncedFromFirestore && (
+          <div className="bg-linear-to-r from-amber-400 to-emerald-400 text-slate-950 p-6 rounded-3xl border border-amber-500/80 shadow-premium mb-8 flex flex-col sm:flex-row items-center gap-5 animate-fade-in relative overflow-hidden">
+            <div 
+              className="absolute inset-0 bg-[radial-gradient(circle_at_30%_120%,rgba(255,255,255,0.2),transparent)] pointer-events-none" 
+              aria-hidden="true" 
+            />
+            <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-white bg-linear-to-br from-emerald-700 to-amber-700 shrink-0 shadow-md flex items-center justify-center font-black text-amber-300 text-lg">
+              {liveCreator.avatar && !liveCreator.avatar.includes("unsplash.com") ? (
+                <Image
+                  src={liveCreator.avatar}
+                  alt={liveCreator.name}
+                  fill
+                  unoptimized
+                  referrerPolicy="no-referrer"
+                  className="object-cover"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLElement).style.display = "none";
+                  }}
                 />
-              </div>
-              <div className="flex-1 text-center sm:text-left relative z-10">
+              ) : (
+                <span>{getInitials(liveCreator.name)}</span>
+              )}
+            </div>
+            <div className="flex-1 text-center sm:text-left relative z-10">
+              <div className="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
                 <span className="text-[10px] font-black uppercase tracking-wider bg-black/10 px-2.5 py-0.5 rounded-full select-none">
-                  Special Advocate Invite
+                  Verified Advocate Invite
                 </span>
-                <h2 className="text-lg font-black tracking-tight mt-1">
-                  You Were Invited by {creator.name}!
-                </h2>
-                <p className="text-xs font-bold text-slate-900 mt-1 leading-relaxed">
-                  Enjoy free, ad-free access to all 60+ composting quiz puzzles. Your exclusive skin coupon <span className="font-mono bg-black/10 px-1 py-0.5 rounded font-black">{promoCode}</span> is active and ready to be redeemed.
-                </p>
+                <span className="text-xs font-mono font-bold text-slate-800">
+                  @{liveCreator.handle.replace(/^@/, "")}
+                </span>
+              </div>
+              <h2 className="text-xl font-black tracking-tight mt-1 text-slate-950">
+                You Were Invited by {liveCreator.name}!
+              </h2>
+              <p className="text-xs font-bold text-slate-900/90 mt-1.5 leading-relaxed">
+                {liveCreator.bio || `Join ${liveCreator.name} on Kitchen Scraps to explore zero-waste culinary quizzes, earn rewards, and track your sustainable habits!`}
+              </p>
+              <div className="mt-2.5 inline-flex items-center gap-2 bg-black/10 px-3 py-1 rounded-xl text-xs font-bold text-slate-950">
+                <span>🎁 Special Perk Active:</span>
+                <span className="font-mono font-black underline">{promoCode}</span>
               </div>
             </div>
-          );
-        })()}
+          </div>
+        )}
 
         {/* Page Header - Honest Status */}
         <div className="bg-white rounded-3xl border border-brand-border shadow-premium-lg p-8 sm:p-10 mb-8">

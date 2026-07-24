@@ -139,9 +139,13 @@ export default function Hero() {
     let isSubscribed = true;
     fetchCreatorFromFirestore(referrer)
       .then((fetched) => {
-        if (isSubscribed && fetched && fetched.avatar) {
-          setLiveCreator(fetched);
-          saveCreatorToCache(fetched);
+        if (isSubscribed) {
+          if (fetched && fetched.isSyncedFromFirestore) {
+            setLiveCreator(fetched);
+            saveCreatorToCache(fetched);
+          } else {
+            setLiveCreator(null);
+          }
         }
       })
       .catch(() => {});
@@ -150,9 +154,13 @@ export default function Hero() {
     };
   }, [referrer]);
 
+  const activeRefCode = liveCreator
+    ? liveCreator.advocateCode || liveCreator.handle || liveCreator.id
+    : referrer;
+
   const handleCopyScore = () => {
-    const shareUrl = referrer 
-      ? `https://kitchen-scraps.web.app/?ref=${encodeURIComponent(referrer)}` 
+    const shareUrl = activeRefCode 
+      ? `https://kitchen-scraps.web.app/?ref=${encodeURIComponent(activeRefCode)}` 
       : "https://kitchen-scraps.web.app/";
     const textToCopy = `🌱 I scored ${score}/3 on the Kitchen Scraps Composting teaser! Can you beat my score? Try it free: ${shareUrl}`;
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -293,7 +301,7 @@ export default function Hero() {
             {/* Download CTA (Primary Action) */}
             <div className="flex flex-col w-full md:w-auto">
               <Link
-                href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
+                href={activeRefCode ? `/download?ref=${encodeURIComponent(activeRefCode)}` : "/download"}
                 onClick={() => handleCtaClick("Download APK", "/download")}
                 className="bg-brand-header text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-brand-hero-accent hover-lift transition-all shadow-premium hover:shadow-premium-lg w-full flex items-center justify-center gap-2.5 cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50"
               >
@@ -306,7 +314,7 @@ export default function Hero() {
             {/* Teaser CTA (Secondary Action) */}
             <div className="flex flex-col md:flex-row items-center w-full md:w-auto gap-3">
               <Link
-                href={referrer ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps-quiz.web.app"}
+                href={activeRefCode ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(activeRefCode)}` : "https://kitchen-scraps-quiz.web.app"}
                 onClick={() => handleCtaClick("Play Now - Web", "https://kitchen-scraps-quiz.web.app")}
                 className="border-2 border-emerald-900 text-emerald-900 px-8 py-3.5 rounded-2xl font-bold text-lg hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium w-full md:w-auto text-center order-first focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50"
               >
@@ -503,7 +511,7 @@ export default function Hero() {
         <div className="max-w-6xl mx-auto flex flex-row gap-2.5">
           {/* Mobile Download Button */}
           <Link
-            href={referrer ? `/download?ref=${encodeURIComponent(referrer)}` : "/download"}
+            href={activeRefCode ? `/download?ref=${encodeURIComponent(activeRefCode)}` : "/download"}
             onClick={() => handleCtaClick("Download APK - Mobile CTA", "/download")}
             className="flex-1 bg-brand-header text-white px-2 py-2.5 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-hero-accent hover-lift transition-all shadow-premium text-center cursor-pointer focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-header/50 flex items-center justify-center min-h-11"
           >
@@ -513,7 +521,7 @@ export default function Hero() {
 
           {/* Mobile Play Button */}
           <Link
-            href={referrer ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(referrer)}` : "https://kitchen-scraps-quiz.web.app"}
+            href={activeRefCode ? `https://kitchen-scraps-quiz.web.app/?ref=${encodeURIComponent(activeRefCode)}` : "https://kitchen-scraps-quiz.web.app"}
             onClick={() => handleCtaClick("Play Now - Web - Mobile CTA", "https://kitchen-scraps-quiz.web.app")}
             className="flex-1 border-2 border-emerald-900 text-emerald-900 px-2 py-2 rounded-xl font-bold text-xs sm:text-sm hover:bg-brand-soft-bg/40 hover-lift transition-all shadow-premium text-center focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-900/50 flex items-center justify-center min-h-11"
           >

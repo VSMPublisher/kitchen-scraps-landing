@@ -247,6 +247,9 @@ export function normalizeCreatorDoc(id: string, raw: RawCreatorRecord): Creator 
     if (list.length > 0) questions = list;
   }
 
+  const bio = raw.bio || raw.description || raw.about || raw.tagline ? String(raw.bio || raw.description || raw.about || raw.tagline) : undefined;
+  const advocateCode = raw.advocateCode || raw.advocate_code || raw.referralCode || raw.code || raw.handle ? String(raw.advocateCode || raw.advocate_code || raw.referralCode || raw.code || raw.handle) : undefined;
+
   return {
     id: cleanId,
     name,
@@ -264,11 +267,13 @@ export function normalizeCreatorDoc(id: string, raw: RawCreatorRecord): Creator 
     status: raw.status ? String(raw.status) : undefined,
     isApproved: raw.isApproved !== undefined ? Boolean(raw.isApproved) : undefined,
     questions,
+    bio,
+    advocateCode,
   };
 }
 
 /**
- * Fetch a single creator from Firestore by referral ID / code / handle
+ * Fetch a single creator from Firestore by referral ID / code / handle / advocateCode
  * Tries Firestore SDK first, then Firestore REST API across possible collections ("creators", "users", "advocates")
  */
 export async function fetchCreatorFromFirestore(creatorId: string): Promise<Creator | null> {
@@ -305,10 +310,10 @@ export async function fetchCreatorFromFirestore(creatorId: string): Promise<Crea
         }
       }
 
-      // Query by referralCode, code, handle, id or username field
+      // Query by advocateCode, advocate_code, handle, referralCode, code, id or username field
       try {
         const colRef = collection(db, colName);
-        for (const fieldName of ["handle", "referralCode", "code", "id", "username"]) {
+        for (const fieldName of ["advocateCode", "advocate_code", "handle", "referralCode", "code", "id", "username"]) {
           for (const matchVal of [cleanId, baseId]) {
             const q = query(colRef, where(fieldName, "==", matchVal), limit(1));
             const querySnap = await getDocs(q);
@@ -356,7 +361,7 @@ export async function fetchCreatorFromFirestore(creatorId: string): Promise<Crea
         for (const d of docs) {
           const raw = parseFirestoreRestFields(d);
           const dId = String(raw.id || "").toLowerCase();
-          const refCode = String(raw.referralCode || raw.code || raw.handle || "").toLowerCase().replace(/^@/, "");
+          const refCode = String(raw.advocateCode || raw.advocate_code || raw.referralCode || raw.code || raw.handle || "").toLowerCase().replace(/^@/, "");
           const nameMatch = String(raw.name || "").toLowerCase().replace(/\s+/g, "");
 
           if (

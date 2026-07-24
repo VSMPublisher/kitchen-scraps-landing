@@ -87,12 +87,12 @@ export default function HowItWorks() {
           {steps.map((item, idx) => (
             <div key={idx} className="flex flex-col items-center group">
               {/* Image Showcase frame container */}
-              <div className="w-full max-w-[240px] mb-8 relative">
+              <div className="w-full max-w-60 mb-8 relative">
                 {/* Outer soft shadow */}
-                <div className="absolute -inset-1 bg-gradient-to-b from-brand-header/30 to-brand-cta/30 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-300 pointer-events-none" />
-
+                <div className="absolute -inset-1 bg-linear-to-b from-brand-header/30 to-brand-cta/30 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-300 pointer-events-none" />
+                
                 {/* Device Mockup Shadow Container */}
-                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-premium bg-white aspect-[9/19]">
+                <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-premium bg-white aspect-9/19">
                   <Image
                     src={item.image}
                     alt={`Kitchen Scraps App Setup Step ${item.step}: ${item.title}`}
@@ -148,10 +148,11 @@ export default function HowItWorks() {
                   <button
                     key={item.name}
                     onClick={() => setActiveAha(idx)}
-                    className={`p-3.5 rounded-2xl border text-left transition-all duration-300 flex items-center justify-between gap-3 cursor-pointer group/btn ${activeAha === idx
-                      ? "bg-emerald-950 border-emerald-500/50 shadow-premium text-white scale-[1.02] ring-2 ring-emerald-500/20"
-                      : "bg-emerald-950/30 border-emerald-800/40 hover:bg-emerald-950/50 hover:border-emerald-700 text-emerald-100 hover:text-white"
-                      }`}
+                    className={`p-3.5 rounded-2xl border text-left transition-all duration-300 flex items-center justify-between gap-3 cursor-pointer group/btn ${
+                      activeAha === idx
+                        ? "bg-emerald-950 border-emerald-500/50 shadow-premium text-white scale-[1.02] ring-2 ring-emerald-500/20"
+                        : "bg-emerald-950/30 border-emerald-800/40 hover:bg-emerald-950/50 hover:border-emerald-700 text-emerald-100 hover:text-white"
+                    }`}
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-2xl shrink-0 select-none bg-emerald-900/40 w-10 h-10 rounded-xl flex items-center justify-center border border-emerald-800/50">
@@ -166,8 +167,9 @@ export default function HowItWorks() {
                         </span>
                       </div>
                     </div>
-                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform duration-300 ${activeAha === idx ? "translate-x-1 text-brand-cta" : "text-emerald-700 group-hover/btn:translate-x-0.5"
-                      }`} />
+                    <ArrowRight className={`w-4 h-4 shrink-0 transition-transform duration-300 ${
+                      activeAha === idx ? "translate-x-1 text-brand-cta" : "text-emerald-700 group-hover/btn:translate-x-0.5"
+                    }`} />
                   </button>
                 ))}
               </div>
@@ -176,7 +178,7 @@ export default function HowItWorks() {
             {/* Right Display Mockup: 7 Columns */}
             <div className="lg:col-span-7 flex justify-center order-1 lg:order-2">
               <div className="w-full max-w-md bg-[#FAF9F5] border-[6px] border-zinc-800 rounded-[2.5rem] shadow-premium-lg overflow-hidden flex flex-col text-slate-900 relative">
-
+                
                 {/* Phone Top Notch Status Bar */}
                 <div className="h-6 bg-emerald-850 w-full flex items-center justify-between px-5 text-[9px] text-emerald-200/80 font-sans tracking-tight shrink-0 select-none relative">
                   <span>9:41 AM</span>

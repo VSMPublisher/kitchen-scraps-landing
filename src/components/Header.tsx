@@ -2,21 +2,22 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { getCreator, Creator, saveCreatorToCache } from "@/utils/creators";
+import { Creator, saveCreatorToCache, getInitials } from "@/utils/creators";
 import { fetchCreatorFromFirestore } from "@/lib/firebase";
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [referrer, setReferrer] = useState<string | null>(null);
-  const [liveCreator, setLiveCreator] = useState<Creator | null>(null);
+  const [verifiedCreator, setVerifiedCreator] = useState<Creator | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
-      const ref = params.get("ref") || params.get("code");
+      const ref = params.get("ref") || params.get("code") || params.get("creator") || params.get("advocateCode");
       if (ref) {
-        localStorage.setItem("ks_referrer", ref);
-        setTimeout(() => setReferrer(ref), 0);
+        const cleanRef = ref.trim().replace(/^@/, "");
+        localStorage.setItem("ks_referrer", cleanRef);
+        setTimeout(() => setReferrer(cleanRef), 0);
       } else {
         const stored = localStorage.getItem("ks_referrer");
         if (stored) {
@@ -27,16 +28,31 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (!referrer) return;
+    if (!referrer) {
+      setVerifiedCreator(null);
+      return;
+    }
     let isSubscribed = true;
     fetchCreatorFromFirestore(referrer)
       .then((fetched) => {
-        if (isSubscribed && fetched && fetched.avatar) {
-          setLiveCreator(fetched);
-          saveCreatorToCache(fetched);
+        if (isSubscribed) {
+          if (fetched && fetched.isSyncedFromFirestore) {
+            setVerifiedCreator(fetched);
+            saveCreatorToCache(fetched);
+            localStorage.setItem("ks_verified_creator", JSON.stringify(fetched));
+          } else {
+            // Unverified or invalid referral code in Firestore: silently ignore/discard
+            setVerifiedCreator(null);
+            localStorage.removeItem("ks_referrer");
+            localStorage.removeItem("ks_verified_creator");
+          }
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        if (isSubscribed) {
+          setVerifiedCreator(null);
+        }
+      });
     return () => {
       isSubscribed = false;
     };
@@ -60,27 +76,85 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-brand-header shadow-premium transition-all duration-300 flex flex-col">
-      {referrer && (() => {
-        const creator = liveCreator || getCreator(referrer);
-        return (
-          <div className="bg-amber-400 text-slate-950 text-xs font-black py-2.5 px-4 text-center select-none flex items-center justify-center gap-2 border-b border-amber-500/30 animate-fade-in">
-            <span>🌱</span>
-            <span>
-              You have been invited by <strong className="underline decoration-2 font-mono">{creator.name}</strong> ({creator.handle})! Download below to unlock your premium Welcome Kit.
-            </span>
-            <button 
-              onClick={() => {
-                localStorage.removeItem("ks_referrer");
-                setReferrer(null);
-              }}
-              className="ml-2 bg-black/10 text-[9px] hover:bg-black/20 text-slate-950 font-bold px-1.5 py-0.5 rounded cursor-pointer border-0 transition-all uppercase"
-              aria-label="Dismiss invite"
-            >
-              ✕ Dismiss
-            </button>
+      {/* Unified Firestore Verified Creator Welcome Banner */}
+      {verifiedCreator && (
+        <div className="bg-emerald-900 text-white text-xs py-2.5 px-4 border-b border-emerald-700/60 shadow-md animate-fade-in">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-3 text-left overflow-hidden">
+              {/* Avatar Image with Initials/Badge Fallback */}
+              <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0 bg-linear-to-br from-emerald-600 to-amber-600 border border-emerald-400/40 flex items-center justify-center font-black text-amber-300 text-xs shadow-xs">
+                {verifiedCreator.avatar && !verifiedCreator.avatar.includes("unsplash.com") ? (
+                  <Image
+                    src={verifiedCreator.avatar}
+                    alt={verifiedCreator.name}
+                    fill
+                    unoptimized
+                    referrerPolicy="no-referrer"
+                    className="object-cover"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLElement).style.display = "none";
+                    }}
+                  />
+                ) : (
+                  <span>{getInitials(verifiedCreator.name)}</span>
+                )}
+              </div>
+
+              <div className="flex flex-col min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="bg-emerald-800 text-amber-300 font-extrabold text-[10px] px-2 py-0.5 rounded border border-emerald-600/60 font-mono shrink-0">
+                    🌱 Verified Creator Invite
+                  </span>
+                  <span className="font-extrabold text-sm text-white truncate">
+                    Welcome! You were invited by {verifiedCreator.name}
+                  </span>
+                  <span className="text-emerald-200 text-xs font-mono font-semibold">
+                    (@{verifiedCreator.handle.replace(/^@/, "")})
+                  </span>
+                </div>
+                {/* Custom Bio or Default Warm Tagline */}
+                <p className="text-emerald-100/90 text-xs mt-0.5 line-clamp-2 leading-relaxed">
+                  {verifiedCreator.bio || `Join ${verifiedCreator.name} on Kitchen Scraps to explore zero-waste culinary quizzes, earn rewards, and track your sustainable habits!`}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <a
+                href={`/download?ref=${encodeURIComponent(verifiedCreator.advocateCode || verifiedCreator.handle || verifiedCreator.id)}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const target = document.getElementById("download");
+                  if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                  } else if (typeof window !== "undefined") {
+                    window.location.href = `/download?ref=${encodeURIComponent(verifiedCreator.advocateCode || verifiedCreator.handle || verifiedCreator.id)}`;
+                  }
+                }}
+                className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs px-3.5 py-1.5 rounded-lg shadow-xs transition-all flex items-center gap-1 cursor-pointer"
+              >
+                <span>Get App & Perk</span>
+                <span className="text-sm">➔</span>
+              </a>
+              <button
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    localStorage.removeItem("ks_referrer");
+                    localStorage.removeItem("ks_verified_creator");
+                  }
+                  setReferrer(null);
+                  setVerifiedCreator(null);
+                }}
+                className="bg-emerald-800/80 hover:bg-emerald-700 text-emerald-200 hover:text-white font-extrabold text-xs px-2 py-1 rounded cursor-pointer transition"
+                title="Dismiss invitation"
+                aria-label="Dismiss invite"
+              >
+                ✕
+              </button>
+            </div>
           </div>
-        );
-      })()}
+        </div>
+      )}
       <div className="max-w-6xl mx-auto w-full py-2.5 md:py-3 px-4 md:px-6 flex items-center justify-between relative">
 
         {/* Logo Section */}
